@@ -2,24 +2,28 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {UiModule} from '../ui/ui.module';
+import {RedirectToComponent} from './components/redirectTo.component';
 
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
+    declarations: [
+      RedirectToComponent,
+    ],
+    imports: [
+        CommonModule,
+        FontAwesomeModule,
         RouterModule,
-        NgbModule,
         UiModule,
-  ],
-  exports: [
-    FontAwesomeModule,
+    ],
+    exports: [
+        FontAwesomeModule,
         RouterModule,
-        NgbModule,
         UiModule,
-  ]
+        RedirectToComponent,
+    ],
+    entryComponents: [
+      RedirectToComponent,
+    ]
 })
 export class SharedModule { }

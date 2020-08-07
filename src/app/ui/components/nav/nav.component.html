@@ -1,1 +1,6 @@
-<p>nav works!</p>
+<ul class="tab tab-block">
+  <li class="tab-item" *ngFor="let entry of this.entryList" [routerLink]="'/'+entry.path"
+  routerLinkActive="active">
+{{entry.label}}
+  </li>
+</ul>

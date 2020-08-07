@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+// Example of project-name.scss
+// Define variables to override default ones
+$bg-color-dark: red;
+
+// Import full Spectre source code
+@import "node_modules/spectre.css/src/spectre";
