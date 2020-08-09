@@ -4,6 +4,7 @@ import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {UiModule} from '../ui/ui.module';
 import {RedirectToComponent} from './components/redirectTo.component';
+import {DataService} from './services/data.service';
 
 
 @NgModule({
@@ -24,6 +25,10 @@ import {RedirectToComponent} from './components/redirectTo.component';
     ],
     entryComponents: [
       RedirectToComponent,
+    ],
+    providers: [
+      DataService,
+
     ]
 })
 export class SharedModule { }

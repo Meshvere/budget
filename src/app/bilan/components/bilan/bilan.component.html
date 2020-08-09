@@ -14,17 +14,17 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let i of month" [class.active]="i == 0">
-            <td>Mois {{i}}</td>
-            <td>{{1800 | currency:'EUR':'symbol':'4.2-2':'fr'}}</td>
-            <td>{{1800 | currency:'EUR':'symbol':'4.2-2':'fr'}}</td>
-            <td>{{1800 | currency:'EUR':'symbol':'4.2-2':'fr'}}</td>
-            <td>{{200 | currency:'EUR':'symbol':'4.2-2':'fr'}}</td>
-            <td>{{120 | currency:'EUR':'symbol':'4.2-2':'fr'}}</td>
-            <td>{{80 | currency:'EUR':'symbol':'4.2-2':'fr'}}</td>
-            <td>{{-80 | currency:'EUR':'symbol':'4.2-2':'fr'}}</td>
-            <td>{{200 | currency:'EUR':'symbol':'4.2-2':'fr'}}</td>
-            <td>{{825.33 | currency:'EUR':'symbol':'4.2-2':'fr'}}</td>
+        <tr *ngFor="let i of monthList" [class.active]="i == 0">
+            <td>{{this.calcMonthDate(i) | date:'MMM-y'}}</td>
+            <td>{{1800 | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td>{{1800 | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td>{{1800 | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td>{{200 | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td>{{120 | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td>{{80 | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td>{{-80 | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td>{{200 | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td>{{825.33 | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
         </tr>
     </tbody>
 </table>

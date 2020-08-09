@@ -1,21 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef,Component} from '@angular/core';
+
+import {DataService} from 'src/app/shared/services/data.service';
+import {ComponentInit} from 'src/app/shared/models/component-init';
 
 @Component({
   selector: 'app-bilan',
   templateUrl: './bilan.component.html',
   styleUrls: ['./bilan.component.scss']
 })
-export class BilanComponent implements OnInit {
-    public deltaMonth:number = 6;
-    public month:number[] = [];
 
-    constructor() {
-        for(let i:number = - this.deltaMonth; i <= this.deltaMonth; i++) {
-            this.month.push(i);
-        }
+export class BilanComponent extends ComponentInit {
+    public monthList:number[] = [];
+
+    constructor(
+      protected _cd:ChangeDetectorRef,
+      private _dataService:DataService
+    ) {
+      super(_cd);
     }
 
     ngOnInit(): void {
+      super.ngOnInit();
+
+      this.addSub = this._dataService.monthList$.subscribe(ml => {
+        console.log(ml)
+        this.monthList = ml;
+
+        this._cd.markForCheck();
+      });
     }
 
+    public calcMonthDate(i:number):Date {
+      let curDate:Date = new Date();
+      curDate.setMonth(curDate.getMonth() + i);
+
+      return curDate;
+    }
 }
