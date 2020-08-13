@@ -4,12 +4,12 @@ import {DataService} from 'src/app/shared/services/data.service';
 import {ComponentInit} from 'src/app/shared/models/component-init';
 
 @Component({
-  selector: 'app-bilan',
-  templateUrl: './bilan.component.html',
-  styleUrls: ['./bilan.component.scss']
+  selector: 'app-summary',
+  templateUrl: './summary.component.html',
+  styleUrls: ['./summary.component.scss']
 })
 
-export class BilanComponent extends ComponentInit {
+export class SummaryComponent extends ComponentInit {
     public monthList:number[] = [];
 
     constructor(

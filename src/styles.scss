@@ -4,5 +4,9 @@
 // Define variables to override default ones
 $bg-color-dark: red;
 
+.hand {
+  cursor: pointer;
+}
+
 // Import full Spectre source code
 @import "node_modules/spectre.css/src/spectre";

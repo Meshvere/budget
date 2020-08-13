@@ -6,13 +6,14 @@ import {RedirectToComponent} from './shared/components/redirectTo.component';
 const routes: Routes = [
   {
       path: '', children: [
-          { path: 'bilan',  data: { title: 'Bilan' }, loadChildren: './bilan/bilan.module#BilanModule' },
+          { path: 'summary',  data: { title: 'Bilan' }, loadChildren: './summary/summary.module#SummaryModule' },
           { path: 'recette',  data: { title: 'Recette' }, loadChildren: './recette/recette.module#RecetteModule' },
           { path: 'depense',  data: { title: 'Dépense' }, loadChildren: './depense/depense.module#DepenseModule' },
           { path: 'remboursement',  data: { title: 'Remboursement' }, loadChildren: './remboursement/remboursement.module#RemboursementModule' },
           { path: 'ticket-resto',  data: { title: 'Tickets resto' }, loadChildren: './ticket-resto/ticket-resto.module#TicketRestoModule' },
+          { path: 'epargne',  data: { title: 'Epargne' }, loadChildren: './epargne/epargne.module#EpargneModule' },
 
-          { path: '**', component: RedirectToComponent, data: { to: '/bilan' } }
+          { path: '**', component: RedirectToComponent, data: { to: '/summary' } }
       ]
   }
 ];

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SharedModule} from './shared/shared.module';
-import {BilanModule} from './bilan/bilan.module';
+import {SummaryModule} from './summary/summary.module';
 import {RecetteModule} from './recette/recette.module';
 
 import { registerLocaleData } from '@angular/common';
@@ -19,12 +19,12 @@ registerLocaleData(localeFr, 'fr');
         BrowserModule,
         AppRoutingModule,
         SharedModule,
-        BilanModule,
+        SummaryModule,
         RecetteModule,
     ],
     exports: [
         SharedModule,
-        BilanModule,
+        SummaryModule,
         RecetteModule,
     ],
     providers: [],

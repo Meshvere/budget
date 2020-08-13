@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RecetteComponent } from './components/recette/recette.component';
 import {RecetteRoutingModule} from './recette-routing.module';
 import { RecetteFormComponent } from './components/recette-form/recette-form.component';
+import {SharedModule} from '../shared/shared.module';
 
 
 
@@ -14,6 +15,7 @@ import { RecetteFormComponent } from './components/recette-form/recette-form.com
   imports: [
     CommonModule,
     RecetteRoutingModule,
+    SharedModule,
   ],
   exports: [
     RecetteRoutingModule,
