@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router , ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'my-redirect-to',
-    template: ''
+    template: '',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RedirectToComponent implements OnInit {
 

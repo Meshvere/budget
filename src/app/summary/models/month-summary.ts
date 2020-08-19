@@ -2,7 +2,7 @@ export class MonthSummary {
     public num: number;
     public depense: number;
     public recurrent: number;
-    public recette: number;
+    public income: number;
     public reste: number;
     public remboursableA: number;
     public remboursableS: number;

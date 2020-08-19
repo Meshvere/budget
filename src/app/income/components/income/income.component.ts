@@ -1,23 +1,24 @@
 import {ChangeDetectorRef,Component, ChangeDetectionStrategy} from '@angular/core';
 import {ComponentInit} from 'src/app/shared/models/component-init';
+import {Income} from 'src/app/shared/models/income';
 import {DataService} from 'src/app/shared/services/data.service';
+import {IconService} from 'src/app/ui/services/icon.service';
 import {ToastService} from 'src/app/ui/services/toast.service';
 
-
 @Component({
-  selector: 'app-summary',
-  templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'income',
+    templateUrl: './income.component.html',
+    styleUrls: ['./income.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-
-export class SummaryComponent extends ComponentInit {
-    public monthList:number[] = [];
+export class IncomeComponent extends ComponentInit {
+  public income:Income[] = [];
 
     constructor(
       protected _cd:ChangeDetectorRef,
       protected _toastService:ToastService,
-      private _dataService:DataService
+      private _dataService:DataService,
+      public icon:IconService,
     ) {
       super(_cd, _toastService);
     }
@@ -25,17 +26,10 @@ export class SummaryComponent extends ComponentInit {
     ngOnInit(): void {
       super.ngOnInit();
 
-      this.addSub = this._dataService.monthList$.subscribe(ml => {
-        this.monthList = ml;
+      this.addSub = this._dataService.income$.subscribe(rec => {
+        this.income = rec;
 
         this._cd.markForCheck();
       });
-    }
-
-    public calcMonthDate(i:number):Date {
-      let curDate:Date = new Date();
-      curDate.setMonth(curDate.getMonth() + i);
-
-      return curDate;
     }
 }

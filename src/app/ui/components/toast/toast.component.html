@@ -1,0 +1,6 @@
+<div class="toast toast-primary" [ngClass]="[this.type]">
+  <button class="btn btn-clear float-right"></button>
+  <fa-icon [icon]="this.getIcon()" class="hand"></fa-icon>
+  <h6>{{this.title}}</h6>
+  <p>{{this.message}}</p>
+</div>

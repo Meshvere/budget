@@ -4,6 +4,9 @@ import { NavComponent } from './components/nav/nav.component';
 import { PageComponent } from './pages/page/page.component';
 import {RouterModule} from '@angular/router';
 import {IconService} from './services/icon.service';
+import { ToastComponent } from './components/toast/toast.component';
+import {ToastService} from './services/toast.service';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 
 
@@ -11,21 +14,27 @@ import {IconService} from './services/icon.service';
     declarations: [
         NavComponent,
         PageComponent,
+        ToastComponent,
     ],
     imports: [
         CommonModule,
         RouterModule,
+        FontAwesomeModule,
     ],
     exports: [
         NavComponent,
         PageComponent,
+        ToastComponent,
+        FontAwesomeModule,
     ],
     entryComponents: [
         NavComponent,
         PageComponent,
+        ToastComponent,
     ],
     providers: [
       IconService,
+      ToastService,
     ]
 })
 export class UiModule { }

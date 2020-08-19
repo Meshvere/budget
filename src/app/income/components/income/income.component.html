@@ -14,18 +14,18 @@
       </tr>
   </thead>
   <tbody>
-      <tr *ngFor="let rec of recette">
+      <tr *ngFor="let rec of income">
           <td>{{rec.date | date:'MMM-y'}}</td>
           <td>{{rec.date | date:'dd/MM/yyyy'}}</td>
-          <td>{{rec.compte}}</td>
-          <td>{{rec.objet}}</td>
-          <td>{{rec.montant | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
-          <td><fa-icon [icon]="rec.partage?icon.checkCircle:icon.circle"></fa-icon></td>
+          <td>{{rec.account}}</td>
+          <td>{{rec.label}}</td>
+          <td>{{rec.amount | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+          <td><fa-icon [icon]="rec.shared?icon.checkCircle:icon.circle"></fa-icon></td>
           <td>{{rec.montantPercu | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
-          <td><fa-icon [icon]="rec.partage?icon.checkCircle:icon.circle"></fa-icon></td>
+          <td><fa-icon [icon]="rec.shared?icon.checkCircle:icon.circle"></fa-icon></td>
           <td>{{rec.commentaire}}</td>
           <td class="action">
-            <fa-icon [icon]="icon.edit" class="hand"  [routerLink]="['/recette/', rec.id]"></fa-icon>
+            <fa-icon [icon]="icon.edit" class="hand"  [routerLink]="['/income/', rec.id]"></fa-icon>
             <fa-icon [icon]="icon.remove" class="hand"></fa-icon>
           </td>
       </tr>

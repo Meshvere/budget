@@ -1,10 +1,14 @@
 import {OnInit, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {Subscription} from 'rxjs';
+import {ToastService} from 'src/app/ui/services/toast.service';
 
 export class ComponentInit implements OnInit, OnDestroy {
     protected _subs:Subscription[] = [];
 
-    constructor(protected _cd:ChangeDetectorRef) {
+    constructor(
+        protected _cd:ChangeDetectorRef,
+        protected _toastService:ToastService,
+    ) {
 
     }
 

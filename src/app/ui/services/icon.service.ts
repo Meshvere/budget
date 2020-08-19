@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import { faCheckCircle, IconDefinition, faCircle, IconPrefix, IconName, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import {FaIconLibrary} from '@fortawesome/angular-fontawesome';
+import {Injectable} from '@angular/core';
+import {faCheckCircle,faCircle,faCircleNotch,faEdit,faExclamationTriangle,faTimesCircle,faTrash,IconDefinition} from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +9,11 @@ export class IconService {
   public circle:IconDefinition = faCircle;
   public edit:IconDefinition = faEdit;
   public remove:IconDefinition = faTrash;
+  public success:IconDefinition = faCheckCircle;
+  public warning:IconDefinition = faExclamationTriangle;
+  public error:IconDefinition = faTimesCircle;
+  public loading:IconDefinition = faCircleNotch;
 
-  constructor(private _library: FaIconLibrary) {
-    this._library.addIcons(faCheckCircle, faCircle)
+  constructor() {
   }
 }
