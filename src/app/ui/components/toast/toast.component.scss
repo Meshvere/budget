@@ -1,0 +1,12 @@
+.toast  {
+  position: relative;
+
+  .line {
+    display: flex;
+    flex-direction: row;
+
+    .text {
+      margin-left: .5rem;
+    }
+  }
+}

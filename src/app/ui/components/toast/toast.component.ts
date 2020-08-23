@@ -12,9 +12,12 @@ import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToastComponent extends ComponentInit {
+  @Input() public id:number;
   @Input() public title:string;
   @Input() public message:string;
   @Input() public type:string = Toast.NORMAL;
+  @Input() public autoClose:boolean = false;
+  @Input() public autoCloseDelay:number;
 
   constructor(
     protected _cd:ChangeDetectorRef,
@@ -26,6 +29,12 @@ export class ToastComponent extends ComponentInit {
 
   ngOnInit(): void {
     super.ngOnInit();
+
+    if(this.autoClose && this.autoCloseDelay != undefined) {
+      setTimeout(()=>{                           //<<<---using ()=> syntax
+        this.close();
+   }, this.autoCloseDelay * 1000);
+    }
   }
 
   public getIcon():IconDefinition {
@@ -42,5 +51,14 @@ export class ToastComponent extends ComponentInit {
     }
 
     return icon;
+  }
+
+  public get loading():boolean {
+    return this.type == Toast.LOADING;
+  }
+
+  public close() {
+    this._toastService.closeToast(this.id);
+    this._cd.markForCheck();
   }
 }

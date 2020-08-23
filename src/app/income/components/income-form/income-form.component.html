@@ -17,20 +17,20 @@
 
   <div class="twoCol">
     <div class="form-group">
-      <label class="form-label" for="montant">Montant</label>
-        <input class="form-input" type="number" id="montant" step="0.01" required="true" [(ngModel)]="curIncome.amount"
-        ng-model-options="{ getterSetter: true }" [formControl]="this.montantFrm">&nbsp;€
+      <label class="form-label" for="amount">Montant</label>
+        <input class="form-input" type="number" id="amount" step="0.01" required="true" [(ngModel)]="curIncome.amount"
+        ng-model-options="{ getterSetter: true }" [formControl]="this.amountFrm" inputmode="numeric">&nbsp;€
     </div>
     <div class="form-group">
       <label class="form-label">Montant perçu</label>
-      <span class="form-input">{{curIncome.montantPercu}}&nbsp;€</span>
+      <span class="form-input">{{curIncome.amountRecieved | currency:'EUR':'symbol':'.2-2':'fr'}}</span>
     </div>
   </div>
 
   <div class="twoCol">
     <label class="form-switch">
-      <input type="checkbox" id="partage" required="true" [(ngModel)]="curIncome.shared"
-      ng-model-options="{ getterSetter: true }" [formControl]="this.partageFrm">
+      <input type="checkbox" id="shared" required="true" [(ngModel)]="curIncome.shared"
+      ng-model-options="{ getterSetter: true }" [formControl]="this.sharedFrm">
       <i class="form-icon"></i> Partagé
     </label>
     <label class="form-switch">
@@ -46,8 +46,8 @@
   </div>
 
   <div class="footer">
-    <button class="btn" [routerLink]="['..']">Retour</button>
-    <button class="btn btn-primary">Enregistrer</button>
+    <button class="btn" (click)="this.back()">Retour</button>
+    <button class="btn btn-primary" (click)="this.save()" [disabled]="!this.formValid">Enregistrer</button>
   </div>
 </form>
 {{this.curIncome | json}}

@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import {ToastService} from '../../services/toast.service';
+import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
 import {ComponentInit} from 'src/app/shared/models/component-init';
-import {Toast} from '../../models/toast';
+import {ToastService} from '../../services/toast.service';
 
 @Component({
     selector: 'app-page',
@@ -10,7 +9,6 @@ import {Toast} from '../../models/toast';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageComponent extends ComponentInit {
-    public toastList:Toast[] = [];
 
     constructor(
       protected _cd:ChangeDetectorRef,
@@ -18,13 +16,4 @@ export class PageComponent extends ComponentInit {
     ) {
       super(_cd, _toastService);
     }
-
-    ngOnInit(): void {
-      super.ngOnInit();
-
-      this.addSub = this._toastService.toastList$.subscribe(toastL => {
-        this.toastList = toastL;
-      });
-    }
-
 }

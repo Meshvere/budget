@@ -21,8 +21,8 @@
           <td>{{rec.label}}</td>
           <td>{{rec.amount | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
           <td><fa-icon [icon]="rec.shared?icon.checkCircle:icon.circle"></fa-icon></td>
-          <td>{{rec.montantPercu | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
-          <td><fa-icon [icon]="rec.shared?icon.checkCircle:icon.circle"></fa-icon></td>
+          <td>{{rec.amountRecieved | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+          <td><fa-icon [icon]="rec.waiting?icon.checkCircle:icon.circle"></fa-icon></td>
           <td>{{rec.commentaire}}</td>
           <td class="action">
             <fa-icon [icon]="icon.edit" class="hand"  [routerLink]="['/income/', rec.id]"></fa-icon>

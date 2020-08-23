@@ -1,14 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {registerLocaleData} from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {IncomeModule} from './income/income.module';
 import {SharedModule} from './shared/shared.module';
 import {SummaryModule} from './summary/summary.module';
-import {IncomeModule} from './income/income.module';
+import {UiModule} from './ui/ui.module';
 
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
@@ -19,12 +20,14 @@ registerLocaleData(localeFr, 'fr');
         BrowserModule,
         AppRoutingModule,
         SharedModule,
+        UiModule,
         SummaryModule,
         IncomeModule,
     ],
     exports: [
         SharedModule,
         SummaryModule,
+        UiModule,
         IncomeModule,
     ],
     providers: [],

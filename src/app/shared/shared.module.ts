@@ -6,11 +6,9 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {environment} from '../../environments/environments.firebase';
-import {UiModule} from '../ui/ui.module';
 import {EmptyStateComponent} from './components/empty-state/empty-state.component';
 import {RedirectToComponent} from './components/redirectTo.component';
 import {DataService} from './services/data.service';
-
 
 @NgModule({
     declarations: [
@@ -21,7 +19,6 @@ import {DataService} from './services/data.service';
         CommonModule,
         FontAwesomeModule,
         RouterModule,
-        UiModule,
         FormsModule,
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
@@ -30,12 +27,11 @@ import {DataService} from './services/data.service';
     exports: [
         FontAwesomeModule,
         RouterModule,
-        UiModule,
         FormsModule,
         ReactiveFormsModule,
-        RedirectToComponent,
         AngularFireModule,
         AngularFirestoreModule,
+        RedirectToComponent,
         EmptyStateComponent,
     ],
     entryComponents: [

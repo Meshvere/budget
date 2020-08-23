@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {BehaviorSubject} from 'rxjs';
+import {AngularFirestore, DocumentReference, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {NavEntry} from 'src/app/ui/models/nav-entry';
 import {Account} from '../enum/account.enum';
 import {Income} from '../models/income';
+import cloneDeep from 'lodash/cloneDeep';
+import { from, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +43,7 @@ export class DataService {
 
 
         this.income$ = new BehaviorSubject([]);
-        _db.collection<Income>('/income').valueChanges({ idField: 'id' }).subscribe(income => {
+        this._db.collection<Income>('/income').valueChanges({ idField: 'id' }).subscribe(income => {
             let res:Income[] = [];
 
             for(let curIn of income) {
@@ -54,18 +56,22 @@ export class DataService {
     }
 
     // TODO : make real synchro with DB
-    public getIncome(id:string):BehaviorSubject<Income> {
-      let rec:Income;
+    public getIncome(id:string):Observable<Income> {
+      let inc:Income;
 
-      for(let r of this.income$.value) {
-        if(r.id == id) {
-          rec = r;
+      for(let curInc of this.income$.value) {
+        if(curInc.id == id) {
+          inc = cloneDeep(curInc);
+
           break;
         }
       }
 
-      return new BehaviorSubject(rec);
+      return of(inc);
+    }
 
+    public saveIncome(inc:Income):Observable<void> {
+      return from(this._db.collection<Income>('/income').doc(inc.id).set(inc.toObject()));
     }
 
     public getAccounts():BehaviorSubject<string[]> {

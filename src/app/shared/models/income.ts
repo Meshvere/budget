@@ -4,6 +4,7 @@ import {Account} from '../enum/account.enum';
 export class Income {
     public id:string;
     public date:Date;
+    public timestamp:any;
     public account:Account = Account.MINE;
     public label:string;
     public amount:number;
@@ -15,15 +16,20 @@ export class Income {
 
 
     constructor(init?:Partial<Income>) {
-      if(init['date'] != undefined) {
-        this.date = new Date(init['date']['seconds']);
+      this.timestamp = init['date'];
+
+      if(init['date'] != undefined && init['date'] != null) {
+        let second:number = typeof init['date'] == 'number'?init['date']:init['date']['seconds'];
+
+        this.date = new Date(second * 1000);
       } else {
         this.date = new Date();
       }
+      delete init.date;
+
       if(init['account'] != undefined) {
         init.account = init['account'] == Account.MINE?Account.MINE:Account.COMMON;
       }
-      delete init.date;
 
       Object.assign(this, init);
 
@@ -32,7 +38,7 @@ export class Income {
       }
     }
 
-    public get montantPercu():number {
+    public get amountRecieved():number {
         return this.shared?(this.amount/2):this.amount;
     }
 
@@ -42,5 +48,15 @@ export class Income {
 
     public set dateInput(dat:string) {
         this.date = new Date(dat);
+    }
+
+    public toObject():any {
+      let obj:any = JSON.parse(JSON.stringify(this));
+
+      if(this.date != undefined && this.date != null) {
+        obj.date = Math.round(this.date.getTime() / 1000);
+      }
+
+      return obj;
     }
 }

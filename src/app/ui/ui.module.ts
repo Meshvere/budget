@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { NavComponent } from './components/nav/nav.component';
-import { PageComponent } from './pages/page/page.component';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {IconService} from './services/icon.service';
-import { ToastComponent } from './components/toast/toast.component';
-import {ToastService} from './services/toast.service';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {NavComponent} from './components/nav/nav.component';
+import {ToastComponent} from './components/toast/toast.component';
+import {PageComponent} from './pages/page/page.component';
+import {IconService} from './services/icon.service';
+import {ToastService} from './services/toast.service';
+import { ToasterComponent } from './components/toaster/toaster.component';
 
 
 
@@ -15,6 +16,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
         NavComponent,
         PageComponent,
         ToastComponent,
+        ToasterComponent,
     ],
     imports: [
         CommonModule,
@@ -22,10 +24,10 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
         FontAwesomeModule,
     ],
     exports: [
+        FontAwesomeModule,
         NavComponent,
         PageComponent,
         ToastComponent,
-        FontAwesomeModule,
     ],
     entryComponents: [
         NavComponent,

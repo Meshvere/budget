@@ -1,8 +1,10 @@
 export class Toast {
+    public id:number;
     public title: string;
     public message: string;
     public type: string = Toast.NORMAL;
     public autoClose:boolean = false;
+    public autoCloseDelay:number;
 
     public static LOADING:string = 'toast-loading';
     public static NORMAL:string = 'toast-primary';
@@ -12,5 +14,14 @@ export class Toast {
 
     constructor(init?:Partial<Toast>) {
         Object.assign(this, init);
+
+        this.id = new Date().getTime();
+
+        if(this.type == Toast.LOADING) {
+          this.autoClose = true;
+        } else if(this.type == Toast.SUCCESS) {
+          this.autoClose = true;
+          this.autoCloseDelay = 3;
+        }
     }
 }

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ComponentInit} from 'src/app/shared/models/component-init';
 import {Income} from 'src/app/shared/models/income';
 import {DataService} from 'src/app/shared/services/data.service';
@@ -20,8 +20,8 @@ export class IncomeFormComponent extends ComponentInit {
 
   public dateFrm:FormControl = new FormControl();
   public accountFrm:FormControl = new FormControl();
-  public montantFrm:FormControl = new FormControl();
-  public partageFrm:FormControl = new FormControl();
+  public amountFrm:FormControl = new FormControl();
+  public sharedFrm:FormControl = new FormControl();
   public waitingFrm:FormControl = new FormControl();
   public commentFrm:FormControl = new FormControl();
 
@@ -29,6 +29,7 @@ export class IncomeFormComponent extends ComponentInit {
     protected _cd:ChangeDetectorRef,
     protected _toastService:ToastService,
     private _route: ActivatedRoute,
+    private _router:Router,
     private _dataService:DataService,
     public icon:IconService,
   ) {
@@ -41,7 +42,7 @@ export class IncomeFormComponent extends ComponentInit {
     })
 
     this.addSub = this._route.params.subscribe(param => {
-      this._toastService.addToast('Recette', 'Recette en cours de chargement', Toast.LOADING);
+      let toastId:number = this._toastService.addToast('Recette', 'Recette en cours de chargement', Toast.LOADING);
 
       this._cd.markForCheck();
 
@@ -49,6 +50,7 @@ export class IncomeFormComponent extends ComponentInit {
         if(loaded) {
           this._dataService.getIncome(param.id).subscribe(rec => {
             this.curIncome = rec;
+            this._toastService.closeToast(toastId);
             this._toastService.addToast('Recette', 'Recette récupérée', Toast.SUCCESS);
 
             this._cd.markForCheck();
@@ -60,5 +62,32 @@ export class IncomeFormComponent extends ComponentInit {
 
   ngOnInit(): void {
     super.ngOnInit();
+  }
+
+  public back() {
+    this._router.navigate(['/income']);
+  }
+
+  public save() {
+    this.addSub = this._dataService.saveIncome(this.curIncome).subscribe(res => {
+      this._toastService.addToast('Recette', 'Recette enregistrée', Toast.SUCCESS);
+
+      this.back();
+    });
+  }
+
+  public get formValid():boolean {
+    let formElems:string[] = ['dateFrm', 'accountFrm', 'amountFrm', 'sharedFrm', 'waitingFrm', 'commentFrm'];
+    let valid:boolean;
+
+    for(let elemName of formElems) {
+      valid = this[elemName].valid;
+
+      if(!valid) {
+        break;
+      }
+    }
+
+    return valid;
   }
 }
