@@ -21,7 +21,10 @@ export class Toast {
           this.autoClose = true;
         } else if(this.type == Toast.SUCCESS) {
           this.autoClose = true;
-          this.autoCloseDelay = 3;
+
+          if(this.autoCloseDelay == undefined) {
+            this.autoCloseDelay = 3;
+          }
         }
     }
 }
