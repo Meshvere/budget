@@ -5,22 +5,22 @@ import {SummaryComponent} from './components/summary/summary.component';
 import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
-  declarations: [
-  SummaryComponent
+   declarations: [
+   SummaryComponent
 ],
-  imports: [
-    CommonModule,
-    SummaryRoutingModule,
-    SharedModule
-  ],
-  exports: [
-    SummaryRoutingModule
-  ],
-  entryComponents: [
-    SummaryComponent
-  ],
-  providers: [
+   imports: [
+      CommonModule,
+      SummaryRoutingModule,
+      SharedModule
+   ],
+   exports: [
+      SummaryRoutingModule
+   ],
+   entryComponents: [
+      SummaryComponent
+   ],
+   providers: [
 
-  ]
+   ]
 })
 export class SummaryModule { }

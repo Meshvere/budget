@@ -8,7 +8,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { from, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+     providedIn: 'root'
 })
 export class DataService {
     private _deltaMonth:number = 6;
@@ -47,7 +47,7 @@ export class DataService {
             let res:Income[] = [];
 
             for(let curIn of income) {
-              res.push(new Income(curIn));
+                res.push(new Income(curIn));
             }
 
             this.income$.next(res);
@@ -57,17 +57,17 @@ export class DataService {
 
     // TODO : make real synchro with DB
     public getIncome(id:string):Observable<Income> {
-      let inc:Income;
+        let inc:Income;
 
-      for(let curInc of this.income$.value) {
-        if(curInc.id == id) {
-          inc = cloneDeep(curInc);
+        for(let curInc of this.income$.value) {
+            if(curInc.id == id) {
+                inc = cloneDeep(curInc);
 
-          break;
+                break;
+            }
         }
-      }
 
-      return of(inc);
+        return of(inc);
     }
 
     public saveIncome(inc:Income):Observable<void> {

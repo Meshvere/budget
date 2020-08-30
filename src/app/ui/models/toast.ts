@@ -18,13 +18,13 @@ export class Toast {
         this.id = new Date().getTime();
 
         if(this.type == Toast.LOADING) {
-          this.autoClose = true;
+             this.autoClose = true;
         } else if(this.type == Toast.SUCCESS) {
-          this.autoClose = true;
+            this.autoClose = true;
 
-          if(this.autoCloseDelay == undefined) {
-            this.autoCloseDelay = 3;
-          }
+            if(this.autoCloseDelay == undefined) {
+                this.autoCloseDelay = 3;
+            }
         }
     }
 }

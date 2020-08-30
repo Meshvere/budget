@@ -16,26 +16,26 @@ export class Income {
 
 
     constructor(init?:Partial<Income>) {
-      this.timestamp = init['date'];
+        this.timestamp = init['date'];
 
-      if(init['date'] != undefined && init['date'] != null) {
-        let second:number = typeof init['date'] == 'number'?init['date']:init['date']['seconds'];
+        if(init['date'] != undefined && init['date'] != null) {
+                let second:number = typeof init['date'] == 'number'?init['date']:init['date']['seconds'];
 
-        this.date = new Date(second * 1000);
-      } else {
-        this.date = new Date();
-      }
-      delete init.date;
+                this.date = new Date(second * 1000);
+        } else {
+                this.date = new Date();
+        }
+        delete init.date;
 
-      if(init['account'] != undefined) {
-        init.account = init['account'] == Account.MINE?Account.MINE:Account.COMMON;
-      }
+        if(init['account'] != undefined) {
+            init.account = init['account'] == Account.MINE?Account.MINE:Account.COMMON;
+        }
 
-      Object.assign(this, init);
+        Object.assign(this, init);
 
-      if(init['amount'] != undefined) {
-        this.amount = Math.round(this.amount * this._roundFactor) / this._roundFactor;
-      }
+        if(init['amount'] != undefined) {
+            this.amount = Math.round(this.amount * this._roundFactor) / this._roundFactor;
+        }
     }
 
     public get amountRecieved():number {
@@ -51,12 +51,12 @@ export class Income {
     }
 
     public toObject():any {
-      let obj:any = JSON.parse(JSON.stringify(this));
+        let obj:any = JSON.parse(JSON.stringify(this));
 
-      if(this.date != undefined && this.date != null) {
-        obj.date = Math.round(this.date.getTime() / 1000);
-      }
+        if(this.date != undefined && this.date != null) {
+            obj.date = Math.round(this.date.getTime() / 1000);
+        }
 
-      return obj;
+        return obj;
     }
 }

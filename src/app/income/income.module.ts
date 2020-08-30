@@ -6,20 +6,21 @@ import {IncomeComponent} from './components/income/income.component';
 import {IncomeRoutingModule} from './income-routing.module';
 
 @NgModule({
-  declarations: [
-    IncomeComponent,
-    IncomeFormComponent,
-  ],
-  imports: [
-    CommonModule,
-    IncomeRoutingModule,
-    SharedModule,
-  ],
-  exports: [
-    IncomeRoutingModule,
-  ],
-  entryComponents: [
-    IncomeComponent,
-  ]
+    declarations: [
+        IncomeComponent,
+        IncomeFormComponent,
+    ],
+    imports: [
+        CommonModule,
+        IncomeRoutingModule,
+        SharedModule,
+    ],
+    exports: [
+        IncomeRoutingModule,
+    ],
+    entryComponents: [
+        IncomeComponent,
+        IncomeFormComponent,
+    ]
 })
 export class IncomeModule { }

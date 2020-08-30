@@ -5,13 +5,13 @@
 $bg-color-dark: red;
 
 .hand {
-  cursor: pointer;
+   cursor: pointer;
 }
 // Import full Spectre source code
 @import "node_modules/spectre.css/src/spectre";
 
 input, textarea {
-  &:required {
-    border-left: 3px solid $primary-color;
-  }
+   &:required {
+      border-left: 3px solid $primary-color;
+   }
 }

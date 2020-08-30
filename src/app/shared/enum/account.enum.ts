@@ -1,4 +1,4 @@
 export enum Account {
-  MINE = "Perso",
-  COMMON = "Commun",
+    MINE = "Perso",
+    COMMON = "Commun",
 }

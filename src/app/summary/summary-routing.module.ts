@@ -4,13 +4,13 @@ import {SummaryComponent} from './components/summary/summary.component';
 
 
 const routes: Routes = [
-  {
-      path: '', component: SummaryComponent
-  }
+   {
+         path: '', component: SummaryComponent
+   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+   imports: [RouterModule.forChild(routes)],
+   exports: [RouterModule]
 })
 export class SummaryRoutingModule { }

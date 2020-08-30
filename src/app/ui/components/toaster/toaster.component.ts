@@ -4,28 +4,28 @@ import {Toast} from '../../models/toast';
 import {ToastService} from '../../services/toast.service';
 
 @Component({
-  selector: 'app-toaster',
-  templateUrl: './toaster.component.html',
-  styleUrls: ['./toaster.component.scss']
+   selector: 'app-toaster',
+   templateUrl: './toaster.component.html',
+   styleUrls: ['./toaster.component.scss']
 })
 export class ToasterComponent extends ComponentInit {
-  public toastList:Toast[] = [];
+   public toastList:Toast[] = [];
 
-  constructor(
-    protected _cd:ChangeDetectorRef,
-    protected _toastService:ToastService,
-  ) {
-    super(_cd, _toastService);
-  }
+   constructor(
+      protected _cd:ChangeDetectorRef,
+      protected _toastService:ToastService,
+   ) {
+      super(_cd, _toastService);
+   }
 
-  ngOnInit(): void {
-    super.ngOnInit();
+   ngOnInit(): void {
+      super.ngOnInit();
 
-    this.addSub = this._toastService.toastList$.subscribe(toastL => {
-      this.toastList = toastL;
+      this.addSub = this._toastService.toastList$.subscribe(toastL => {
+         this.toastList = toastL;
 
-      this._cd.markForCheck();
-    });
-  }
+         this._cd.markForCheck();
+      });
+   }
 
 }

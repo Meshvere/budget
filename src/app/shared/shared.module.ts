@@ -12,8 +12,8 @@ import {DataService} from './services/data.service';
 
 @NgModule({
     declarations: [
-      RedirectToComponent,
-      EmptyStateComponent,
+        RedirectToComponent,
+        EmptyStateComponent,
     ],
     imports: [
         CommonModule,
@@ -35,12 +35,11 @@ import {DataService} from './services/data.service';
         EmptyStateComponent,
     ],
     entryComponents: [
-      RedirectToComponent,
-      EmptyStateComponent,
+        RedirectToComponent,
+        EmptyStateComponent,
     ],
     providers: [
-      DataService,
-
+        DataService,
     ]
 })
 export class SharedModule { }

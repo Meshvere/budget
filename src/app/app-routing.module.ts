@@ -8,10 +8,10 @@ const routes: Routes = [
       path: '', children: [
           { path: 'summary',  data: { title: 'Bilan' }, loadChildren: './summary/summary.module#SummaryModule' },
           { path: 'income',  data: { title: 'Income' }, loadChildren: './income/income.module#IncomeModule' },
-          { path: 'depense',  data: { title: 'Dépense' }, loadChildren: './depense/depense.module#DepenseModule' },
-          { path: 'remboursement',  data: { title: 'Remboursement' }, loadChildren: './remboursement/remboursement.module#RemboursementModule' },
-          { path: 'ticket-resto',  data: { title: 'Tickets resto' }, loadChildren: './ticket-resto/ticket-resto.module#TicketRestoModule' },
-          { path: 'epargne',  data: { title: 'Epargne' }, loadChildren: './epargne/epargne.module#EpargneModule' },
+          { path: 'outcome',  data: { title: 'Dépense' }, loadChildren: './outcome/outcome.module#OutcomeModule' },
+          { path: 'refund',  data: { title: 'Remboursement' }, loadChildren: './refund/refund.module#RefundModule' },
+          { path: 'food-ticket',  data: { title: 'Tickets resto' }, loadChildren: './food-ticket/food-ticket.module#FoodTicketModule' },
+          { path: 'saving',  data: { title: 'Epargne' }, loadChildren: './saving/saving.module#SavingModule' },
 
           { path: '**', component: RedirectToComponent, data: { to: '/summary' } }
       ]

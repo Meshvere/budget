@@ -11,9 +11,9 @@ import {ToastService} from '../../services/toast.service';
 export class PageComponent extends ComponentInit {
 
     constructor(
-      protected _cd:ChangeDetectorRef,
-      protected _toastService:ToastService,
+        protected _cd:ChangeDetectorRef,
+        protected _toastService:ToastService,
     ) {
-      super(_cd, _toastService);
+        super(_cd, _toastService);
     }
 }

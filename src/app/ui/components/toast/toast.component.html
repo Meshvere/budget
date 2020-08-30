@@ -1,10 +1,10 @@
 <div class="toast toast-primary" [ngClass]="[this.type]">
-  <button class="btn btn-clear float-right" *ngIf="!this.autoClose || (this.autoClose && autoCloseDelay != undefined)" (click)="this.close()"></button>
-  <div class="line">
-    <fa-icon [icon]="this.getIcon()" class="hand" [spin]="this.loading" size="3x"></fa-icon>
-    <div class="text">
-      <h6>{{this.title}}</h6>
-      <p>{{this.message}}</p>
-    </div>
-  </div>
+   <button class="btn btn-clear float-right" *ngIf="!this.autoClose || (this.autoClose && autoCloseDelay != undefined)" (click)="this.close()"></button>
+   <div class="line">
+      <fa-icon [icon]="this.getIcon()" class="hand" [spin]="this.loading" size="3x"></fa-icon>
+      <div class="text">
+         <h6>{{this.title}}</h6>
+         <p>{{this.message}}</p>
+      </div>
+   </div>
 </div>

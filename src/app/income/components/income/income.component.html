@@ -1,33 +1,33 @@
 <table class="table table-striped table-hover">
-  <thead>
-      <tr>
-          <th>Mois</th>
-          <th>Date</th>
-          <th>Compte</th>
-          <th>Objet</th>
-          <th>Montant</th>
-          <th>Partagé</th>
-          <th>Montant perçu</th>
-          <th>En attente</th>
-          <th>Commentaire</th>
-          <th>&nbsp;</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr *ngFor="let rec of income">
-          <td>{{rec.date | date:'MMM-y'}}</td>
-          <td>{{rec.date | date:'dd/MM/yyyy'}}</td>
-          <td>{{rec.account}}</td>
-          <td>{{rec.label}}</td>
-          <td>{{rec.amount | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
-          <td><fa-icon [icon]="rec.shared?icon.checkCircle:icon.circle"></fa-icon></td>
-          <td>{{rec.amountRecieved | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
-          <td><fa-icon [icon]="rec.waiting?icon.checkCircle:icon.circle"></fa-icon></td>
-          <td>{{rec.commentaire}}</td>
-          <td class="action">
-            <fa-icon [icon]="icon.edit" class="hand"  [routerLink]="['/income/', rec.id]"></fa-icon>
-            <fa-icon [icon]="icon.remove" class="hand"></fa-icon>
-          </td>
-      </tr>
-  </tbody>
+    <thead>
+        <tr>
+            <th>Mois</th>
+            <th>Date</th>
+            <th>Compte</th>
+            <th>Objet</th>
+            <th>Montant</th>
+            <th>Partagé</th>
+            <th>Montant perçu</th>
+            <th>En attente</th>
+            <th>Commentaire</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let rec of income">
+            <td>{{rec.date | date:'MMM-y'}}</td>
+            <td>{{rec.date | date:'dd/MM/yyyy'}}</td>
+            <td>{{rec.account}}</td>
+            <td>{{rec.label}}</td>
+            <td>{{rec.amount | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td><fa-icon [icon]="rec.shared?icon.checkCircle:icon.circle"></fa-icon></td>
+            <td>{{rec.amountRecieved | currency:'EUR':'symbol':'.2-2':'fr'}}</td>
+            <td><fa-icon [icon]="rec.waiting?icon.checkCircle:icon.circle"></fa-icon></td>
+            <td>{{rec.commentaire}}</td>
+            <td class="action">
+                <fa-icon [icon]="icon.edit" class="hand"  [routerLink]="['/income/', rec.id]"></fa-icon>
+                <fa-icon [icon]="icon.remove" class="hand"></fa-icon>
+            </td>
+        </tr>
+    </tbody>
 </table>
