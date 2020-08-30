@@ -5,6 +5,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {FoodTicketModule} from './food-ticket/food-ticket.module';
+import {ImportDataModule} from './import-data/import-data.module';
 import {IncomeModule} from './income/income.module';
 import {OutcomeModule} from './outcome/outcome.module';
 import {RefundModule} from './refund/refund.module';
@@ -31,16 +32,18 @@ registerLocaleData(localeFr, 'fr');
         RefundModule,
         SavingModule,
         FoodTicketModule,
+        ImportDataModule,
     ],
     exports: [
         SharedModule,
-        SummaryModule,
         UiModule,
+        SummaryModule,
         IncomeModule,
         OutcomeModule,
         RefundModule,
         SavingModule,
         FoodTicketModule,
+        ImportDataModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

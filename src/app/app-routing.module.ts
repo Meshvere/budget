@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule,Routes} from '@angular/router';
 import {RedirectToComponent} from './shared/components/redirectTo.component';
 
 
@@ -12,6 +12,7 @@ const routes: Routes = [
           { path: 'refund',  data: { title: 'Remboursement' }, loadChildren: './refund/refund.module#RefundModule' },
           { path: 'food-ticket',  data: { title: 'Tickets resto' }, loadChildren: './food-ticket/food-ticket.module#FoodTicketModule' },
           { path: 'saving',  data: { title: 'Epargne' }, loadChildren: './saving/saving.module#SavingModule' },
+          { path: 'import',  data: { title: 'Import' }, loadChildren: './import-data/import-data.module#ImportDataModule' },
 
           { path: '**', component: RedirectToComponent, data: { to: '/summary' } }
       ]
