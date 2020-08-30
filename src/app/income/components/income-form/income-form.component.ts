@@ -77,13 +77,14 @@ export class IncomeFormComponent extends ComponentInit {
   }
 
   public get formValid():boolean {
-    let formElems:string[] = ['dateFrm', 'accountFrm', 'amountFrm', 'sharedFrm', 'waitingFrm', 'commentFrm'];
+    let formElems:string[] = ['dateFrm', 'accountFrm', 'amountFrm'];
     let valid:boolean;
 
     for(let elemName of formElems) {
       valid = this[elemName].valid;
 
       if(!valid) {
+        console.log(elemName)
         break;
       }
     }
