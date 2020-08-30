@@ -34,10 +34,11 @@ export class DataService {
 
         navEntryList.push(new NavEntry({label:'Bilan', path:'summary'}));
         navEntryList.push(new NavEntry({label:'Recette', path:'income'}));
-        navEntryList.push(new NavEntry({label:'Dépenses', path:'depense'}));
-        navEntryList.push(new NavEntry({label:'Remboursements', path:'remboursements'}));
-        navEntryList.push(new NavEntry({label:'Tickets resto', path:'ticket-resto'}));
-        navEntryList.push(new NavEntry({label:'Epargne', path:'epargne'}));
+        navEntryList.push(new NavEntry({label:'Dépenses', path:'outcome'}));
+        navEntryList.push(new NavEntry({label:'Remboursements', path:'refund'}));
+        navEntryList.push(new NavEntry({label:'Tickets resto', path:'food-ticket'}));
+        navEntryList.push(new NavEntry({label:'Epargne', path:'saving'}));
+        navEntryList.push(new NavEntry({label:'Import', path:'import'}));
 
         this.menuEntries$ = new BehaviorSubject(navEntryList);
 
