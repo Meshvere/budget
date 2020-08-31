@@ -9,7 +9,7 @@ export class Income {
     public label:string;
     public amount:number;
     public shared:boolean = false;
-    public commentaire:string;
+    public commentaire:string; //TODO translate
     public waiting:boolean = false;
 
     private _roundFactor:number = 100;
