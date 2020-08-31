@@ -6,6 +6,7 @@ import {Account} from '../enum/account.enum';
 import {Income} from '../models/income';
 import cloneDeep from 'lodash/cloneDeep';
 import { from, of } from 'rxjs';
+import {Outcome} from '../models/outcome';
 
 @Injectable({
      providedIn: 'root'
@@ -19,10 +20,14 @@ export class DataService {
     public income$:BehaviorSubject<Income[]>;
     public incomeLoaded$:BehaviorSubject<boolean>;
 
+    public outcome$:BehaviorSubject<Outcome[]>;
+    public outcomeLoaded$:BehaviorSubject<boolean>;
+
     constructor(
       private _db: AngularFirestore
     ) {
         this.incomeLoaded$ = new BehaviorSubject(false);
+        this.outcomeLoaded$ = new BehaviorSubject(false);
         let months:number[] = [];
         for(let i:number = - this._deltaMonth; i <= this._deltaMonth; i++) {
             months.push(i);
@@ -53,6 +58,18 @@ export class DataService {
 
             this.income$.next(res);
             this.incomeLoaded$.next(true);
+        });
+
+        this.outcome$ = new BehaviorSubject([]);
+        this._db.collection<Outcome>('/outcome').valueChanges({ idField: 'id' }).subscribe(outcome => {
+            let res:Outcome[] = [];
+
+            for(let curIn of outcome) {
+                res.push(new Outcome(curIn));
+            }
+
+            this.outcome$.next(res);
+            this.outcomeLoaded$.next(true);
         });
     }
 

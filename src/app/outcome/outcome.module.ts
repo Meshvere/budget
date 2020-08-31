@@ -4,6 +4,7 @@ import {OutcomeRoutingModule} from './outcome-routing.module';
 import {SharedModule} from '../shared/shared.module';
 import {OutcomeComponent} from './components/outcome/outcome.component';
 import {OutcomeFormComponent} from './components/outcome-form/outcome-form.component';
+import {TableModule} from '../table/table.module';
 
 
 
@@ -16,6 +17,7 @@ import {OutcomeFormComponent} from './components/outcome-form/outcome-form.compo
         CommonModule,
         OutcomeRoutingModule,
         SharedModule,
+        TableModule,
     ],
     exports: [
         OutcomeRoutingModule,
