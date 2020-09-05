@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
-import {ComponentInit} from 'src/app/shared/models/component-init';
+import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {ToastService} from '../../services/toast.service';
 
 @Component({
@@ -8,7 +8,7 @@ import {ToastService} from '../../services/toast.service';
     styleUrls: ['./page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PageComponent extends ComponentInit {
+export class PageComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,

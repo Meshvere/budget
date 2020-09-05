@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
-import {ComponentInit} from 'src/app/shared/models/component-init';
+import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {ToastService} from 'src/app/ui/services/toast.service';
 import {TableColumn} from '../../models/table-column';
 import {IconService} from 'src/app/ui/services/icon.service';
@@ -11,7 +11,7 @@ import {ActivatedRoute,Router} from '@angular/router';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent extends ComponentInit {
+export class TableComponent extends AbstractComponent {
     @Input() public title:string;
     @Input() public columns:TableColumn[] = [];
     @Input() public actions:TableAction[] = [];

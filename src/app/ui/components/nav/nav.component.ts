@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {NavEntry} from '../../models/nav-entry';
-import {ComponentInit} from 'src/app/shared/models/component-init';
+import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {DataService} from 'src/app/shared/services/data.service';
 import {ToastService} from '../../services/toast.service';
 
@@ -11,7 +11,7 @@ import {ToastService} from '../../services/toast.service';
     styleUrls: ['./nav.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavComponent extends ComponentInit {
+export class NavComponent extends AbstractComponent {
     public entryList:NavEntry[] = [];
     public activeRoute:string;
 

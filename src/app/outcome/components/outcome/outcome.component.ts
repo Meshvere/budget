@@ -1,5 +1,5 @@
 import {ChangeDetectorRef,Component} from '@angular/core';
-import {ComponentInit} from '../../../shared/models/component-init';
+import {AbstractComponent} from '../../../shared/models/abstract-component';
 import {ToastService} from '../../../ui/services/toast.service';
 import {Outcome} from 'src/app/shared/models/outcome';
 import {DataService} from 'src/app/shared/services/data.service';
@@ -12,7 +12,7 @@ import {TableAction, TableActionRouteTo, TableActionRouteToElem} from 'src/app/t
     templateUrl: './outcome.component.html',
     styleUrls: ['./outcome.component.scss']
 })
-export class OutcomeComponent extends ComponentInit {
+export class OutcomeComponent extends AbstractComponent {
     public tableColumnsDaily:TableColumn[] = [];
     public tableColumnsRecurrent:TableColumn[] = [];
     public tableActions:TableAction[] = [];

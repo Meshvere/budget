@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import {ComponentInit} from 'src/app/shared/models/component-init';
+import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {Toast} from '../../models/toast';
 import {ToastService} from '../../services/toast.service';
 
@@ -8,7 +8,7 @@ import {ToastService} from '../../services/toast.service';
    templateUrl: './toaster.component.html',
    styleUrls: ['./toaster.component.scss']
 })
-export class ToasterComponent extends ComponentInit {
+export class ToasterComponent extends AbstractComponent {
    public toastList:Toast[] = [];
 
    constructor(

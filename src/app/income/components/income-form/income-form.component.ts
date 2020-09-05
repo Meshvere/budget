@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ComponentInit} from 'src/app/shared/models/component-init';
+import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {Income} from 'src/app/shared/models/income';
 import {DataService} from 'src/app/shared/services/data.service';
 import {Toast} from 'src/app/ui/models/toast';
@@ -14,7 +14,7 @@ import {ToastService} from 'src/app/ui/services/toast.service';
     styleUrls: ['./income-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IncomeFormComponent extends ComponentInit {
+export class IncomeFormComponent extends AbstractComponent {
     public curIncome:Income;
     public account:string[] = [];
 

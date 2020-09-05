@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import {Toast} from '../../models/toast';
-import {ComponentInit} from 'src/app/shared/models/component-init';
+import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {ToastService} from '../../services/toast.service';
 import {IconService} from '../../services/icon.service';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
@@ -11,7 +11,7 @@ import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
    styleUrls: ['./toast.component.scss'],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ToastComponent extends ComponentInit {
+export class ToastComponent extends AbstractComponent {
    @Input() public id:number;
    @Input() public title:string;
    @Input() public message:string;

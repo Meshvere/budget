@@ -1,5 +1,5 @@
 import {ChangeDetectorRef,Component, ChangeDetectionStrategy} from '@angular/core';
-import {ComponentInit} from 'src/app/shared/models/component-init';
+import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {DataService} from 'src/app/shared/services/data.service';
 import {ToastService} from 'src/app/ui/services/toast.service';
 
@@ -11,7 +11,7 @@ import {ToastService} from 'src/app/ui/services/toast.service';
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class SummaryComponent extends ComponentInit {
+export class SummaryComponent extends AbstractComponent {
       public monthList:number[] = [];
 
       constructor(

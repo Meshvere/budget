@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
-import {ComponentInit} from 'src/app/shared/models/component-init';
+import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {Income} from 'src/app/shared/models/income';
 import {DataService} from 'src/app/shared/services/data.service';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from 'src/app/table/models/table-action';
@@ -14,7 +14,7 @@ import {Router, ActivatedRoute} from '@angular/router';
         styleUrls: ['./income.component.scss'],
         changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IncomeComponent extends ComponentInit {
+export class IncomeComponent extends AbstractComponent {
     public tableColumns:TableColumn[] = [];
     public tableActions:TableAction[] = [];
 
