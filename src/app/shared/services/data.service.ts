@@ -56,6 +56,8 @@ export class DataService {
                 res.push(new Income(curIn));
             }
 
+            res.sort((a,b) => a.date < b.date?-1:1);
+
             this.income$.next(res);
             this.incomeLoaded$.next(true);
         });
@@ -67,6 +69,8 @@ export class DataService {
             for(let curIn of outcome) {
                 res.push(new Outcome(curIn));
             }
+
+            res.sort((a,b) => (a.date != undefined?a.date:a.start_on) < (b.date != undefined?b.date:b.start_on)?-1:1);
 
             this.outcome$.next(res);
             this.outcomeLoaded$.next(true);
