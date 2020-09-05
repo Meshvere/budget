@@ -10,11 +10,14 @@
     <tbody>
         <tr *ngFor="let curRow of this.rows">
             <td *ngFor="let curCol of this.columns">
-                <span *ngIf="curCol.cellType == 'month'">{{curRow[curCol.field] | date:'MMM-y'}}</span>
-                <span *ngIf="curCol.cellType == 'date'">{{curRow[curCol.field] | date:'dd/MM/yyyy'}}</span>
+                <span *ngIf="curCol.cellType == 'month' && curRow[curCol.field] != undefined">{{curRow[curCol.field] | date:'MMM-y'}}</span>
+                <span *ngIf="curCol.cellType == 'month' && curRow[curCol.field] == undefined">&nbsp;</span>
+                <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] != undefined">{{curRow[curCol.field] | date:'dd/MM/yyyy'}}</span>
+                <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] == undefined">&nbsp;</span>
                 <span *ngIf="curCol.cellType == 'money'">{{curRow[curCol.field]  | currency:'EUR':'symbol':'.2-2':'fr'}}</span>
                 <span *ngIf="curCol.cellType == 'boolean'"><fa-icon [icon]="curRow[curCol.field]?icon.checkCircle:icon.circle"></fa-icon></span>
-                <span *ngIf="curCol.cellType == 'raw'">{{curRow[curCol.field]}}</span></td>
+                <span *ngIf="curCol.cellType == 'raw'">{{curRow[curCol.field]}}</span>
+            </td>
             <td class="action">
                 <span *ngIf="this.actions.length > 0">
                     <fa-icon *ngFor="let curAction of this.actions" [icon]="icon[curAction.icon]" class="hand tooltip tooltip-left" [attr.data-tooltip]="curAction.label" (click)="this.doAction(curRow, curAction.action)"></fa-icon>

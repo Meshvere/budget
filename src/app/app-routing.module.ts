@@ -7,7 +7,7 @@ const routes: Routes = [
   {
       path: '', children: [
           { path: 'summary',  data: { title: 'Bilan' }, loadChildren: './summary/summary.module#SummaryModule' },
-          { path: 'income',  data: { title: 'Income' }, loadChildren: './income/income.module#IncomeModule' },
+          { path: 'income',  data: { title: 'Recette' }, loadChildren: './income/income.module#IncomeModule' },
           { path: 'outcome',  data: { title: 'Dépense' }, loadChildren: './outcome/outcome.module#OutcomeModule' },
           { path: 'refund',  data: { title: 'Remboursement' }, loadChildren: './refund/refund.module#RefundModule' },
           { path: 'food-ticket',  data: { title: 'Tickets resto' }, loadChildren: './food-ticket/food-ticket.module#FoodTicketModule' },

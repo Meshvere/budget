@@ -27,8 +27,8 @@ export class OutcomeComponent extends ComponentInit {
     ) {
         super(_cd, _toastService);
 
-        this.tableColumnsDaily.push(new TableColumn({label: 'Mois', field:'date', cellType:'month'}));
-        this.tableColumnsDaily.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));
+        this.tableColumnsDaily.push(new TableColumn({label: 'Mois', field:'dateMom', cellType:'month'}));
+        this.tableColumnsDaily.push(new TableColumn({label: 'Date', field:'dateMom', cellType:'date'}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Compte', field:'account', cellType:'raw'}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Bénéficiaire', field:'recipient', cellType:'raw'}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Objet', field:'label', cellType:'raw'}));
@@ -41,17 +41,15 @@ export class OutcomeComponent extends ComponentInit {
         this.tableColumnsDaily.push(new TableColumn({label: 'Passé sur le compte', field:'on_account', cellType:'boolean'}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Commentaire', field:'comment', cellType:'raw'}));
 
-        this.tableColumnsRecurrent.push(new TableColumn({label: 'Mois', field:'date', cellType:'month'}));
-        this.tableColumnsRecurrent.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));
+        this.tableColumnsRecurrent.push(new TableColumn({label: 'Actif', field:'active', cellType:'boolean'}));
+        this.tableColumnsRecurrent.push(new TableColumn({label: 'Jour de prélèvement', field:'day', cellType:'raw'}));
+        this.tableColumnsRecurrent.push(new TableColumn({label: 'A partir du', field:'startOnMom', cellType:'date'}));
+        this.tableColumnsRecurrent.push(new TableColumn({label: 'Jusqu\'au', field:'endOnMom', cellType:'date'}));
         this.tableColumnsRecurrent.push(new TableColumn({label: 'Compte', field:'account', cellType:'raw'}));
         this.tableColumnsRecurrent.push(new TableColumn({label: 'Objet', field:'label', cellType:'raw'}));
         this.tableColumnsRecurrent.push(new TableColumn({label: 'Montant', field:'amount', cellType:'money'}));
         this.tableColumnsRecurrent.push(new TableColumn({label: 'Partagé', field:'shared', cellType:'boolean'}));
         this.tableColumnsRecurrent.push(new TableColumn({label: 'Montant dépensé', field:'amountPaid', cellType:'money'}));
-        this.tableColumnsRecurrent.push(new TableColumn({label: 'Jour de prélèvement', field:'day', cellType:'raw'}));
-        this.tableColumnsRecurrent.push(new TableColumn({label: 'A partir du', field:'start_on', cellType:'date'}));
-        this.tableColumnsRecurrent.push(new TableColumn({label: 'Jusqu\'au', field:'end_on', cellType:'date'}));
-        this.tableColumnsRecurrent.push(new TableColumn({label: 'Actif', field:'active', cellType:'boolean'}));
 
         this.tableActions.push(new TableAction({label: 'Modifier la dépense', icon: 'edit', action:new TableActionRouteTo({route:[
             new TableActionRouteToElem({type:'raw', value: '/outcome/'}),

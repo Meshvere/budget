@@ -1,10 +1,14 @@
+import * as moment from 'moment';
+import 'moment/locale/fr';
 import {Account} from '../enum/account.enum';
+import {TimeService} from '../services/time.service';
+import {FirebaseEntity,FirebaseEntityMapping} from './firebase-entity';
 
 
-export class Outcome {
+export class Outcome extends FirebaseEntity {
     public id:string;
-    public date:Date;
-    public timestamp:any;
+    public date:number;
+    public dateMom:moment.Moment;
     public account:Account = Account.MINE;
     public recipient:string;
     public label:string;
@@ -18,84 +22,83 @@ export class Outcome {
 
     public recurrent:boolean = false;
     public day:number = 0;
-    public start_on:Date;
-    public end_on:Date;
-
-    private _roundFactor:number = 100;
-
+    public start_on:number;
+    public startOnMom:moment.Moment;
+    public end_on:number;
+    public endOnMom:moment.Moment;
 
     constructor(init?:Partial<Outcome>) {
-        this.timestamp = init['date'];
+        super(init);
 
-        if(init['date'] != undefined && init['date'] != null) {
-                let second:number = typeof init['date'] == 'number'?init['date']:init['date']['seconds'];
+        this._dateMapping.push(new FirebaseEntityMapping({from:'date', to:'dateMom'}));
+        this._dateMapping.push(new FirebaseEntityMapping({from:'start_on', to:'startOnMom'}));
+        this._dateMapping.push(new FirebaseEntityMapping({from:'end_on', to:'endOnMom'}));
 
-                this.date = new Date(second * 1000);
-        } else {
-                this.date = new Date();
-        }
-        delete init.date;
+        if(init != undefined) {
+            if(init['account'] != undefined) {
+                init.account = init['account'] == Account.MINE?Account.MINE:Account.COMMON;
+            }
 
-        if(init['start_on'] != undefined && init['start_on'] != null) {
-            let second:number = typeof init['start_on'] == 'number'?init['start_on']:init['start_on']['seconds'];
+            Object.assign(this, init);
 
-            this.start_on = new Date(second * 1000);
-        } else {
-                this.start_on = new Date();
-        }
-        delete init.start_on;
+            if(init['amount'] != undefined) {
+                this.amount = this.numberCut(this.amount);
+            }
 
-        if(init['end_on'] != undefined && init['end_on'] != null) {
-            let second:number = typeof init['end_on'] == 'number'?init['end_on']:init['end_on']['seconds'];
-
-            this.end_on = new Date(second * 1000);
-        } else {
-                this.end_on = new Date();
-        }
-        delete init.end_on;
-
-        if(init['account'] != undefined) {
-            init.account = init['account'] == Account.MINE?Account.MINE:Account.COMMON;
+            this._initDates();
         }
 
-        Object.assign(this, init);
-
-        if(init['amount'] != undefined) {
-            this.amount = Math.round(this.amount * this._roundFactor) / this._roundFactor;
-        }
+        this.removeNull();
     }
 
     public get amountPaid():number {
-        return this.shared?(this.amount/2):this.amount;
+        return this.numberCut(this.shared?(this.amount/2):this.amount);
     }
 
     public get refundAurelie():number {
-        return this.shared && this.account == Account.MINE?(this.amount/2):0;
+        return this.numberCut(this.shared && this.account == Account.MINE?(this.amount/2):0);
     }
 
     public get refundMe():number {
-        return this.shared && this.account == Account.COMMON?(this.amount/2):0;
+        return this.numberCut(this.shared && this.account == Account.COMMON?(this.amount/2):0);
     }
 
     public get dateInput():string {
-        return [this.date.getFullYear(), (this.date.getMonth()+1).toString().padStart(2, '0'), (this.date.getDate()).toString().padStart(2, '0')].join('-');
+        return this.dateMom!=undefined?this.dateMom.format(TimeService.dateFormat):undefined;
     }
 
     public set dateInput(dat:string) {
-        this.date = new Date(dat);
+        this.dateMom = this.parseDate(dat);
+        this.date = this.dateMom!=undefined?this.dateMom.valueOf():undefined;
+
+        this.removeNull();
     }
 
-    public toObject():any {
-        let obj:any = JSON.parse(JSON.stringify(this));
+    public get startOnInput():string {
+        return this.startOnMom!=undefined?this.startOnMom.format(TimeService.dateFormat):undefined;
+    }
 
-        if(this.date != undefined && this.date != null) {
-            obj.date = Math.round(this.date.getTime() / 1000);
-        }
+    public set startOnInput(dat:string) {
+        this.startOnMom = this.parseDate(dat);
+        this.start_on = this.startOnMom!=undefined?this.startOnMom.valueOf():undefined;
 
-        return obj;
+        this.removeNull();
+    }
+
+    public get endOnInput():string {
+        return this.endOnMom!=undefined?this.endOnMom.format(TimeService.dateFormat):undefined;
+    }
+
+    public set endOnInput(dat:string) {
+        this.endOnMom = this.parseDate(dat);
+        this.end_on = this.endOnMom!=undefined?this.endOnMom.valueOf():undefined;
+
+        this.removeNull();
     }
 
     public get active():boolean {
-        return this.date.getTime() >= this.start_on.getTime() && this.date.getTime() <= this.end_on.getTime();
+        // return this.date != undefined && this.start_on != undefined && this.end_on != undefined && this.date.getTime() >= this.start_on.getTime() && this.date.getTime() <= this.end_on.getTime();
+
+        return false
     }
 }

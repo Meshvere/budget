@@ -6,6 +6,7 @@ import {TableAction, TableActionRouteTo, TableActionRouteToElem} from 'src/app/t
 import {TableColumn} from 'src/app/table/models/table-column';
 import {IconService} from 'src/app/ui/services/icon.service';
 import {ToastService} from 'src/app/ui/services/toast.service';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
         selector: 'income',
@@ -23,16 +24,19 @@ export class IncomeComponent extends ComponentInit {
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
         private _dataService:DataService,
+        private _route:ActivatedRoute,
+        private _router:Router,
         public icon:IconService,
     ) {
         super(_cd, _toastService);
 
-        this.tableColumns.push(new TableColumn({label: 'Mois', field:'date', cellType:'month'}));
-        this.tableColumns.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));
+        this.tableColumns.push(new TableColumn({label: 'Mois', field:'dateMom', cellType:'month'}));
+        this.tableColumns.push(new TableColumn({label: 'Date', field:'dateMom', cellType:'date'}));
         this.tableColumns.push(new TableColumn({label: 'Compte', field:'account', cellType:'raw'}));
         this.tableColumns.push(new TableColumn({label: 'Objet', field:'label', cellType:'raw'}));
         this.tableColumns.push(new TableColumn({label: 'Montant', field:'amount', cellType:'money'}));
         this.tableColumns.push(new TableColumn({label: 'Partagé', field:'shared', cellType:'boolean'}));
+        this.tableColumns.push(new TableColumn({label: 'Récurrent', field:'recurrent', cellType:'boolean'}));
         this.tableColumns.push(new TableColumn({label: 'Montant perçu', field:'amountRecieved', cellType:'money'}));
         this.tableColumns.push(new TableColumn({label: 'En attente', field:'waiting', cellType:'boolean'}));
         this.tableColumns.push(new TableColumn({label: 'Commentaire', field:'commentaire', cellType:'raw'}));
@@ -52,5 +56,9 @@ export class IncomeComponent extends ComponentInit {
 
             this._cd.markForCheck();
         });
+    }
+
+    public addIncome() {
+        this._router.navigate(['.', 'add'])
     }
 }

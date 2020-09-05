@@ -9,6 +9,7 @@ import {environment} from '../../environments/environments.firebase';
 import {EmptyStateComponent} from './components/empty-state/empty-state.component';
 import {RedirectToComponent} from './components/redirectTo.component';
 import {DataService} from './services/data.service';
+import {TimeService} from './services/time.service';
 
 @NgModule({
     declarations: [
@@ -40,6 +41,7 @@ import {DataService} from './services/data.service';
     ],
     providers: [
         DataService,
+        TimeService,
     ]
 })
 export class SharedModule { }

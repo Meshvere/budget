@@ -22,6 +22,7 @@ export class IncomeFormComponent extends ComponentInit {
     public accountFrm:FormControl = new FormControl();
     public amountFrm:FormControl = new FormControl();
     public sharedFrm:FormControl = new FormControl();
+    public recurrentFrm:FormControl = new FormControl();
     public waitingFrm:FormControl = new FormControl();
     public commentFrm:FormControl = new FormControl();
 
@@ -39,8 +40,24 @@ export class IncomeFormComponent extends ComponentInit {
             this.account = acc;
 
             this._cd.markForCheck();
-        })
+        });
 
+        this._route.data.subscribe(data => {
+            if(data.action == 'edit') {
+                this.retrieveIncome();
+            } else {
+                this.curIncome = new Income();
+
+                this._cd.markForCheck();
+            }
+        });
+    }
+
+    ngOnInit(): void {
+        super.ngOnInit();
+    }
+
+    public retrieveIncome() {
         this.addSub = this._route.params.subscribe(param => {
             let toastId:number = this._toastService.addToast('Recette', 'Recette en cours de chargement', Toast.LOADING);
 
@@ -58,10 +75,6 @@ export class IncomeFormComponent extends ComponentInit {
                 }
             });
         });
-    }
-
-    ngOnInit(): void {
-        super.ngOnInit();
     }
 
     public back() {
@@ -84,7 +97,6 @@ export class IncomeFormComponent extends ComponentInit {
             valid = this[elemName].valid;
 
             if(!valid) {
-                console.log(elemName)
                 break;
             }
         }

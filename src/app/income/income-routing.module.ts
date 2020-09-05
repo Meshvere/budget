@@ -7,7 +7,8 @@ import {IncomeComponent} from './components/income/income.component';
 const routes: Routes = [
     {
         path: '', children: [
-            { path: ':id', component: IncomeFormComponent },
+            { path: 'add',  data: { action: 'add' }, component: IncomeFormComponent },
+            { path: ':id',  data: { action: 'edit' }, component: IncomeFormComponent },
             { path: '**', component: IncomeComponent}
         ]
     }

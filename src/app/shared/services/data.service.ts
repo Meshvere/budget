@@ -88,16 +88,44 @@ export class DataService {
         return of(inc);
     }
 
-    public saveIncome(inc:Income):Observable<void> {
-      return from(this._db.collection<Income>('/income').doc(inc.id).set(inc.toObject()));
+    // TODO : make real synchro with DB
+    public getOutcome(id:string):Observable<Outcome> {
+        let out:Outcome;
+
+        for(let curOutc of this.outcome$.value) {
+            if(curOutc.id == id) {
+                out = cloneDeep(curOutc);
+
+                break;
+            }
+        }
+
+        return of(out);
+    }
+
+    public saveIncome(inc:Income):Observable<void|DocumentReference> {
+        if(inc.id != undefined) {
+            return from(this._db.collection<Income>('/income').doc(inc.id).set(inc.toObject()));
+        } else {
+            return from(this._db.collection<Income>('/income').add(inc.toObject()));
+        }
+
+    }
+
+    public saveOutcome(out:Outcome):Observable<void|DocumentReference> {
+        if(out.id != undefined) {
+            return from(this._db.collection<Income>('/outcome').doc(out.id).set(out.toObject()));
+        } else {
+            return from(this._db.collection<Income>('/outcome').add(out.toObject()));
+        }
     }
 
     public getAccounts():BehaviorSubject<string[]> {
-      let accounts:string[] = [];
+        let accounts:string[] = [];
 
-      accounts.push(Account.MINE);
-      accounts.push(Account.COMMON);
+        accounts.push(Account.MINE);
+        accounts.push(Account.COMMON);
 
-      return new BehaviorSubject(accounts);
+        return new BehaviorSubject(accounts);
     }
 }

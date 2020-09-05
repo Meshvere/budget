@@ -7,7 +7,8 @@ import {OutcomeComponent} from './components/outcome/outcome.component';
 const routes: Routes = [
     {
         path: '', children: [
-            { path: ':id', component: OutcomeFormComponent },
+            { path: 'add',  data: { action: 'add' }, component: OutcomeFormComponent },
+            { path: ':id',  data: { action: 'edit' }, component: OutcomeFormComponent },
             { path: '**', component: OutcomeComponent}
         ]
     }
