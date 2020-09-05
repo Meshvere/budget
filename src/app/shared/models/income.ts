@@ -13,7 +13,7 @@ export class Income extends FirebaseEntity {
     public label:string;
     public amount:number;
     public shared:boolean = false;
-    public commentaire:string; //TODO translate
+    public comment:string;
     public waiting:boolean = false;
     public recurrent:boolean = false;
 

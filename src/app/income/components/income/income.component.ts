@@ -39,7 +39,7 @@ export class IncomeComponent extends AbstractComponent {
         this.tableColumns.push(new TableColumn({label: 'Récurrent', field:'recurrent', cellType:'boolean'}));
         this.tableColumns.push(new TableColumn({label: 'Montant perçu', field:'amountRecieved', cellType:'money'}));
         this.tableColumns.push(new TableColumn({label: 'En attente', field:'waiting', cellType:'boolean'}));
-        this.tableColumns.push(new TableColumn({label: 'Commentaire', field:'commentaire', cellType:'raw'}));
+        this.tableColumns.push(new TableColumn({label: 'Commentaire', field:'comment', cellType:'raw'}));
 
         this.tableActions.push(new TableAction({label: 'Modifier la recette', icon: 'edit', action:new TableActionRouteTo({route:[
             new TableActionRouteToElem({type:'raw', value: '/income/'}),
