@@ -39,6 +39,11 @@
             <i class="form-icon"></i> Encours
         </label>
         <label class="form-switch">
+            <input type="checkbox" id="on_account" required="true" [(ngModel)]="curOutcome.on_account"
+            ng-model-options="{ getterSetter: true }" [formControl]="this.onAccountFrm">
+            <i class="form-icon"></i> Passé sur le compte
+        </label>
+        <label class="form-switch">
             <input type="checkbox" id="waiting" required="true" [(ngModel)]="curOutcome.waiting"
             ng-model-options="{ getterSetter: true }" [formControl]="this.waitingFrm">
             <i class="form-icon"></i> En attente

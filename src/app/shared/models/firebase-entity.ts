@@ -23,8 +23,6 @@ export class FirebaseEntity {
             } else if(data[attr] != undefined && data[attr] != null) {
                 date = moment(data[attr]);
             }
-
-            delete data[attr];
         }
 
         return date;
@@ -33,13 +31,19 @@ export class FirebaseEntity {
     public toObject():any {
         let obj:any = JSON.parse(JSON.stringify(this));
 
+        let removeField:string[] = [];
+
+        for(let map of this._dateMapping) {
+            removeField.push(map.to);
+        }
+
         for(let elemName of Object.keys(this)) {
-            if(this[elemName] != undefined && this[elemName] != null && this[elemName].constructor.name == 'Moment') {
+            if(elemName.substr(0, 1) == '_' || removeField.indexOf(elemName) >= 0) {
+                delete obj[elemName];
+            } else if(this[elemName] != undefined && this[elemName] != null && this[elemName].constructor.name == 'Moment') {
                 obj[elemName] = this[elemName].valueOf();
             }
-            if(elemName.substr(0, 1) == '_') {
-                delete obj[elemName];
-            }
+
         }
 
         return obj;
@@ -63,5 +67,6 @@ export class FirebaseEntityMapping {
     public to:string;
 
     constructor(init?:Partial<FirebaseEntityMapping>) {
+        Object.assign(this, init);
     }
 }

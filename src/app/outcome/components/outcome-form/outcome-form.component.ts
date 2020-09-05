@@ -25,6 +25,7 @@ export class OutcomeFormComponent extends AbstractComponent {
     public refundedFrm:FormControl = new FormControl();
     public amountFrm:FormControl = new FormControl();
     public sharedFrm:FormControl = new FormControl();
+    public onAccountFrm:FormControl = new FormControl();
     public waitingFrm:FormControl = new FormControl();
     public commentFrm:FormControl = new FormControl();
 

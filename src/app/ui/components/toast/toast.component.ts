@@ -27,15 +27,15 @@ export class ToastComponent extends AbstractComponent {
       super(_cd, _toastService);
    }
 
-   ngOnInit(): void {
-      super.ngOnInit();
+    ngOnInit(): void {
+        super.ngOnInit();
 
-      if(this.autoClose && this.autoCloseDelay != undefined) {
-         setTimeout(()=>{                                        //<<<---using ()=> syntax
-            this.close();
-    }, this.autoCloseDelay * 1000);
-      }
-   }
+        if(this.autoClose && this.autoCloseDelay != undefined) {
+            setTimeout(()=>{
+                this.close();
+            }, this.autoCloseDelay * 1000);
+        }
+    }
 
    public getIcon():IconDefinition {
       let icon:IconDefinition;
