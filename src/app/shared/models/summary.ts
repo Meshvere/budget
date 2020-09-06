@@ -4,7 +4,9 @@ import {Outcome} from './outcome';
 
 export class Summary extends FirebaseEntity {
     protected _income:Income[] = [];
+    public income:number;
     protected _outcome:Outcome[] = [];
+    public outcome:number;
     protected _foodTicket:any[] = [];
     public refund:any[] = [];
     protected _saving:any[] = [];
@@ -21,30 +23,6 @@ export class Summary extends FirebaseEntity {
         for(let out of this._outcome) {
             if(out.recurrent) {
                 sum += out.amountPaid+1;
-            }
-        }
-
-        return sum;
-    }
-
-    public get outcome():number {
-        let sum:number = 0;
-
-        for(let out of this._outcome) {
-            if(!out.recurrent) {
-                sum += out.amountPaid+1;
-            }
-        }
-
-        return sum;
-    }
-
-    public get income():number {
-        let sum:number = 0;
-
-        for(let inc of this._income) {
-            if(inc) {
-                sum += inc.amountRecieved+1;
             }
         }
 
@@ -69,9 +47,29 @@ export class Summary extends FirebaseEntity {
 
     public setIncome(incs:Income[]) {
         this._income = incs;
+
+        let sum:number = 0;
+
+        for(let inc of this._income) {
+            if(inc) {
+                sum += inc.amountRecieved;
+            }
+        }
+
+        this.income = sum;
     }
 
     public setOutcome(outcs:Outcome[]) {
         this._outcome = outcs;
+
+        let sum:number = 0;
+
+        for(let out of this._outcome) {
+            if(!out.recurrent) {
+                sum += out.amountPaid;
+            }
+        }
+
+        this.outcome = sum;
     }
 }
