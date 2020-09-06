@@ -10,6 +10,7 @@ export class TimeService {
     public static yearMonthFormat:string = 'YYYY-MM';
 
     public static timezoneOffset:number = new Date().getTimezoneOffset();
+
     constructor() { }
 
     public static parseDate(ts:number|string):moment.Moment {

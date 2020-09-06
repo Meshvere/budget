@@ -3,24 +3,26 @@ import {NgModule} from '@angular/core';
 import {SummaryRoutingModule} from './summary-routing.module';
 import {SummaryComponent} from './components/summary/summary.component';
 import {SharedModule} from '../shared/shared.module';
+import {TableModule} from '../table/table.module';
 
 @NgModule({
-   declarations: [
-   SummaryComponent
+    declarations: [
+    SummaryComponent
 ],
-   imports: [
-      CommonModule,
-      SummaryRoutingModule,
-      SharedModule
-   ],
-   exports: [
-      SummaryRoutingModule
-   ],
-   entryComponents: [
-      SummaryComponent
-   ],
-   providers: [
+    imports: [
+        CommonModule,
+        SummaryRoutingModule,
+        SharedModule,
+        TableModule,
+    ],
+    exports: [
+        SummaryRoutingModule
+    ],
+    entryComponents: [
+        SummaryComponent
+    ],
+    providers: [
 
-   ]
+    ]
 })
 export class SummaryModule { }

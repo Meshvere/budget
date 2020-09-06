@@ -7,13 +7,16 @@ import {Income} from '../models/income';
 import cloneDeep from 'lodash/cloneDeep';
 import { from, of } from 'rxjs';
 import {Outcome} from '../models/outcome';
+import {Summary} from '../models/summary';
+import * as moment from 'moment';
+import 'moment/locale/fr';
 
 @Injectable({
      providedIn: 'root'
 })
 export class DataService {
     private _deltaMonth:number = 6;
-    public monthList$:BehaviorSubject<number[]>;
+    public summary$:BehaviorSubject<Summary[]>;
 
     public menuEntries$:BehaviorSubject<NavEntry[]>;
 
@@ -28,12 +31,15 @@ export class DataService {
     ) {
         this.incomeLoaded$ = new BehaviorSubject(false);
         this.outcomeLoaded$ = new BehaviorSubject(false);
-        let months:number[] = [];
+        let months:Summary[] = [];
         for(let i:number = - this._deltaMonth; i <= this._deltaMonth; i++) {
-            months.push(i);
+            let curDate:moment.Moment = moment();
+            curDate.month(curDate.month() + i);
+
+            months.push(new Summary({date:curDate.valueOf()}));
         }
 
-        this.monthList$ = new BehaviorSubject(months);
+        this.summary$ = new BehaviorSubject(months);
 
         let navEntryList:NavEntry[] = [];
 
@@ -60,6 +66,8 @@ export class DataService {
 
             this.income$.next(res);
             this.incomeLoaded$.next(true);
+
+            this._calcSummary();
         });
 
         this.outcome$ = new BehaviorSubject([]);
@@ -74,6 +82,8 @@ export class DataService {
 
             this.outcome$.next(res);
             this.outcomeLoaded$.next(true);
+
+            this._calcSummary();
         });
     }
 
@@ -131,5 +141,33 @@ export class DataService {
         accounts.push(Account.COMMON);
 
         return new BehaviorSubject(accounts);
+    }
+
+    private _calcSummary() {
+        let sums:Summary[] = this.summary$.value;
+
+        for(let curSum of sums) {
+            let key:string = curSum.monthKey;
+
+            let incs:Income[] = [];
+            let outs:Outcome[] = [];
+
+            for(let inc of this.income$.value) {
+                if(inc.monthKey == key) {
+                    incs.push(inc);
+                }
+            }
+
+            for(let out of this.outcome$.value) {
+                if(out.monthKey == key) {
+                    outs.push(out);
+                }
+            }
+
+            curSum.setIncome(incs);
+            curSum.setOutcome(outs);
+        }
+
+        this.summary$.next(sums);
     }
 }

@@ -1,11 +1,16 @@
 import * as moment from 'moment';
 import 'moment/locale/fr';
+import {TimeService} from '../services/time.service';
 
 export class FirebaseEntity {
+    public date:number;
     protected _roundFactor:number = 100;
     protected _dateMapping:FirebaseEntityMapping[] = [];
 
     constructor(init?:Partial<FirebaseEntity>) {
+        if(init != undefined && init.date != undefined) {
+            this.date = init.date;
+        }
     }
 
     protected _initDates() {
@@ -59,6 +64,16 @@ export class FirebaseEntity {
                 this[key] = undefined;
             }
         }
+    }
+
+    public getMonth(field:string):string {
+        let dat:moment.Moment = TimeService.parseDate(this[field]);
+
+        return dat.format(TimeService.yearMonthFormat);
+    }
+
+    public get monthKey():string {
+        return TimeService.parseDate(this.date).format(TimeService.yearMonthFormat);
     }
 }
 
