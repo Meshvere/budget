@@ -10,6 +10,7 @@ import {EmptyStateComponent} from './components/empty-state/empty-state.componen
 import {RedirectToComponent} from './components/redirectTo.component';
 import {DataService} from './services/data.service';
 import {TimeService} from './services/time.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import {TimeService} from './services/time.service';
         ReactiveFormsModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
+        HttpClientModule,
     ],
     exports: [
         FontAwesomeModule,
@@ -34,6 +36,7 @@ import {TimeService} from './services/time.service';
         AngularFirestoreModule,
         RedirectToComponent,
         EmptyStateComponent,
+        HttpClientModule,
     ],
     entryComponents: [
         RedirectToComponent,

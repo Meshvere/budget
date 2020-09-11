@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared/shared.module';
 import {ImportDataComponent} from './components/import-data/import-data.component';
 import {ImportDataRoutingModule} from './import-data-routing.module';
+import {ImportDataService} from './services/import-data.service';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,9 @@ import {ImportDataRoutingModule} from './import-data-routing.module';
     ],
     entryComponents: [
         ImportDataComponent,
+    ],
+    providers: [
+        ImportDataService,
     ]
 })
 export class ImportDataModule { }

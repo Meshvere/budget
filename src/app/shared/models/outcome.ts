@@ -6,7 +6,6 @@ import {FirebaseEntity,FirebaseEntityMapping} from './firebase-entity';
 
 
 export class Outcome extends FirebaseEntity {
-    public id:string;
     public dateMom:moment.Moment;
     public account:Account = Account.MINE;
     public recipient:string;

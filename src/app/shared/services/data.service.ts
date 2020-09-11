@@ -10,6 +10,7 @@ import {Outcome} from '../models/outcome';
 import {Summary} from '../models/summary';
 import * as moment from 'moment';
 import 'moment/locale/fr';
+import {flatMap, map} from 'rxjs/operators';
 
 @Injectable({
      providedIn: 'root'
@@ -128,10 +129,18 @@ export class DataService {
 
     public saveOutcome(out:Outcome):Observable<void|DocumentReference> {
         if(out.id != undefined) {
-            return from(this._db.collection<Income>('/outcome').doc(out.id).set(out.toObject()));
+            return from(this._db.collection<Outcome>('/outcome').doc(out.id).set(out.toObject()));
         } else {
-            return from(this._db.collection<Income>('/outcome').add(out.toObject()));
+            return from(this._db.collection<Outcome>('/outcome').add(out.toObject()));
         }
+    }
+
+    public saveMass(path:string, datas:any[]):Observable<void> {
+        return from(this._db.collection('/'+path).doc('/'+path).delete().then(value => {
+            for(let elem of datas) {
+                // from(this._db.collection('/'+path).add(elem.toObject()));
+            }
+        }));
     }
 
     public getAccounts():BehaviorSubject<string[]> {
