@@ -1,0 +1,76 @@
+<empty-state *ngIf="curIncome == undefined" title="Recette non trouvée"></empty-state>
+<form class="form-horizontal" *ngIf="curIncome != undefined">
+    <div class="twoCol">
+        <div class="form-group">
+                <label class="form-label" for="date">Date</label>
+                <input class="form-input" type="date" id="date" required="true" [ngModel]="curIncome.date | date:'yyyy-MM-dd'" (ngModelChange)="curIncome.date = $event"
+                    ng-model-options="{ getterSetter: true }" [formControl]="this.dateFrm">{{curIncome.date | date:'y-M-d'}}
+        </div>
+        <div class="form-group">
+                <label class="form-label" for="account">Compte</label>
+                <select class="form-select" id="account" required="true" [(ngModel)]="curIncome.account"
+                    ng-model-options="{ getterSetter: true }" [formControl]="this.accountFrm">
+                    <option *ngFor="let cpt of this.account" value="{{cpt}}">{{cpt}}</option>
+                </select>
+        </div>
+    </div>
+
+    <div class="twoCol">
+        <div class="form-group">
+            <label class="form-label" for="amount">Montant</label>
+                <input class="form-input" type="number" id="amount" step="0.01" required="true" [(ngModel)]="curIncome.amount"
+                ng-model-options="{ getterSetter: true }" [formControl]="this.amountFrm" inputmode="numeric" min="0">&nbsp;€
+        </div>
+        <div class="form-group">
+            <label class="form-label">Montant perçu</label>
+            <span class="form-input">{{curIncome.amountRecieved | currency:'EUR':'symbol':'.2-2':'fr'}}</span>
+        </div>
+    </div>
+
+    <div class="twoCol">
+        <label class="form-switch">
+            <input type="checkbox" id="recurrent" [(ngModel)]="curIncome.recurrent"
+            ng-model-options="{ getterSetter: true }" [formControl]="this.recurrentFrm">
+            <i class="form-icon"></i> Récurrent
+        </label>
+        <label class="form-switch">
+            <input type="checkbox" id="shared" [(ngModel)]="curIncome.shared"
+            ng-model-options="{ getterSetter: true }" [formControl]="this.sharedFrm">
+            <i class="form-icon"></i> Partagé
+        </label>
+        <label class="form-switch">
+            <input type="checkbox" id="waiting" [(ngModel)]="curIncome.waiting"
+            ng-model-options="{ getterSetter: true }" [formControl]="this.waitingFrm">
+            <i class="form-icon"></i> En attente
+        </label>
+    </div>
+    <div *ngIf="curIncome.recurrent">
+        <div class="twoCol">
+            <div class="form-group">
+                <label class="form-label" for="recurrentDay">Jour de prélèvement</label>
+                    <input class="form-input" type="number" id="recurrentDay" [required]="curIncome.recurrent" [(ngModel)]="curIncome.recurrent_day"
+                    ng-model-options="{ getterSetter: true }" [formControl]="this.recurrentDayFrm" inputmode="numeric" min="1" max="31">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="recurrentStart">Date début</label>
+                    <input class="form-input" type="date" id="recurrentStart" [required]="true" [(ngModel)]="curIncome.recurrent_start"
+                    ng-model-options="{ getterSetter: true }" [formControl]="this.recurrentStartFrm" [max]="curIncome.recurrent_stop">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="recurrentStop">Date fin</label>
+                    <input class="form-input" type="date" id="recurrentStop" [required]="curIncome.recurrent" [(ngModel)]="curIncome.recurrent_stop"
+                    ng-model-options="{ getterSetter: true }" [formControl]="this.recurrentStopFrm" [min]="curIncome.recurrent_start">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label" for="comment">Commentaire</label>
+        <textarea class="form-input" id="comment" placeholder="Commentaire" rows="3" [(ngModel)]="curIncome.comment"
+        ng-model-options="{ getterSetter: true }" [formControl]="this.commentFrm"></textarea>
+    </div>
+
+    <div class="footer">
+        <button class="btn" (click)="this.back()">Retour</button>
+        <button class="btn btn-primary" (click)="this.save()" [disabled]="!this.formValid">Enregistrer</button>
+    </div>
+</form>
