@@ -43,7 +43,7 @@ app.get('/income/', function (req, res) {
 app.put('/income/', function (req, res) {
     let inc = req.body.body.inc;
     let sqlQuery = '';
-    
+
     if(inc.id == undefined) {
         sqlQuery = "INSERT INTO income (account, label, amount, shared, comment, waiting, recurrent, recurrent_day, recurrent_start, recurrent_stop) VALUES (" +
                 "'" + inc.account.replace("'", "\'") + "', '" + inc.label.replace("'", "\'") + "', " +
@@ -58,8 +58,9 @@ app.put('/income/', function (req, res) {
                 ", recurrent_day = '" + inc.recurrentDay + "' , recurrent_start = '" + inc.recurrentStart + "'" +
                 ", recurrent_stop = '" + inc.recurrentStop + "' WHERE id = "+ inc.id +";"
     }
-    
-    const rows = db.doQuery(sqlQuery, queryCallback(res));
+
+    // const rows = db.doQuery(sqlQuery, queryCallback(res));
+    console.log(sqlQuery)
 });
 
 app.get('/outcomes', function (req, res) {
@@ -72,10 +73,10 @@ function queryCallback(res) {
     return function(err, rows) {
         if(err) {
             errHandle(res, err);
-            
+
             return;
         }
-        
+
         sendResponse(res, rows);
     }
 }
@@ -114,3 +115,9 @@ server.setTimeout(10*60*1000);
 server.listen(3000, function () {
     console.log('App listening on port ' + 3000);
 });
+
+
+class AbstractEntity {
+    var id:string;
+    var date:Date;
+}
