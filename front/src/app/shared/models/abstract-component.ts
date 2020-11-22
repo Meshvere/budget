@@ -1,7 +1,8 @@
-import {OnInit, OnDestroy, ChangeDetectorRef} from '@angular/core';
+import { OnInit, OnDestroy, ChangeDetectorRef, Directive } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ToastService} from 'src/app/ui/services/toast.service';
 
+@Directive()
 export class AbstractComponent implements OnInit, OnDestroy {
     protected _subs:Subscription[] = [];
 

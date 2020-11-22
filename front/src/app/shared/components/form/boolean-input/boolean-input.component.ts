@@ -9,7 +9,6 @@ import {ToastService} from 'src/app/ui/services/toast.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BooleanInputComponent extends AbstractInputComponent {
-    @Input() public value:string;
     @Output() public valueChange:EventEmitter<boolean> = new EventEmitter();
     @Input() public labelTrue:string = 'Oui';
     @Input() public labelFalse:string = 'Non';
