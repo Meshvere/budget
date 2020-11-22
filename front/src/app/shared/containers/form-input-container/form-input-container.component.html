@@ -1,0 +1,13 @@
+<div class="form-group">
+    <label *ngIf="this.label != undefined">{{this.label}}</label>
+    <div class="input-group" [class.fullWidth]="this.fullWidth">
+        <div class="input-group-prepend" *ngIf="this.icon != undefined && this.iconPosition=='before'">
+            <fa-icon class="input-group-text" [icon]="this.icon"></fa-icon>
+        </div>
+        <ng-content [class.fullWidth]="this.fullWidth"></ng-content>
+        <div class="input-group-append" *ngIf="this.icon != undefined && this.iconPosition!='before'">
+            <fa-icon class="input-group-text" [icon]="this.icon"></fa-icon>
+        </div>
+    </div>
+    <p *ngFor="let error of this.errorList" class="form-text invalid-feedback">{{error}}</p>
+  </div>

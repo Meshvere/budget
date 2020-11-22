@@ -1,0 +1,5 @@
+<ul ngbNav class="nav-tabs" [roles]="false" [activeId]=""><!--  [activeId]="route | async" -->
+    <li [ngbNavItem]="entry.path" *ngFor="let entry of this.entryList">
+        <a ngbNavLink [routerLink]="['/', entry.path]" [routerLinkActive]="'active'">{{ entry.label }}</a>
+    </li>
+</ul>

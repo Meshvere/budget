@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Example of project-name.scss
+// Define variables to override default ones
+$bg-color-dark: red;
+
+.hand {
+   cursor: pointer;
+}
+// Import full Spectre source code
+@import "~bootstrap/scss/bootstrap";
+@import "~src/variables";
+
+input, textarea, select {
+   &:required {
+      border-left-width: 3px;
+      border-left-style: solid;
+   }
+}
+
+.hidden {
+    display: none;
+}
+
+.p-left {
+    text-align: left;
+}
+
+.p-right {
+    text-align: right;
+}
+
+.multiCol {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

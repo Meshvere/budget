@@ -1,0 +1,11 @@
+.fullWidth {
+    width: 100%;
+
+    ::ng-deep {
+        date-input, number-input, select-input, boolean-input, text-input,
+        input, textarea, select {
+            width: 100%;
+        }
+
+    }
+}

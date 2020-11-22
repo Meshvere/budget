@@ -1,0 +1,8 @@
+<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="this.value">
+    <label ngbButtonLabel [ngClass]="{btn:true, 'btn-primary':this.value, 'btn-outline-primary':!this.value}">
+        <input ngbButton type="radio" value="true" [disabled]="this.disabled" [checked]="this.value" (change)="this.valueChanged($event)" /> {{labelTrue}}
+    </label>
+    <label ngbButtonLabel [ngClass]="{btn:true, 'btn-primary':!this.value, 'btn-outline-primary':this.value}">
+        <input ngbButton type="radio" value="false" [disabled]="this.disabled" [checked]="!this.value" (change)="this.valueChanged($event)" /> {{labelFalse}}
+    </label>
+</div>

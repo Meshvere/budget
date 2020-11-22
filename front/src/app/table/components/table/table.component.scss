@@ -1,0 +1,9 @@
+.action {
+    fa-icon {
+        margin-left: 1rem;
+
+        &:first-child {
+            margin-left: 0;
+        }
+    }
+}
