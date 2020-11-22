@@ -18,7 +18,7 @@ export class NavComponent extends AbstractComponent {
     constructor(
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
-        private _route: ActivatedRoute,
+        public route: ActivatedRoute,
         private _router: Router,
         private _dataService:DataService,
     ) {
@@ -28,10 +28,14 @@ export class NavComponent extends AbstractComponent {
           this.entryList = me;
 
           this._cd.markForCheck();
-        })
+        });
     }
 
     ngOnInit(): void {
-      super.ngOnInit();
+        super.ngOnInit();
+
+        this.route.url.subscribe(rt => {
+            // console.log(rt)
+        })
     }
 }

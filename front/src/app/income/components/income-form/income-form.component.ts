@@ -1,8 +1,12 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute,Router} from '@angular/router';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
+import {Observable,of} from 'rxjs';
+import {flatMap} from 'rxjs/operators';
 import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {Income} from 'src/app/shared/models/income';
+import {InputErrorMessageModel,InputErrorModel} from 'src/app/shared/models/input-error-model';
+import {SelectModel} from 'src/app/shared/models/select-model';
 import {DataService} from 'src/app/shared/services/data.service';
 import {Toast} from 'src/app/ui/models/toast';
 import {IconService} from 'src/app/ui/services/icon.service';
@@ -16,18 +20,9 @@ import {ToastService} from 'src/app/ui/services/toast.service';
 })
 export class IncomeFormComponent extends AbstractComponent {
     public curIncome:Income;
-    public account:string[] = [];
+    public account:SelectModel[] = [];
 
-    public dateFrm:FormControl = new FormControl();
-    public accountFrm:FormControl = new FormControl();
-    public amountFrm:FormControl = new FormControl();
-    public sharedFrm:FormControl = new FormControl();
-    public recurrentFrm:FormControl = new FormControl();
-    public recurrentDayFrm:FormControl = new FormControl();
-    public recurrentStartFrm:FormControl = new FormControl();
-    public recurrentStopFrm:FormControl = new FormControl();
-    public waitingFrm:FormControl = new FormControl();
-    public commentFrm:FormControl = new FormControl();
+    public validations:{code:string, validation:InputErrorModel}[] = [];
 
     constructor(
         protected _cd:ChangeDetectorRef,
@@ -38,51 +33,43 @@ export class IncomeFormComponent extends AbstractComponent {
         public icon:IconService,
     ) {
         super(_cd, _toastService);
-
-        this.addSub = this._dataService.getAccounts().subscribe(acc => {
-            this.account = acc;
-
-            this._cd.markForCheck();
-        });
-
-        this._route.data.subscribe(data => {
-            if(data.action == 'edit') {
-                this.retrieveIncome();
-            } else {
-                this.curIncome = new Income();
-
-                this._cd.markForCheck();
-            }
-        });
-
-        this.addSub = this.recurrentFrm.valueChanges.subscribe(val => {
-            this.recurrentDayFrm.updateValueAndValidity();
-            this.recurrentStartFrm.updateValueAndValidity();
-            this.recurrentStopFrm.updateValueAndValidity();
-
-            this._cd.markForCheck();
-        })
     }
 
     ngOnInit(): void {
         super.ngOnInit();
-    }
 
-    public retrieveIncome() {
-        this.addSub = this._route.params.subscribe(param => {
-            let toastId:number = this._toastService.addToast('Recette', 'Recette en cours de chargement', Toast.LOADING);
+        this.addSub = this._dataService.getAccounts().subscribe(acc => {
+            let list:SelectModel[] = [];
+
+            acc.forEach(item => {
+                list.push(new SelectModel({value:item, label:item}));
+            });
+
+            this.account = list;
 
             this._cd.markForCheck();
-
-            this._dataService.getIncome(param.id).subscribe(rec => {
-                this.curIncome = rec;
-
-                this._toastService.closeToast(toastId);
-                this._toastService.addToast('Recette', 'Recette récupérée', Toast.SUCCESS);
-
-                this._cd.markForCheck();
-            });
         });
+
+        this.addSub = this._route.data.pipe(flatMap(data => {
+            let obs:Observable<Income>;
+            if(data.action == 'edit') {
+                obs = this.retrieveIncome();
+            } else {
+                obs = of(new Income());
+            }
+
+            return obs;
+        })).subscribe(income => {
+            this.curIncome = income;
+
+            this._cd.markForCheck();
+        });
+    }
+
+    public retrieveIncome():Observable<Income> {
+        return this._route.params.pipe(flatMap(param => {
+            return this._dataService.getIncome(param.id);
+        }));
     }
 
     public back() {
@@ -91,24 +78,17 @@ export class IncomeFormComponent extends AbstractComponent {
 
     public save() {
         this.addSub = this._dataService.saveIncome(this.curIncome).subscribe(res => {
-            this._toastService.addToast('Recette', 'Recette enregistrée', Toast.SUCCESS);
-            if(res === true) {
+            if(res.affectedRows > 0) {
                 this.back();
             }
         });
     }
 
     public get formValid():boolean {
-        let formElems:string[] = ['dateFrm', 'accountFrm', 'amountFrm'];
-
-        if(this.curIncome.recurrent) {
-            formElems.push('recurrentDayFrm', 'recurrentStartFrm', 'recurrentStopFrm');
-        }
-
         let valid:boolean;
 
-        for(let elemName of formElems) {
-            valid = this[elemName].valid;
+        for(let validation of this.validations) {
+            valid = validation.validation.valid;
 
             if(!valid) {
                 break;
@@ -116,5 +96,57 @@ export class IncomeFormComponent extends AbstractComponent {
         }
 
         return valid;
+    }
+
+    public getIcon(name:string):IconDefinition {
+        return this.icon[name];
+    }
+
+    public valueChange(value:any, prop:string) {
+        this.curIncome[prop] = value;
+
+        this._cd.markForCheck();
+    }
+
+    public validationChange($event, code:string) {
+        this.validations = this.validations.filter(item => item.code != code);
+        this.validations.push({code:code, validation:$event})
+    }
+
+    public getErrors(code:string):InputErrorModel {
+        let errors:InputErrorModel;
+
+        this.validations.forEach(item => {
+            if(item.code == code) {
+                errors = item.validation;
+            }
+        })
+
+        return errors;
+    }
+
+    public getErrorMessages(code:string):InputErrorMessageModel[] {
+        let messages:InputErrorMessageModel[] = [];
+
+        if(code == 'date') {
+            messages.push(new InputErrorMessageModel({code:'required', message:'Date requise'}));
+        } else if(code == 'recurrent_day') {
+            messages.push(new InputErrorMessageModel({code:'required', message:'Date requise'}));
+            messages.push(new InputErrorMessageModel({code:'min', message:'Doit être plus grand ou égale à {min}'}));
+            messages.push(new InputErrorMessageModel({code:'max', message:'Doit être plus petit ou égale à {max}'}));
+        } else if(code == 'recurrent_start') {
+            messages.push(new InputErrorMessageModel({code:'required', message:'Date requise'}));
+            messages.push(new InputErrorMessageModel({code:'max', message:'Doit être antérieure à la date de fin'}));
+        } else if(code == 'recurrent_stop') {
+            messages.push(new InputErrorMessageModel({code:'required', message:'Date requise'}));
+            messages.push(new InputErrorMessageModel({code:'max', message:'Doit être postérieure à la date de début'}));
+        } else if(code == 'account') {
+            messages.push(new InputErrorMessageModel({code:'required', message:'Compte requis'}));
+        } else if(code == 'amount') {
+            messages.push(new InputErrorMessageModel({code:'required', message:'Montant requis'}));
+            messages.push(new InputErrorMessageModel({code:'min', message:'Doit être plus grand que {min}€'}));
+        }
+
+        return messages;
     }
 }

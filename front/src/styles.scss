@@ -8,11 +8,13 @@ $bg-color-dark: red;
    cursor: pointer;
 }
 // Import full Spectre source code
-@import "node_modules/spectre.css/src/spectre";
+@import "~bootstrap/scss/bootstrap";
+@import "~src/variables";
 
 input, textarea, select {
    &:required {
-      border-left: 3px solid $primary-color;
+      border-left-width: 3px;
+      border-left-style: solid;
    }
 }
 
@@ -26,4 +28,10 @@ input, textarea, select {
 
 .p-right {
     text-align: right;
+}
+
+.multiCol {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

@@ -6,10 +6,12 @@ import 'moment/locale/fr';
     providedIn: 'root'
 })
 export class TimeService {
-    public static dateFormat:string = 'YYYY-MM-DD';
-    public static yearMonthFormat:string = 'YYYY-MM';
+    public static readonly undefinedDate:string = '1970-01-01';
 
-    public static timezoneOffset:number = new Date().getTimezoneOffset();
+    public static readonly dateFormat:string = 'YYYY-MM-DD';
+    public static readonly yearMonthFormat:string = 'YYYY-MM';
+
+    public static readonly timezoneOffset:number = new Date().getTimezoneOffset();
 
     constructor() { }
 
@@ -27,5 +29,23 @@ export class TimeService {
         // }
 
         return moment(ts, format).utc(true);
+    }
+
+    public static yyyyMmDd(date:Date, separator:string = '-'):string {
+        if(date == undefined) {
+            return undefined;
+        }
+
+        var mm = date.getMonth() + 1; // getMonth() is zero-based
+        var dd = date.getDate();
+
+        return [date.getFullYear(),
+                (mm>9 ? '' : '0') + mm,
+                (dd>9 ? '' : '0') + dd
+                ].join(separator);
+    }
+
+    public static purgeDefaultDate(date:Date):Date {
+        return date == undefined || TimeService.yyyyMmDd(date) == TimeService.undefinedDate?undefined:date;
     }
 }

@@ -1,0 +1,4 @@
+<select class="form-control" [formControl]="this.frmCtrl" [ngClass]="{'is-valid':this.valid && this.needValidation, 'is-invalid':!this.valid && this.needValidation}"
+[required]="this.required" [disabled]="this.disabled" (change)="this.valueChanged($event)" [(ngModel)]="this.value">
+    <option *ngFor="let item of values" [value]="item.value">{{item.label}}</option>
+</select>

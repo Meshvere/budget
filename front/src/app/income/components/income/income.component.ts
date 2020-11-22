@@ -40,6 +40,7 @@ export class IncomeComponent extends AbstractComponent {
         this.tableColumns.push(new TableColumn({label: 'Partagé', field:'shared', cellType:'boolean'}));
         this.tableColumns.push(new TableColumn({label: 'Récurrent', field:'recurrent', cellType:'boolean'}));
         this.tableColumns.push(new TableColumn({label: 'Montant perçu', field:'amountRecieved', cellType:'money'}));
+        this.tableColumns.push(new TableColumn({label: 'Passé sur le compte', field:'on_account', cellType:'boolean'}));
         this.tableColumns.push(new TableColumn({label: 'En attente', field:'waiting', cellType:'boolean'}));
         this.tableColumns.push(new TableColumn({label: 'Commentaire', field:'comment', cellType:'raw'}));
 

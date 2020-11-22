@@ -8,6 +8,7 @@ import {PageComponent} from './pages/page/page.component';
 import {IconService} from './services/icon.service';
 import {ToastService} from './services/toast.service';
 import { ToasterComponent } from './components/toaster/toaster.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -22,6 +23,7 @@ import { ToasterComponent } from './components/toaster/toaster.component';
         CommonModule,
         RouterModule,
         FontAwesomeModule,
+        NgbModule,
     ],
     exports: [
         FontAwesomeModule,

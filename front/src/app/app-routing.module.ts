@@ -16,8 +16,7 @@ const routes: Routes = [
 
           { path: '**', component: RedirectToComponent, data: { to: '/summary' } }
       ]
-  },
-  { path: 'income', loadChildren: () => import('./app/income/income.module').then(m => m.IncomeModule) }
+  }
 ];
 
 @NgModule({

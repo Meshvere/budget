@@ -1,12 +1,59 @@
-.toast   {
-   position: relative;
+@import "~src/variables";
 
-   .line {
-      display: flex;
-      flex-direction: row;
+$light: 10%;
 
-      .text {
-         margin-left: .5rem;
-      }
-   }
+.toast {
+    margin-top:0;
+
+    fa-icon {
+        margin-right: .25rem;
+    }
+
+    &.toast-loading, &.toast-success, &.toast-warning, &.toast-error {
+        .toast-header, .toast-body, .close {
+            color: $white;
+        }
+    }
+
+    &.toast-loading {
+        .toast-header {
+            background-color: $loading-color;
+            border-bottom: 1px solid darken($loading-color, $light);
+        }
+
+        .toast-body {
+            background-color: lighten($loading-color, $light);
+        }
+    }
+
+    &.toast-success {
+        .toast-header {
+            background-color: $success-color;
+            border-bottom: 1px solid darken($success-color, $light);
+        }
+
+        .toast-body {
+            background-color: lighten($success-color, $light);
+        }
+    }
+
+    &.toast-warning {
+        .toast-header {
+            background-color: $warning-color;
+        }
+
+        .toast-body {
+            background-color: lighten($warning-color, $light);
+        }
+    }
+
+    &.toast-error {
+        .toast-header {
+            background-color: $error-color;
+        }
+
+        .toast-body {
+            background-color: lighten($error-color, $light);
+        }
+    }
 }

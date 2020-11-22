@@ -1,6 +1,7 @@
 import {Account} from '../enum/account.enum';
 import {TimeService} from '../services/time.service';
 import {AbstractEntity} from './abstract-entity';
+import {UtilsService} from '../services/utils.service';
 
 
 export class Outcome extends AbstractEntity {
@@ -31,7 +32,7 @@ export class Outcome extends AbstractEntity {
             Object.assign(this, init);
 
             if(init['amount'] != undefined) {
-                this.amount = this.numberCut(this.amount);
+                this.amount = UtilsService.numberCut(this.amount);
             }
         }
 
@@ -39,15 +40,15 @@ export class Outcome extends AbstractEntity {
     }
 
     public get amountPaid():number {
-        return this.numberCut(this.shared?(this.amount/2):this.amount);
+        return UtilsService.numberCut(this.shared?(this.amount/2):this.amount);
     }
 
     public get refundAurelie():number {
-        return this.numberCut(this.shared && this.account == Account.MINE?(this.amount/2):0);
+        return UtilsService.numberCut(this.shared && this.account == Account.MINE?(this.amount/2):0);
     }
 
     public get refundMe():number {
-        return this.numberCut(this.shared && this.account == Account.COMMON?(this.amount/2):0);
+        return UtilsService.numberCut(this.shared && this.account == Account.COMMON?(this.amount/2):0);
     }
 
     public get active():boolean {

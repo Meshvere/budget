@@ -1,6 +1,11 @@
 .toaster {
-   app-toast {
-      margin-top: .5rem;
-      max-width: 25rem;
-   }
+    app-toast {
+        display: block;
+        margin-bottom: .5rem;
+        max-width: 25rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 }

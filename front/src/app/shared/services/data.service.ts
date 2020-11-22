@@ -1,27 +1,27 @@
+import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
-import {BehaviorSubject, Observable} from 'rxjs';
+import * as moment from 'moment';
+import 'moment/locale/fr';
+import {BehaviorSubject,Observable,of} from 'rxjs';
+import {flatMap} from 'rxjs/operators';
 import {NavEntry} from 'src/app/ui/models/nav-entry';
 import {Account} from '../enum/account.enum';
 import {Income} from '../models/income';
-import cloneDeep from 'lodash/cloneDeep';
-import { from, of } from 'rxjs';
-import { catchError, map, tap, flatMap } from 'rxjs/operators';
 import {Outcome} from '../models/outcome';
 import {Summary} from '../models/summary';
-import * as moment from 'moment';
-import 'moment/locale/fr';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {ToastService} from 'src/app/ui/services/toast.service';
+import {Toast} from 'src/app/ui/models/toast';
+import {BackResponse} from '../models/back-response';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DataService {
-    private _host:string = 'localhost';
+    private _host:string = '192.168.56.102';
     private _port:number = 3000;
     private _baseUrl:string = '/';
 
-    private _deltaMonth:number = 6;
+    private readonly _deltaMonth:number = 6;
     public summary$:BehaviorSubject<Summary[]>;
 
     public menuEntries$:BehaviorSubject<NavEntry[]>;
@@ -30,8 +30,8 @@ export class DataService {
     public dateEnd:moment.Moment;
 
     constructor(
-        private _db: AngularFirestore,
         private _http:HttpClient,
+        protected _toastService:ToastService,
     ) {
         let months:Summary[] = [];
         for(let i:number = - this._deltaMonth; i <= this._deltaMonth; i++) {
@@ -73,6 +73,7 @@ export class DataService {
 
     public getIncomes():Observable<Income[]> {
         let data:any = {start:this.dateStart, end: this.dateEnd};
+        let toastId:number = this._toastService.addToast('Recette', 'Recettes en cours de chargement', Toast.LOADING);
 
         return this._http.get<Income[]>(this._constructUrl('incomes'), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
@@ -82,14 +83,16 @@ export class DataService {
                     list.push(new Income(ev[i]));
                 }
 
+                this._toastService.closeToast(toastId);
+
                 return of(list);
             })
         );
     }
 
-    // TODO : make real synchro with DB
     public getIncome(id:string):Observable<Income> {
         let data:any = {id: id};
+        let toastId:number = this._toastService.addToast('Recette', 'Recette en cours de chargement', Toast.LOADING);
 
         return this._http.get<Income>(this._constructUrl('income?id='+id), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
@@ -98,6 +101,9 @@ export class DataService {
                 if(ev[0] != undefined) {
                     inc = new Income(ev[0]);
                 }
+
+                this._toastService.closeToast(toastId);
+                this._toastService.addToast('Recette', 'Recette récupérée', Toast.SUCCESS);
 
                 return of(inc);
             })
@@ -135,19 +141,19 @@ export class DataService {
         return of(out);
     }
 
-    public saveIncome(inc:Income):Observable<any> {
-        let data:any = {inc: inc};
+    public saveIncome(inc:Income):Observable<BackResponse> {
+        let toastId:number = this._toastService.addToast('Recette', 'Enregistrement de la recette en cours', Toast.LOADING);
+
+        let data:any = {inc: inc.toObject()};
 
         return this._http.put<any>(this._constructUrl('income'), this._getHttpHeader('PUT', data)).pipe(
             flatMap((ev) => {
-                console.log(ev)
-                // let list:Outcome[] = [];
+                let result:BackResponse = new BackResponse(ev);
 
-                // for(let i = 0; i < ev['length']; i++) {
-                //     list.push(new Outcome(ev[i]));
-                // }
+                this._toastService.closeToast(toastId);
+                this._handleResponse(result, 'Recette', 'Recette enregistrée');
 
-                return of(undefined);
+                return of(result);
             })
         );
 
@@ -237,9 +243,21 @@ export class DataService {
           // Let the app keep running by returning an empty result.
           return of(result as T);
         };
-      }
+    }
 
-      private _constructUrl(path:string):string {
+    private _constructUrl(path:string):string {
           return 'http://'+this._host+':'+this._port+this._baseUrl+path;
-      }
+    }
+
+    private _handleResponse(result:BackResponse, title:string, message:string) {
+        if(result.affectedRows > 0) {
+            this._toastService.addToast(title, message, Toast.SUCCESS);
+        } else {
+            this._toastService.addToast(title, result.message, Toast.ERROR, false);
+        }
+    }
+
+    private _notifyError(title:string, message:string) {
+        this._toastService.addToast(title, message, Toast.ERROR, false);
+    }
 }

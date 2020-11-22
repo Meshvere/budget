@@ -1,37 +1,53 @@
 import * as moment from 'moment';
 import 'moment/locale/fr';
 import {TimeService} from '../services/time.service';
+import {UtilsService} from '../services/utils.service';
+import {EntityProperty} from './entity-property';
 
 export class AbstractEntity implements AbstractEntityI {
-    public id:string;
-    public date:Date;
-    protected _roundFactor:number = 100;
+    public id:number = -1;
+    public date:Date = new Date(TimeService.undefinedDate);
 
     constructor(init?:Partial<AbstractEntity>) {
-        if(init != undefined && init.date != undefined) {
-            console.log('----------------------------')
-            console.log(init.date)
-            this.date = new Date(init.date);
-            console.log(this.date)
+    }
+
+    protected _castDatas(src?:Partial<AbstractEntity>):Partial<AbstractEntity> {
+        if(src == undefined) {
+            src = this;
         }
+        let properties:EntityProperty[] = UtilsService.getProperties(this);
+        let castableProps:EntityProperty[] = properties.filter(prop => UtilsService.castableTypes.indexOf(prop.type) >= 0);
+        this._purgeDefault(properties);
+
+        if(src != undefined) {
+            castableProps.forEach(prop => {
+                src[prop.name] = UtilsService.castProp(src[prop.name], prop.type);
+            });
+        }
+
+        this._purgeDefault(properties, src);
+
+        return src;
     }
 
     public toObject():any {
+        let properties:EntityProperty[] = UtilsService.getProperties(this);
+
         let obj:any = JSON.parse(JSON.stringify(this));
 
-        let removeField:string[] = [];
+        properties.forEach(prop => {
+            if(prop.name.substr(0, 1) == '_') {
+                delete obj[prop.name];
+            } else if(UtilsService.castableTypes.indexOf(prop.type) >= 0) {
+                obj[prop.name] = UtilsService.castProp(obj[prop.name], prop.type);
 
-        for(let elemName of Object.keys(this)) {
-            if(elemName.substr(0, 1) == '_' || removeField.indexOf(elemName) >= 0) {
-                delete obj[elemName];
+                if(prop.type == 'Date') {
+                    obj[prop.name] = TimeService.yyyyMmDd(obj[prop.name]);
+                }
             }
-        }
+        })
 
         return obj;
-    }
-
-    public numberCut(num:number):number {
-        return Math.round(num * this._roundFactor) / this._roundFactor;
     }
 
     public removeNull() {
@@ -51,24 +67,35 @@ export class AbstractEntity implements AbstractEntityI {
     public get monthKey():string {
         return TimeService.parseDate(this.date).format(TimeService.yearMonthFormat);
     }
+
+    protected _purgeDefault(properties:EntityProperty[], src?:any) {
+        if(src == undefined) {
+            src = this;
+        }
+        properties.forEach(prop => {
+            if(prop.type == 'Date') {
+                src[prop.name] = TimeService.purgeDefaultDate(src[prop.name]);
+            } else if(prop.type == 'String') {
+                src[prop.name] = src[prop.name] == ''?undefined:src[prop.name];
+            } else if(prop.type == 'Number') {
+                src[prop.name] = src[prop.name] == 0?undefined:src[prop.name];
+            }
+
+            if(prop.name == 'id') {
+                if(src[prop.name] != undefined && src[prop.name] <= 0) {
+                    src[prop.name] = undefined;
+                }
+            }
+        });
+    }
 }
 
-// export class AbstractEntityMapping {
-//     public from:string;
-//     public to:string;
-
-//     constructor(init?:Partial<AbstractEntityMapping>) {
-//         Object.assign(this, init);
-//     }
-// }
-
 export interface AbstractEntityI {
-    id:string;
+    id:number;
     date:Date;
     monthKey:string;
 
     toObject():any;
-    numberCut(num:number):number;
     removeNull();
     getMonth(field:string):string;
 }
