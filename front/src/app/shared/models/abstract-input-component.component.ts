@@ -1,9 +1,10 @@
-import {ChangeDetectorRef,EventEmitter,Input,OnChanges,Output,SimpleChanges} from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, Directive } from '@angular/core';
 import {FormControl,ValidatorFn,Validators} from '@angular/forms';
 import {ToastService} from 'src/app/ui/services/toast.service';
 import {AbstractComponent} from './abstract-component';
 import {InputErrorModel} from './input-error-model';
 
+@Directive()
 export class AbstractInputComponent extends AbstractComponent implements OnChanges {
     protected _changeWatch:string[] = [];
     @Input() public needValidation:boolean = true;

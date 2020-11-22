@@ -15,7 +15,7 @@ export class RedirectToComponent implements OnInit {
 
     public ngOnInit() {
         this._route.data.subscribe((data) => {
-            this._router.navigate([data.to], { preserveQueryParams: true });
+            this._router.navigate([data.to], { queryParamsHandling: 'preserve' });
         });
     }
 }
