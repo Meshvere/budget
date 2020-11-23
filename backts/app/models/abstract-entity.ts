@@ -13,10 +13,7 @@ export class AbstractEntity {
 
     constructor(init?:Partial<AbstractEntity>) {
         if(init != undefined && init.date != undefined) {
-            // console.log('----------------------------')
-            // console.log(init.date)
             this.date = new Date(init.date);
-            // console.log(this.date)
         }
     }
 
@@ -59,7 +56,7 @@ export class AbstractEntity {
                         value = value === true?1:0;
                     break;
                     case 'string':
-                        value = "'" + value + "'";
+                        value = "'" + value.replace("'", "''") + "'";
                     break;
                 }
 
@@ -80,13 +77,12 @@ export class AbstractEntity {
                 let value:any = this[field];
 
                 if(this[field] != undefined) {
-                    console.log(this[field].constructor.name)
                     switch(typeof this[field]) {
                         case 'boolean':
                             value = value === true?1:0;
                         break;
                         case 'string':
-                            value = "'" + value + "'";
+                            value = "'" + value.replace("'", "''") + "'";
                         break;
                     }
                 } else {

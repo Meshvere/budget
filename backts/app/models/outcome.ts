@@ -1,7 +1,5 @@
-import {Account} from '../enum/account.enum';
-import {TimeService} from '../services/time.service';
+import {Account} from './account.enum';
 import {AbstractEntity} from './abstract-entity';
-
 
 export class Outcome extends AbstractEntity {
     public account:Account = Account.MINE;
@@ -20,8 +18,11 @@ export class Outcome extends AbstractEntity {
     public start_on:Date;
     public end_on:Date;
 
+
     constructor(init?:Partial<Outcome>) {
         super(init);
+
+        this._table = 'outcome';
 
         if(init != undefined) {
             if(init['account'] != undefined) {
@@ -38,21 +39,7 @@ export class Outcome extends AbstractEntity {
         this.removeNull();
     }
 
-    public get amountPaid():number {
+    public get amountRecieved():number {
         return this.numberCut(this.shared?(this.amount/2):this.amount);
-    }
-
-    public get refundAurelie():number {
-        return this.numberCut(this.shared && this.account == Account.MINE?(this.amount/2):0);
-    }
-
-    public get refundMe():number {
-        return this.numberCut(this.shared && this.account == Account.COMMON?(this.amount/2):0);
-    }
-
-    public get active():boolean {
-        // return this.date != undefined && this.start_on != undefined && this.end_on != undefined && this.date.getTime() >= this.start_on.getTime() && this.date.getTime() <= this.end_on.getTime();
-
-        return false
     }
 }

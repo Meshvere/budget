@@ -1,4 +1,5 @@
 import {Income} from './models/income';
+import {Outcome} from './models/outcome';
 
 const express = require('express');
 const app = express();
@@ -17,7 +18,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: function (origin, callback) {
+    origin: function (origin:any, callback:any) {
         callback(null, true)
         // if (process.env.ALLOW_ORIGIN.indexOf(origin) !== -1) {
         //     callback(null, true)
@@ -28,21 +29,21 @@ app.use(cors({
 }));
 
 // ------------- ROUTES ----------------------------
-app.get('/', function (req, res) {
+app.get('/', function (req:any, res:any) {
     res.send('Hello World!');
 });
 
-app.get('/incomes', function (req, res) {
+app.get('/incomes', function (req:any, res:any) {
     const rows = db.doQuery("SELECT * FROM income ORDER BY `date`, recurrent", queryCallback(res));
 });
 
-app.get('/income/', function (req, res) {
+app.get('/income/', function (req:any, res:any) {
     let id = req.query.id;
 
     const rows = db.doQuery("SELECT * FROM income WHERE id = '"+id+"'", queryCallback(res));
 });
 
-app.put('/income/', function (req, res) {
+app.put('/income/', function (req:any, res:any) {
     let inc = new Income(req.body.body.inc);
     let sqlQuery = '';
 
@@ -51,18 +52,56 @@ app.put('/income/', function (req, res) {
     } else {
         sqlQuery = inc.getUpdateQuery();
     }
-console.log(sqlQuery);
+
     const rows = db.doQuery(sqlQuery, queryCallback(res));
 });
 
-app.get('/outcomes', function (req, res) {
+app.put('/incomes', function (req:any, res:any) {
+    let rows:any[] = [];
+
+    req.body.body.datas.forEach((rawInc:Income) => {
+        let inc:Income = new Income(rawInc);
+        let sqlQuery = '';
+
+        if(inc.id == undefined) {
+            sqlQuery = inc.getInsertQuery();
+        } else {
+            sqlQuery = inc.getUpdateQuery();
+        }
+
+        rows.push(db.doQuery(sqlQuery));
+    })
+
+    res.send([true]);
+});
+
+app.put('/outcomes', function (req:any, res:any) {
+    let rows:any[] = [];
+
+    req.body.body.datas.forEach((rawOut:Outcome) => {
+        let out:Outcome = new Outcome(rawOut);
+        let sqlQuery = '';
+
+        if(out.id == undefined) {
+            sqlQuery = out.getInsertQuery();
+        } else {
+            sqlQuery = out.getUpdateQuery();
+        }
+
+        rows.push(db.doQuery(sqlQuery));
+    })
+
+    res.send([true]);
+});
+
+app.get('/outcomes', function (req:any, res:any) {
     const rows = db.doQuery("SELECT * FROM outcome ORDER BY `date`", queryCallback(res));
 });
 
 // ----------- FUNCTIONS ---------------
 
 function queryCallback(res) {
-    return function(err, rows) {
+    return function(err:any, rows:any) {
         if(err) {
             errHandle(res, err);
 
@@ -73,12 +112,12 @@ function queryCallback(res) {
     }
 }
 
-function errHandle(res, err) {
+function errHandle(res:any, err:any) {
     res.status(500);
     res.send(err.message);
 }
 
-function sendResponse(res, data) {
+function sendResponse(res:any, data:any) {
     return new Promise((resolve) => {
         res.status(200);
         res.send(data);
@@ -87,9 +126,9 @@ function sendResponse(res, data) {
 }
 
 // We use data attribute to store all results
-function recursivePromise(promiseList, index, data, appList, appIndexList) {
+function recursivePromise(promiseList:any, index:any, data:any, appList:any, appIndexList:any) {
     if (index < promiseList.length) {
-        return promiseList[index]().then((result) => {
+        return promiseList[index]().then((result:any) => {
             data.push(result);
             appList[appIndexList[index]].alreadyinstalled = true;
             return recursivePromise(promiseList, index + 1, data, appList, appIndexList);
