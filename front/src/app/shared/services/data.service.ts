@@ -4,19 +4,20 @@ import * as moment from 'moment';
 import 'moment/locale/fr';
 import {BehaviorSubject,Observable,of} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
-import {NavEntry} from 'src/app/ui/models/nav-entry';
+import {NavEntry} from '../../ui/models/nav-entry';
 import {Account} from '../enum/account.enum';
 import {Income} from '../models/income';
 import {Outcome} from '../models/outcome';
 import {Summary} from '../models/summary';
-import {ToastService} from 'src/app/ui/services/toast.service';
-import {Toast} from 'src/app/ui/models/toast';
+import {ToastService} from '../../ui/services/toast.service';
+import {Toast} from '../../ui/models/toast';
 import {BackResponse} from '../models/back-response';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DataService {
+    private _titles:any = {income: 'Recette', outcome: 'Dépense'};
     private _host:string = '192.168.56.102';
     private _port:number = 3000;
     private _baseUrl:string = '/';
@@ -61,7 +62,7 @@ export class DataService {
 
         //TODO : refactor from routing
         navEntryList.push(new NavEntry({label:'Bilan', path:'summary'}));
-        navEntryList.push(new NavEntry({label:'Recette', path:'income'}));
+        navEntryList.push(new NavEntry({label:this._titles.income, path:'income'}));
         navEntryList.push(new NavEntry({label:'Dépenses', path:'outcome'}));
         navEntryList.push(new NavEntry({label:'Remboursements', path:'refund'}));
         navEntryList.push(new NavEntry({label:'Tickets resto', path:'food-ticket'}));
@@ -73,7 +74,7 @@ export class DataService {
 
     public getIncomes():Observable<Income[]> {
         let data:any = {start:this.dateStart, end: this.dateEnd};
-        let toastId:number = this._toastService.addToast('Recette', 'Recettes en cours de chargement', Toast.LOADING);
+        let toastId:number = this._toastService.addToast(this._titles.income, 'Recettes en cours de chargement', Toast.LOADING);
 
         return this._http.get<Income[]>(this._constructUrl('incomes'), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
@@ -92,7 +93,7 @@ export class DataService {
 
     public getIncome(id:string):Observable<Income> {
         let data:any = {id: id};
-        let toastId:number = this._toastService.addToast('Recette', 'Recette en cours de chargement', Toast.LOADING);
+        let toastId:number = this._toastService.addToast(this._titles.income, 'Recette en cours de chargement', Toast.LOADING);
 
         return this._http.get<Income>(this._constructUrl('income?id='+id), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
@@ -103,7 +104,7 @@ export class DataService {
                 }
 
                 this._toastService.closeToast(toastId);
-                this._toastService.addToast('Recette', 'Recette récupérée', Toast.SUCCESS);
+                this._toastService.addToast(this._titles.income, 'Recette récupérée', Toast.SUCCESS);
 
                 return of(inc);
             })
@@ -142,7 +143,7 @@ export class DataService {
     }
 
     public saveIncome(inc:Income):Observable<BackResponse> {
-        let toastId:number = this._toastService.addToast('Recette', 'Enregistrement de la recette en cours', Toast.LOADING);
+        let toastId:number = this._toastService.addToast(this._titles.income, 'Enregistrement de la recette en cours', Toast.LOADING);
 
         let data:any = {inc: inc.toObject()};
 
@@ -151,7 +152,7 @@ export class DataService {
                 let result:BackResponse = new BackResponse(ev);
 
                 this._toastService.closeToast(toastId);
-                this._handleResponse(result, 'Recette', 'Recette enregistrée');
+                this._handleResponse(result, this._titles.income, 'Recette enregistrée');
 
                 return of(result);
             })
@@ -160,21 +161,44 @@ export class DataService {
     }
 
     public saveOutcome(out:Outcome):Observable<any> {
-        return of(undefined);
-        // if(out.id != undefined) {
-        //     return from(this._db.collection<Outcome>('/outcome').doc(out.id).set(out.toObject()));
-        // } else {
-        //     return from(this._db.collection<Outcome>('/outcome').add(out.toObject()));
-        // }
+        let toastId:number = this._toastService.addToast(this._titles.income, 'Enregistrement de la recette en cours', Toast.LOADING);
+
+        let data:any = {out: out.toObject()};
+
+        return this._http.put<any>(this._constructUrl('outcome'), this._getHttpHeader('PUT', data)).pipe(
+            flatMap((ev) => {
+                let result:BackResponse = new BackResponse(ev);
+
+                this._toastService.closeToast(toastId);
+                this._handleResponse(result, this._titles.income, 'Recette enregistrée');
+
+                return of(result);
+            })
+        );
     }
 
     public saveMass(path:string, datas:any[]):Observable<any> {
-        return of(undefined);
-        // return from(this._db.collection('/'+path).doc('/'+path).delete().then(value => {
-        //     for(let elem of datas) {
-        //         // from(this._db.collection('/'+path).add(elem.toObject()));
-        //     }
-        // }));
+        let toastId:number = this._toastService.addToast(this._titles.income, 'Enregistrement de masse en cours', Toast.LOADING);
+
+        let sendableDatas:Array<Income|Outcome> = [];
+
+        datas.forEach(item => {
+            sendableDatas.push(item.toObject());
+        })
+
+        let data:any = {datas: sendableDatas};
+
+        return this._http.put<any>(this._constructUrl(path), this._getHttpHeader('PUT', data)).pipe(
+            flatMap((ev) => {
+                let result:BackResponse = new BackResponse(ev);
+
+                this._toastService.closeToast(toastId);
+                this._handleResponse(result, this._titles.income, 'Recette enregistrée');
+
+                return of(result);
+            },
+            (err) => {console.error(err)})
+        );
     }
 
     public getAccounts():BehaviorSubject<string[]> {

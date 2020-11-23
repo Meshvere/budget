@@ -18,7 +18,10 @@ export class UtilsService {
             let props:any = Object.getOwnPropertyDescriptors(o);
 
             Object.keys(props).forEach(key => {
-                properties.push(new EntityProperty({name:key, type:props[key].value.constructor.name}));
+                let value:any = props[key].value;
+                if(value) {
+                    properties.push(new EntityProperty({name:key, type:value.constructor.name}));
+                }
             });
 
             this._properties[className] = properties;

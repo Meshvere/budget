@@ -6,34 +6,48 @@ import {UtilsService} from '../services/utils.service';
 
 export class Outcome extends AbstractEntity {
     public account:Account = Account.MINE;
-    public recipient:string;
-    public label:string;
-    public amount:number;
+    public recipient:string = '';
+    public label:string = '';
+    public amount:number = 0;
     public end_of_month:boolean = false;
     public shared:boolean = false;
     public waiting:boolean = false;
     public refunded:boolean = false;
     public on_account:boolean = false;
-    public comment:string;
+    public comment:string = '';
 
     public recurrent:boolean = false;
     public day:number = 0;
     public start_on:Date;
     public end_on:Date;
 
+    // constructor(init?:Partial<Outcome>) {
+    //     super(init);
+
+    //     if(init != undefined) {
+    //         if(init['account'] != undefined) {
+    //             init.account = init['account'] == Account.MINE?Account.MINE:Account.COMMON;
+    //         }
+
+    //         Object.assign(this, init);
+
+    //         if(init['amount'] != undefined) {
+    //             this.amount = UtilsService.numberCut(this.amount);
+    //         }
+    //     }
+
+    //     this.removeNull();
+    // }
+
     constructor(init?:Partial<Outcome>) {
         super(init);
 
-        if(init != undefined) {
-            if(init['account'] != undefined) {
-                init.account = init['account'] == Account.MINE?Account.MINE:Account.COMMON;
-            }
+        init = this._castDatas(init);
 
-            Object.assign(this, init);
+        Object.assign(this, init);
 
-            if(init['amount'] != undefined) {
-                this.amount = UtilsService.numberCut(this.amount);
-            }
+        if(this.amount != undefined) {
+            this.amount = UtilsService.numberCut(this.amount);
         }
 
         this.removeNull();

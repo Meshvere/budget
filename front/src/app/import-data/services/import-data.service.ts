@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {Observable,Subscriber} from 'rxjs';
 import {flatMap, map} from 'rxjs/operators';
 import * as xlsx from 'xlsx';
-import {XlsxSheetData} from 'src/app/shared/models/xlsx-sheet-data';
+import {XlsxSheetData} from '../../shared/models/xlsx-sheet-data';
 
 @Injectable({
   providedIn: 'root'
