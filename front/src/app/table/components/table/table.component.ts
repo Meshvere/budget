@@ -1,21 +1,38 @@
-import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
-import {AbstractComponent} from 'src/app/shared/models/abstract-component';
-import {ToastService} from 'src/app/ui/services/toast.service';
-import {TableColumn} from '../../models/table-column';
-import {IconService} from 'src/app/ui/services/icon.service';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AbstractComponent} from '../../../shared/models/abstract-component';
+import {IconService} from '../../../ui/services/icon.service';
+import {ToastService} from '../../../ui/services/toast.service';
 import {TableAction, TableActionRouteTo} from '../../models/table-action';
-import {ActivatedRoute,Router} from '@angular/router';
+import {TableColumn, TableColumnFilter, TableFilterValue} from '../../models/table-column';
+import cloneDeep from 'lodash/cloneDeep';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent extends AbstractComponent {
+export class TableComponent extends AbstractComponent  implements OnChanges {
     @Input() public title:string;
     @Input() public columns:TableColumn[] = [];
     @Input() public actions:TableAction[] = [];
-    @Input() public rows:any[] = [];
+    private _rows: any[]=[];
+    @Input()
+    public get rows(): any[] {
+        return this._rows;
+    }
+    public set rows(value: any[]) {
+        this._rows=value;
+
+        this._filterRows();
+
+        this._cd.markForCheck();
+    }
+
+    public filteredRows:any = [];
+
+    public filters:TableColumnFilter[] = [];
 
     constructor(
         protected _cd:ChangeDetectorRef,
@@ -27,12 +44,74 @@ export class TableComponent extends AbstractComponent {
         super(_cd, _toastService);
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
+    }
+
+    public ngOnChanges(changes: SimpleChanges): void {
+        if(changes.columns) {
+            this.filters = [];
+
+            this.columns.forEach(col => {
+                if(col.filter) {
+                    this.filters.push(new TableColumnFilter(col));
+                }
+            });
+        }
+        if(changes.rows) {
+            this.filters.forEach(filter => {
+                filter.values = [];
+
+                if(filter.cellType == 'boolean') {
+                    filter.values.push(new TableFilterValue());
+                } else {
+                    this.rows.forEach(row => {
+                        let val:any = row[filter.field];
+
+                        if(filter.values.map(item => item.value).indexOf(val) < 0) {
+                            filter.values.push(new TableFilterValue({value:val, label:val}));
+                        }
+                    });
+                }
+            });
+        }
+
+        if(changes.columns || changes.rows || changes.filters) {
+            this._filterRows();
+        }
     }
 
     public doAction(row:any, action:TableActionRouteTo) {
         if(action.constructor.name == 'TableActionRouteTo') {
             this._router.navigate(action.getRoute(row));
         }
+    }
+
+    public toggleFilter($event:boolean, filter:TableColumnFilter) {
+        filter.active = $event;
+
+        this._filterRows();
+
+        this._cd.markForCheck();
+    }
+
+    public filterValueChange($event) {
+        this._filterRows();
+
+        this._cd.markForCheck();
+    }
+
+    private _filterRows() {
+        let filteredRows:any[] = cloneDeep(this.rows);
+
+        this.filters.forEach(filter => {
+            if(filter.active) {
+                filteredRows = filteredRows.filter(item => {
+
+                    return item[filter.field] === filter.filterValue;
+                });
+            }
+        });
+
+        this.filteredRows = filteredRows;
     }
 }

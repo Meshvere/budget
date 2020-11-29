@@ -27,18 +27,18 @@ export class OutcomeComponent extends AbstractComponent {
     ) {
         super(_cd, _toastService);
 
-        this.tableColumnsDaily.push(new TableColumn({label: 'Mois', field:'date', cellType:'month'}));
+        this.tableColumnsDaily.push(new TableColumn({label: 'Mois', field:'date', cellType:'month', filter:true}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));
-        this.tableColumnsDaily.push(new TableColumn({label: 'Compte', field:'account', cellType:'raw'}));
+        this.tableColumnsDaily.push(new TableColumn({label: 'Compte', field:'account', cellType:'raw', filter:true}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Bénéficiaire', field:'recipient', cellType:'raw'}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Objet', field:'label', cellType:'raw'}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Montant', field:'amount', cellType:'money'}));
-        this.tableColumnsDaily.push(new TableColumn({label: 'Encours', field:'end_of_month', cellType:'boolean'}));
-        this.tableColumnsDaily.push(new TableColumn({label: 'Partagé', field:'shared', cellType:'boolean'}));
-        this.tableColumnsDaily.push(new TableColumn({label: 'En attente', field:'waiting', cellType:'boolean'}));
-        this.tableColumnsDaily.push(new TableColumn({label: 'Remboursé', field:'refund', cellType:'boolean'}));
+        this.tableColumnsDaily.push(new TableColumn({label: 'Encours', field:'end_of_month', cellType:'boolean', filter:true}));
+        this.tableColumnsDaily.push(new TableColumn({label: 'Partagé', field:'shared', cellType:'boolean', filter:true}));
+        this.tableColumnsDaily.push(new TableColumn({label: 'En attente', field:'waiting', cellType:'boolean', filter:true}));
+        this.tableColumnsDaily.push(new TableColumn({label: 'Remboursé', field:'refund', cellType:'boolean', filter:true}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Montant dépensé', field:'amountPaid', cellType:'money'}));
-        this.tableColumnsDaily.push(new TableColumn({label: 'Passé sur le compte', field:'on_account', cellType:'boolean'}));
+        this.tableColumnsDaily.push(new TableColumn({label: 'Passé sur le compte', field:'on_account', cellType:'boolean', filter:true}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Commentaire', field:'comment', cellType:'raw'}));
 
         this.tableColumnsRecurrent.push(new TableColumn({label: 'Actif', field:'active', cellType:'boolean'}));

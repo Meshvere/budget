@@ -17,6 +17,7 @@ export class AbstractEntity implements AbstractEntityI {
         }
         let properties:EntityProperty[] = UtilsService.getProperties(this);
         let castableProps:EntityProperty[] = properties.filter(prop => UtilsService.castableTypes.indexOf(prop.type) >= 0);
+
         this._purgeDefault(properties);
 
         if(src != undefined) {

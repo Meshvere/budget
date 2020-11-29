@@ -6,7 +6,7 @@ import {EntityProperty} from '../models/entity-property';
 })
 export class UtilsService {
     public static readonly roundFactor:number = 100;
-    public static readonly castableTypes:string[] = ['Date'];
+    public static readonly castableTypes:string[] = ['Date', 'Boolean'];
 
     protected static _properties:any = {};
 
@@ -19,7 +19,8 @@ export class UtilsService {
 
             Object.keys(props).forEach(key => {
                 let value:any = props[key].value;
-                if(value) {
+
+                if(value !== undefined) {
                     properties.push(new EntityProperty({name:key, type:value.constructor.name}));
                 }
             });
@@ -36,6 +37,7 @@ export class UtilsService {
     public static castProp(prop:any, type:string):any {
         switch(type) {
             case 'Date': prop = prop != undefined?new Date(prop):undefined;break;
+            case 'Boolean': prop = prop != undefined?(prop === true || prop === 'true' || prop === '1' || prop === 1):undefined;break;
         }
 
         return prop;

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import {AbstractInputComponent} from 'src/app/shared/models/abstract-input-component.component';
-import {ToastService} from 'src/app/ui/services/toast.service';
+import {AbstractInputComponent} from '../../../../shared/models/abstract-input-component.component';
+import {ToastService} from '../../../../ui/services/toast.service';
 
 @Component({
   selector: 'boolean-input',
@@ -13,6 +13,10 @@ export class BooleanInputComponent extends AbstractInputComponent {
     @Input() public labelTrue:string = 'Oui';
     @Input() public labelFalse:string = 'Non';
 
+    public get switchValue():boolean {
+        return this.value === 'true' || this.value === true || this.value === 1;
+    }
+
     constructor(
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
@@ -20,9 +24,9 @@ export class BooleanInputComponent extends AbstractInputComponent {
         super(_cd, _toastService);
     }
 
-    public valueChanged($event) {
-        this.valueChange.emit($event.target.value === 'true');
+    public switchState($event:Event) {
+        this.value = $event.target['value'] === 'true' || $event.target['value'] === true || this.value === 1;
 
-        this._cd.markForCheck();
+        this.valueChange.emit(this.value);
     }
 }

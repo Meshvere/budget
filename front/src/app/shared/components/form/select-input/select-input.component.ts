@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component,Input} from '@angular/core';
-import {AbstractInputComponent} from 'src/app/shared/models/abstract-input-component.component';
-import {SelectModel} from 'src/app/shared/models/select-model';
-import {ToastService} from 'src/app/ui/services/toast.service';
+import {AbstractInputComponent} from '../../../models/abstract-input-component.component';
+import {SelectModel} from '../../../models/select-model';
+import {ToastService} from '../../../../ui/services/toast.service';
 
 @Component({
   selector: 'select-input',

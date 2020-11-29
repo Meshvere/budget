@@ -1,16 +1,15 @@
-import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
-import {ActivatedRoute,Router} from '@angular/router';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
-import {Observable,of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
-import {AbstractComponent} from 'src/app/shared/models/abstract-component';
-import {Income} from 'src/app/shared/models/income';
-import {InputErrorMessageModel,InputErrorModel} from 'src/app/shared/models/input-error-model';
-import {SelectModel} from 'src/app/shared/models/select-model';
-import {DataService} from 'src/app/shared/services/data.service';
-import {Toast} from 'src/app/ui/models/toast';
-import {IconService} from 'src/app/ui/services/icon.service';
-import {ToastService} from 'src/app/ui/services/toast.service';
+import {AbstractComponent} from '../../../shared/models/abstract-component';
+import {Income} from '../../../shared/models/income';
+import {InputErrorMessageModel, InputErrorModel} from '../../../shared/models/input-error-model';
+import {SelectModel} from '../../../shared/models/select-model';
+import {DataService} from '../../../shared/services/data.service';
+import {IconService} from '../../../ui/services/icon.service';
+import {ToastService} from '../../../ui/services/toast.service';
 
 @Component({
     selector: 'app-income-form',
@@ -104,6 +103,18 @@ export class IncomeFormComponent extends AbstractComponent {
 
     public valueChange(value:any, prop:string) {
         this.curIncome[prop] = value;
+
+        if(prop == 'recurrent') {
+            let reset:string[] = [];
+
+            if(this.curIncome.recurrent) {
+                reset.push('date');
+            } else {
+                reset.push('recurrent_day', 'recurrent_start', 'recurrent_stop');
+            }
+
+            reset.forEach(prop => this.curIncome[prop] = undefined);
+        }
 
         this._cd.markForCheck();
     }

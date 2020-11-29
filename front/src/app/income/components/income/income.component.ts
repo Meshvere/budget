@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
-import {AbstractComponent} from 'src/app/shared/models/abstract-component';
-import {Income} from 'src/app/shared/models/income';
-import {DataService} from 'src/app/shared/services/data.service';
-import {TableAction, TableActionRouteTo, TableActionRouteToElem} from 'src/app/table/models/table-action';
-import {TableColumn} from 'src/app/table/models/table-column';
-import {IconService} from 'src/app/ui/services/icon.service';
-import {ToastService} from 'src/app/ui/services/toast.service';
+import {AbstractComponent} from '../../../shared/models/abstract-component';
+import {Income} from '../../../shared/models/income';
+import {DataService} from '../../../shared/services/data.service';
+import {TableAction, TableActionRouteTo, TableActionRouteToElem} from '../../../table/models/table-action';
+import {TableColumn} from '../../../table/models/table-column';
+import {IconService} from '../../../ui/services/icon.service';
+import {ToastService} from '../../../ui/services/toast.service';
 import {Router, ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
 import 'moment/locale/fr';
@@ -32,16 +32,18 @@ export class IncomeComponent extends AbstractComponent {
     ) {
         super(_cd, _toastService);
 
-        this.tableColumns.push(new TableColumn({label: 'Mois', field:'date', cellType:'month'}));
+        this.tableColumns.push(new TableColumn({label: 'Mois', field:'date', cellType:'month', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));
-        this.tableColumns.push(new TableColumn({label: 'Compte', field:'account', cellType:'raw'}));
+        this.tableColumns.push(new TableColumn({label: 'Compte', field:'account', cellType:'raw', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Objet', field:'label', cellType:'raw'}));
         this.tableColumns.push(new TableColumn({label: 'Montant', field:'amount', cellType:'money'}));
-        this.tableColumns.push(new TableColumn({label: 'Partagé', field:'shared', cellType:'boolean'}));
-        this.tableColumns.push(new TableColumn({label: 'Récurrent', field:'recurrent', cellType:'boolean'}));
+        this.tableColumns.push(new TableColumn({label: 'Partagé', field:'shared', cellType:'boolean', filter: true}));
+        this.tableColumns.push(new TableColumn({label: 'Récurrent', field:'recurrent', cellType:'boolean', filter: true}));
+        this.tableColumns.push(new TableColumn({label: 'Du', field:'recurrent_start', cellType:'date', filter: true}));
+        this.tableColumns.push(new TableColumn({label: 'Au', field:'recurrent_stop', cellType:'date', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Montant perçu', field:'amountRecieved', cellType:'money'}));
-        this.tableColumns.push(new TableColumn({label: 'Passé sur le compte', field:'on_account', cellType:'boolean'}));
-        this.tableColumns.push(new TableColumn({label: 'En attente', field:'waiting', cellType:'boolean'}));
+        this.tableColumns.push(new TableColumn({label: 'Passé sur le compte', field:'on_account', cellType:'boolean', filter: true}));
+        this.tableColumns.push(new TableColumn({label: 'En attente', field:'waiting', cellType:'boolean', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Commentaire', field:'comment', cellType:'raw'}));
 
         this.tableActions.push(new TableAction({label: 'Modifier la recette', icon: 'edit', action:new TableActionRouteTo({route:[

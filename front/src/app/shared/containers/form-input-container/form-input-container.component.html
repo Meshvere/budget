@@ -1,13 +1,25 @@
-<div class="form-group">
-    <label *ngIf="this.label != undefined">{{this.label}}</label>
-    <div class="input-group" [class.fullWidth]="this.fullWidth">
-        <div class="input-group-prepend" *ngIf="this.icon != undefined && this.iconPosition=='before'">
-            <fa-icon class="input-group-text" [icon]="this.icon"></fa-icon>
+<div class="form-group" [class.card]="showAsCard">
+    <div [class.card-body]="showAsCard">
+        <h5 class="card-title" *ngIf="showAsCard">
+            <div class="form-check" [class.card-title]="showAsCard">
+                <input class="form-check-input" type="checkbox" [id]="this.inputId" [value]="true" *ngIf="this.togglable" [(ngModel)]="this.openState">
+                <label class="form-check-label" [for]="this.inputId" *ngIf="this.label != undefined">{{this.label}}</label>
+            </div>
+        </h5>
+        <div class="form-check" *ngIf="!showAsCard">
+            <input class="form-check-input" type="checkbox" [id]="this.inputId" [value]="true" *ngIf="this.togglable" [(ngModel)]="this.openState">
+            <label class="form-check-label" [for]="this.inputId" *ngIf="this.label != undefined">{{this.label}}</label>
         </div>
-        <ng-content [class.fullWidth]="this.fullWidth"></ng-content>
-        <div class="input-group-append" *ngIf="this.icon != undefined && this.iconPosition!='before'">
-            <fa-icon class="input-group-text" [icon]="this.icon"></fa-icon>
+        <!-- <label *ngIf="this.label != undefined">{{this.label}}</label> -->
+        <div class="input-group" [class.card-text]="showAsCard" [class.fullWidth]="this.fullWidth" [class.hidden]="!this.showGroup">
+            <div class="input-group-prepend" *ngIf="this.icon != undefined && this.iconPosition=='before'">
+                <fa-icon class="input-group-text" [icon]="this.icon"></fa-icon>
+            </div>
+            <ng-content [class.fullWidth]="this.fullWidth"></ng-content>
+            <div class="input-group-append" *ngIf="this.icon != undefined && this.iconPosition!='before'">
+                <fa-icon class="input-group-text" [icon]="this.icon"></fa-icon>
+            </div>
         </div>
+        <p *ngFor="let error of this.errorList" class="form-text invalid-feedback">{{error}}</p>
     </div>
-    <p *ngFor="let error of this.errorList" class="form-text invalid-feedback">{{error}}</p>
-  </div>
+</div>

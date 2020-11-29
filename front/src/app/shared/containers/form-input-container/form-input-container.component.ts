@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
+import {ToastService} from '../../../ui/services/toast.service';
 import {AbstractComponent} from '../../models/abstract-component';
-import {ToastService} from 'src/app/ui/services/toast.service';
-import {InputErrorModel, InputErrorMessageModel} from '../../models/input-error-model';
+import {InputErrorMessageModel, InputErrorModel} from '../../models/input-error-model';
 
 @Component({
     selector: 'form-input-container',
@@ -11,11 +11,28 @@ import {InputErrorModel, InputErrorMessageModel} from '../../models/input-error-
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormInputContainerComponent extends AbstractComponent implements OnInit {
+    @Input() public showAsCard:boolean = false;
+
     @Input() public label:string;
     @Input() public icon:IconDefinition;
     @Input() public iconPosition:string = 'before';
     @Input() public fullWidth:boolean = false;
     @Input() public message:string;
+
+    @Output() public toggleEvent:EventEmitter<boolean> = new EventEmitter();
+    @Input() public togglable:boolean = false;
+    private _openState: boolean=false;
+    @Input()
+    public get openState(): boolean {
+        return this._openState;
+    }
+    public set openState(value: boolean) {
+        this._openState=value;
+
+        this.toggleEvent.emit(value);
+
+        this._cd.markForCheck();
+    }
 
     @Input() public errorMessages:InputErrorMessageModel[] = [];
 
@@ -32,16 +49,21 @@ export class FormInputContainerComponent extends AbstractComponent implements On
 
         if(value != undefined && value.errors) {
             for(let code in value.errors) {
-                // console.log(this.errorMessages)
-                // console.log(code)
                 this.errorMessages.filter(item => item.code == code).forEach(item => {
                     this.errorList.push(item.message);
                 });
-                // console.log(this.errorList)
             };
         }
 
         this._cd.markForCheck();
+    }
+
+    public get showGroup():boolean {
+        return (this.togglable && this.openState) || (!this.togglable && !this.openState);
+    }
+
+    public get inputId():string {
+        return 'toggleFormInputContainer_'+this._uniqId;
     }
 
     constructor(
