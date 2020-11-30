@@ -106,8 +106,15 @@ export class TableComponent extends AbstractComponent  implements OnChanges {
         this.filters.forEach(filter => {
             if(filter.active) {
                 filteredRows = filteredRows.filter(item => {
-
-                    return item[filter.field] === filter.filterValue;
+                    if(filter.cellType == 'boolean') {
+                        return item[filter.field] === filter.filterValue;
+                    } else {
+                        if(filter.filterValue == undefined || filter.filterValue == '') {
+                            return item;
+                        } else {
+                            return item[filter.field] === filter.filterValue;
+                        }
+                    }
                 });
             }
         });

@@ -2,7 +2,7 @@
     <div class="filter" *ngFor="let filter of this.filters; let index = index">
         <form-input-container [label]="filter.label" [showAsCard]="true" [togglable]="true" [openState]="filter.active" (toggleEvent)="toggleFilter($event, filter)">
             <boolean-input *ngIf="filter.cellType == 'boolean'" [(value)]="filter.filterValue" (valueChange)="filterValueChange($event)"></boolean-input>
-            <select-input *ngIf="filter.cellType != 'boolean'" [(value)]="filter.filterValue" (valueChange)="filterValueChange($event)" [values]="filter.values"></select-input>
+            <select-input *ngIf="filter.cellType != 'boolean'" [labelType]="filter.cellType" [(value)]="filter.filterValue" (valueChange)="filterValueChange($event)" [values]="filter.values"></select-input>
         </form-input-container>
     </div>
 
@@ -22,7 +22,7 @@
                 <span *ngIf="curCol.cellType == 'month' && curRow[curCol.field] == undefined">&nbsp;</span>
                 <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] != undefined">{{curRow[curCol.field] | date:'dd/MM/yyyy'}}</span>
                 <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] == undefined">&nbsp;</span>
-                <span *ngIf="curCol.cellType == 'money'">{{curRow[curCol.field]  | currency:'EUR':'symbol':'.2-2':'fr'}}</span>
+                <span *ngIf="curCol.cellType == 'money'">{{curRow[curCol.field]  | currency:'EUR':'symbol':'.2-2':this.locale}}</span>
                 <span *ngIf="curCol.cellType == 'boolean'"><fa-icon [icon]="curRow[curCol.field]?icon.checkCircle:icon.circle"></fa-icon></span>
                 <span *ngIf="curCol.cellType == 'raw'">{{curRow[curCol.field]}}</span>
             </td>

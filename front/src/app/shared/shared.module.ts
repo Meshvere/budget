@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
-import {NgModule} from '@angular/core';
+import {NgModule, LOCALE_ID} from '@angular/core';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -17,6 +17,7 @@ import { SelectInputComponent } from './components/form/select-input/select-inpu
 import { BooleanInputComponent } from './components/form/boolean-input/boolean-input.component';
 import {TextInputComponent} from './components/form/text-input/text-input.component';
 import {UtilsService} from './services/utils.service';
+import {LocaleService} from './services/locale.service';
 
 @NgModule({
     declarations: [
@@ -70,6 +71,15 @@ import {UtilsService} from './services/utils.service';
         DataService,
         TimeService,
         UtilsService,
+        LocaleService,
+        {
+            provide: LOCALE_ID,
+            useFactory: (localeService: LocaleService) => {
+            //   console.log('locale ID', localeService.getLanguage());
+              return localeService.getLanguage();
+            },
+            deps: [LocaleService]
+          }
     ]
 })
 export class SharedModule { }

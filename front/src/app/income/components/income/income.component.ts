@@ -36,7 +36,7 @@ export class IncomeComponent extends AbstractComponent {
         this.tableColumns.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));
         this.tableColumns.push(new TableColumn({label: 'Compte', field:'account', cellType:'raw', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Objet', field:'label', cellType:'raw'}));
-        this.tableColumns.push(new TableColumn({label: 'Montant', field:'amount', cellType:'money'}));
+        this.tableColumns.push(new TableColumn({label: 'Montant', field:'amount', cellType:'money', filter:true}));
         this.tableColumns.push(new TableColumn({label: 'Partagé', field:'shared', cellType:'boolean', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Récurrent', field:'recurrent', cellType:'boolean', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Du', field:'recurrent_start', cellType:'date', filter: true}));

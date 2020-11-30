@@ -16,6 +16,7 @@ import {UiModule} from './ui/ui.module';
 
 
 registerLocaleData(localeFr, 'fr');
+registerLocaleData(localeFr, 'fr-FR');
 
 @NgModule({
     declarations: [

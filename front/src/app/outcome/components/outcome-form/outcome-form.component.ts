@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
+import {ChangeDetectionStrategy,ChangeDetectorRef,Component, Inject, LOCALE_ID} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractComponent} from 'src/app/shared/models/abstract-component';
@@ -35,6 +35,7 @@ export class OutcomeFormComponent extends AbstractComponent {
     public dayFrm:FormControl = new FormControl();
 
     constructor(
+        @Inject(LOCALE_ID) public locale: string,
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
         private _route: ActivatedRoute,

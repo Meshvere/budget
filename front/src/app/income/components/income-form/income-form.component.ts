@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, LOCALE_ID} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {Observable, of} from 'rxjs';
@@ -24,6 +24,7 @@ export class IncomeFormComponent extends AbstractComponent {
     public validations:{code:string, validation:InputErrorModel}[] = [];
 
     constructor(
+        @Inject(LOCALE_ID) public locale: string,
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
         private _route: ActivatedRoute,
