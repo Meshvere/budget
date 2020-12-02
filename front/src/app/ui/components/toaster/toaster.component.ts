@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {Toast} from '../../models/toast';
 import {ToastService} from '../../services/toast.service';
+import {UtilsService} from '../../../shared/services/utils.service';
 
 @Component({
    selector: 'app-toaster',
@@ -14,8 +15,9 @@ export class ToasterComponent extends AbstractComponent {
    constructor(
       protected _cd:ChangeDetectorRef,
       protected _toastService:ToastService,
+      protected _utilsService:UtilsService,
    ) {
-      super(_cd, _toastService);
+      super(_cd, _toastService, _utilsService);
    }
 
    ngOnInit(): void {

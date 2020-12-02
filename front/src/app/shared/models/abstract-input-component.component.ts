@@ -3,6 +3,7 @@ import {FormControl,ValidatorFn,Validators} from '@angular/forms';
 import {ToastService} from 'src/app/ui/services/toast.service';
 import {AbstractComponent} from './abstract-component';
 import {InputErrorModel} from './input-error-model';
+import {UtilsService} from '../services/utils.service';
 
 @Directive()
 export class AbstractInputComponent extends AbstractComponent implements OnChanges {
@@ -43,8 +44,9 @@ export class AbstractInputComponent extends AbstractComponent implements OnChang
     constructor(
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
 
         this._changeWatch.push('required');
     }

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy,ChangeDetectorRef,Component, Inject, LOCALE_ID} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, LOCALE_ID} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractComponent} from 'src/app/shared/models/abstract-component';
@@ -7,6 +7,7 @@ import {DataService} from 'src/app/shared/services/data.service';
 import {Toast} from 'src/app/ui/models/toast';
 import {IconService} from 'src/app/ui/services/icon.service';
 import {ToastService} from 'src/app/ui/services/toast.service';
+import {UtilsService} from '../../../shared/services/utils.service';
 
 @Component({
     selector: 'app-outcome-form',
@@ -42,8 +43,9 @@ export class OutcomeFormComponent extends AbstractComponent {
         private _router:Router,
         private _dataService:DataService,
         public icon:IconService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
 
         this.addSub = this._dataService.getAccounts().subscribe(acc => {
             this.account = acc;

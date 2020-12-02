@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy,ChangeDetectorRef,Component,Input} from '@angula
 import {AbstractInputComponent} from 'src/app/shared/models/abstract-input-component.component';
 import {ToastService} from 'src/app/ui/services/toast.service';
 import {TimeService} from 'src/app/shared/services/time.service';
+import {UtilsService} from '../../../services/utils.service';
 
 @Component({
   selector: 'date-input',
@@ -42,7 +43,8 @@ export class DateInputComponent extends AbstractInputComponent {
     constructor(
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
     }
 }

@@ -4,6 +4,7 @@ import {NavEntry} from '../../models/nav-entry';
 import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {DataService} from 'src/app/shared/services/data.service';
 import {ToastService} from '../../services/toast.service';
+import {UtilsService} from '../../../shared/services/utils.service';
 
 @Component({
     selector: 'app-nav',
@@ -21,8 +22,9 @@ export class NavComponent extends AbstractComponent {
         public route: ActivatedRoute,
         private _router: Router,
         private _dataService:DataService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
 
         this.addSub = this._dataService.menuEntries$.subscribe(me => {
           this.entryList = me;

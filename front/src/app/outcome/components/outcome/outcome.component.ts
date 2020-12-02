@@ -6,6 +6,7 @@ import {DataService} from 'src/app/shared/services/data.service';
 import {IconService} from 'src/app/ui/services/icon.service';
 import {TableColumn} from 'src/app/table/models/table-column';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from 'src/app/table/models/table-action';
+import {UtilsService} from '../../../shared/services/utils.service';
 
 @Component({
     selector: 'app-outcome',
@@ -24,8 +25,9 @@ export class OutcomeComponent extends AbstractComponent {
         protected _toastService:ToastService,
         private _dataService:DataService,
         public icon:IconService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
 
         this.tableColumnsDaily.push(new TableColumn({label: 'Mois', field:'date', cellType:'month', filter:true}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));

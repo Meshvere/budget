@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, LOCALE_ID } from '@angular/core';
 import {EntityProperty} from '../models/entity-property';
+import {DatePipe, CurrencyPipe} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UtilsService {
         let properties:EntityProperty[] = [];
         let className:string = o.constructor.name;
 
-        if(this._properties[className] == undefined) {
+        if(UtilsService._properties[className] == undefined) {
             let props:any = Object.getOwnPropertyDescriptors(o);
 
             Object.keys(props).forEach(key => {
@@ -25,9 +26,9 @@ export class UtilsService {
                 }
             });
 
-            this._properties[className] = properties;
+            UtilsService._properties[className] = properties;
         } else {
-            properties = this._properties[className];
+            properties = UtilsService._properties[className];
         }
 
 
@@ -44,8 +45,32 @@ export class UtilsService {
     }
 
     public static numberCut(num:number):number {
-        return num != undefined ? Math.round(num * UtilsService.roundFactor) / UtilsService.roundFactor: num;
+        return num != undefined ? Math.round(num * this.roundFactor) / this.roundFactor: num;
     }
 
-    constructor() { }
+    public dateToString(date:Date, fullDate:boolean = true):string {
+        if(date == undefined) {
+            return undefined;
+        }
+
+        let pipe:DatePipe = new DatePipe(this.locale);
+
+        return pipe.transform(date, fullDate?'dd/MM/yyyy':'MMM-y');
+    }
+
+    public currencyToString(amount:number):string {
+        if(amount == undefined) {
+            return undefined;
+        }
+
+        let pipe:CurrencyPipe = new CurrencyPipe(this.locale);
+
+        return pipe.transform(amount);
+        return '';
+    }
+
+    constructor(
+        @Inject(LOCALE_ID) public locale: string,
+    ) {
+    }
 }

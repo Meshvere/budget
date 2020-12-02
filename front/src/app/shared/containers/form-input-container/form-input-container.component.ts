@@ -3,6 +3,7 @@ import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {ToastService} from '../../../ui/services/toast.service';
 import {AbstractComponent} from '../../models/abstract-component';
 import {InputErrorMessageModel, InputErrorModel} from '../../models/input-error-model';
+import {UtilsService} from '../../services/utils.service';
 
 @Component({
     selector: 'form-input-container',
@@ -69,7 +70,8 @@ export class FormInputContainerComponent extends AbstractComponent implements On
     constructor(
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
     }
 }

@@ -8,6 +8,7 @@ import {Income} from '../../../shared/models/income';
 import {InputErrorMessageModel, InputErrorModel} from '../../../shared/models/input-error-model';
 import {SelectModel} from '../../../shared/models/select-model';
 import {DataService} from '../../../shared/services/data.service';
+import {UtilsService} from '../../../shared/services/utils.service';
 import {IconService} from '../../../ui/services/icon.service';
 import {ToastService} from '../../../ui/services/toast.service';
 
@@ -31,8 +32,9 @@ export class IncomeFormComponent extends AbstractComponent {
         private _router:Router,
         private _dataService:DataService,
         public icon:IconService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
     }
 
     ngOnInit(): void {

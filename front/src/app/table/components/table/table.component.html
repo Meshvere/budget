@@ -18,11 +18,11 @@
     <tbody>
         <tr *ngFor="let curRow of this.filteredRows">
             <td *ngFor="let curCol of this.columns">
-                <span *ngIf="curCol.cellType == 'month' && curRow[curCol.field] != undefined">{{curRow[curCol.field] | date:'MMM-y'}}</span>
+                <span *ngIf="curCol.cellType == 'month' && curRow[curCol.field] != undefined">{{this.monthToString(curRow[curCol.field])}}</span>
                 <span *ngIf="curCol.cellType == 'month' && curRow[curCol.field] == undefined">&nbsp;</span>
-                <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] != undefined">{{curRow[curCol.field] | date:'dd/MM/yyyy'}}</span>
+                <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] != undefined">{{this.dateToString(curRow[curCol.field])}}</span>
                 <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] == undefined">&nbsp;</span>
-                <span *ngIf="curCol.cellType == 'money'">{{curRow[curCol.field]  | currency:'EUR':'symbol':'.2-2':this.locale}}</span>
+                <span *ngIf="curCol.cellType == 'money'">{{this.currencyToDate(curRow[curCol.field])}}</span>
                 <span *ngIf="curCol.cellType == 'boolean'"><fa-icon [icon]="curRow[curCol.field]?icon.checkCircle:icon.circle"></fa-icon></span>
                 <span *ngIf="curCol.cellType == 'raw'">{{curRow[curCol.field]}}</span>
             </td>

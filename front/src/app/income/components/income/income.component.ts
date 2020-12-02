@@ -1,14 +1,13 @@
-import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractComponent} from '../../../shared/models/abstract-component';
 import {Income} from '../../../shared/models/income';
 import {DataService} from '../../../shared/services/data.service';
+import {UtilsService} from '../../../shared/services/utils.service';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from '../../../table/models/table-action';
 import {TableColumn} from '../../../table/models/table-column';
 import {IconService} from '../../../ui/services/icon.service';
 import {ToastService} from '../../../ui/services/toast.service';
-import {Router, ActivatedRoute} from '@angular/router';
-import * as moment from 'moment';
-import 'moment/locale/fr';
 
 @Component({
         selector: 'income',
@@ -29,8 +28,9 @@ export class IncomeComponent extends AbstractComponent {
         private _route:ActivatedRoute,
         private _router:Router,
         public icon:IconService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
 
         this.tableColumns.push(new TableColumn({label: 'Mois', field:'date', cellType:'month', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));

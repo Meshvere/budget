@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy,ChangeDetectorRef,Component,Input} from '@angula
 import {AbstractInputComponent} from 'src/app/shared/models/abstract-input-component.component';
 import {ToastService} from 'src/app/ui/services/toast.service';
 import {Validators} from '@angular/forms';
+import {UtilsService} from '../../../services/utils.service';
 
 @Component({
     selector: 'number-input',
@@ -18,8 +19,9 @@ export class NumberInputComponent extends AbstractInputComponent {
     constructor(
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
 
         this._changeWatch.push('min', 'max');
     }

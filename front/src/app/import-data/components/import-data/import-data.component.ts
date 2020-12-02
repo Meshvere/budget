@@ -1,10 +1,11 @@
-import {ChangeDetectorRef,Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {AbstractComponent} from '../../../shared/models/abstract-component';
 import {Income} from '../../../shared/models/income';
 import {Outcome} from '../../../shared/models/outcome';
-import {XlsxSheetDataMapping,XlsxSheetDataMappingAssoc} from '../../../shared/models/xlsx-sheet-data';
+import {XlsxSheetDataMapping, XlsxSheetDataMappingAssoc} from '../../../shared/models/xlsx-sheet-data';
 import {DataService} from '../../../shared/services/data.service';
 import {TimeService} from '../../../shared/services/time.service';
+import {UtilsService} from '../../../shared/services/utils.service';
 import {ToastService} from '../../../ui/services/toast.service';
 import {ImportDataService} from '../../services/import-data.service';
 
@@ -23,8 +24,9 @@ export class ImportDataComponent extends AbstractComponent {
         protected _toastService:ToastService,
         protected _importDataService:ImportDataService,
         protected _dataService:DataService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
 
         this.dataMapping.push(new XlsxSheetDataMapping({sheetName:"Dépenses",  mapping:[
             new XlsxSheetDataMappingAssoc({from:'Date', to:'date', type:'date'}),

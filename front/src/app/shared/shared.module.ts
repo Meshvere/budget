@@ -68,18 +68,17 @@ import {LocaleService} from './services/locale.service';
         TextInputComponent,
     ],
     providers: [
+        {
+            provide: LOCALE_ID,
+            useFactory: (localeService: LocaleService) => {
+                return localeService.getLanguage();
+            },
+            deps: [LocaleService]
+        },
         DataService,
         TimeService,
         UtilsService,
         LocaleService,
-        {
-            provide: LOCALE_ID,
-            useFactory: (localeService: LocaleService) => {
-            //   console.log('locale ID', localeService.getLanguage());
-              return localeService.getLanguage();
-            },
-            deps: [LocaleService]
-          }
     ]
 })
 export class SharedModule { }

@@ -1,11 +1,12 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import cloneDeep from 'lodash/cloneDeep';
 import {AbstractComponent} from '../../../shared/models/abstract-component';
+import {UtilsService} from '../../../shared/services/utils.service';
 import {IconService} from '../../../ui/services/icon.service';
 import {ToastService} from '../../../ui/services/toast.service';
 import {TableAction, TableActionRouteTo} from '../../models/table-action';
 import {TableColumn, TableColumnFilter, TableFilterValue} from '../../models/table-column';
-import cloneDeep from 'lodash/cloneDeep';
 
 @Component({
   selector: 'app-table',
@@ -40,8 +41,9 @@ export class TableComponent extends AbstractComponent  implements OnChanges {
         public icon:IconService,
         protected _route:ActivatedRoute,
         protected _router:Router,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
     }
 
     public ngOnInit(): void {
@@ -107,6 +109,9 @@ export class TableComponent extends AbstractComponent  implements OnChanges {
             if(filter.active) {
                 filteredRows = filteredRows.filter(item => {
                     if(filter.cellType == 'boolean') {
+                        return item[filter.field] === filter.filterValue;
+                    } else if(filter.cellType == 'month') {
+                        // console.log(item[filter.field])
                         return item[filter.field] === filter.filterValue;
                     } else {
                         if(filter.filterValue == undefined || filter.filterValue == '') {

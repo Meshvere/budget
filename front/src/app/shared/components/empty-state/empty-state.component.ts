@@ -2,6 +2,7 @@ import {ChangeDetectorRef,Component,Input} from '@angular/core';
 import {IconService} from 'src/app/ui/services/icon.service';
 import {ToastService} from 'src/app/ui/services/toast.service';
 import {AbstractComponent} from '../../models/abstract-component';
+import {UtilsService} from '../../services/utils.service';
 
 @Component({
     selector: 'empty-state',
@@ -17,8 +18,9 @@ export class EmptyStateComponent extends AbstractComponent {
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
         public iconService:IconService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService)
+        super(_cd, _toastService, _utilsService)
     }
 
     ngOnInit(): void {

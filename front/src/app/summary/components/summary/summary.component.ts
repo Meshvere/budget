@@ -7,6 +7,7 @@ import {TableAction} from 'src/app/table/models/table-action';
 import {TableColumn} from 'src/app/table/models/table-column';
 import {ToastService} from 'src/app/ui/services/toast.service';
 import {Summary} from 'src/app/shared/models/summary';
+import {UtilsService} from '../../../shared/services/utils.service';
 
 
 @Component({
@@ -25,9 +26,10 @@ export class SummaryComponent extends AbstractComponent {
     constructor(
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
-        private _dataService:DataService
+        private _dataService:DataService,
+        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService);
+        super(_cd, _toastService, _utilsService);
 
         this.tableColumns.push(new TableColumn({label: 'Mois', field:'date', cellType:'month'}));
         this.tableColumns.push(new TableColumn({label: 'Dépense récurrente', field:'recurrent', cellType:'money'}));
