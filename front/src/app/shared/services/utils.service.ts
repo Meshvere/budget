@@ -63,10 +63,9 @@ export class UtilsService {
             return undefined;
         }
 
-        let pipe:CurrencyPipe = new CurrencyPipe(this.locale);
+        let pipe:CurrencyPipe = new CurrencyPipe(this.locale, '€');
 
         return pipe.transform(amount);
-        return '';
     }
 
     constructor(
