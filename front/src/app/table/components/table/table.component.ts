@@ -75,8 +75,6 @@ export class TableComponent extends AbstractComponent implements OnChanges {
                         }
 
                         if(filter.values.map(item => item.value).indexOf(val) < 0) {
-                            // console.log(val)
-                            // console.log(filter)
                             filter.values.push(new TableFilterValue({value:val, label:val}));
                         }
                     });
@@ -118,7 +116,7 @@ export class TableComponent extends AbstractComponent implements OnChanges {
                     if(filter.cellType == 'boolean') {
                         return item[filter.field] === filter.filterValue;
                     } else if(filter.cellType == 'month') {
-                        return this.dateToString(item[filter.field], false) === this.dateToString(filter.filterValue), false;
+                        return this.dateToString(item[filter.field], false) === this.dateToString(filter.filterValue, false);
                     } else {
                         if(filter.filterValue == undefined || filter.filterValue == '') {
                             return item;

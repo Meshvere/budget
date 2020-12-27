@@ -8,14 +8,13 @@ export function Currency() {
                 return constructor.apply(this, args);
             }
             c.prototype = constructor.prototype;
+
             return new c();
         }
 
         target.prototype.currencyToString = function(amount:number):string {
             return UtilsService.currencyToString(amount);
         }
-
-        console.log('Our decorated class currency :', target);
     }
 }
 

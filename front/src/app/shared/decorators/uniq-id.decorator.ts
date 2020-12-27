@@ -12,11 +12,8 @@ export function UniqId() {
 
             let obj = new c();
             obj.uniqId = Math.round(Math.random()*Math.random()*1000000*Date.now()).toString();
-            console.log(obj.uniqId)
 
             return obj;
         }
-
-        console.log('Our decorated class uniqId :', target);
     }
 }
