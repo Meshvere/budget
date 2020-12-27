@@ -2,11 +2,12 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges,
 import {ActivatedRoute, Router} from '@angular/router';
 import cloneDeep from 'lodash/cloneDeep';
 import {AbstractComponent} from '../../../shared/models/abstract-component';
-import {UtilsService} from '../../../shared/services/utils.service';
 import {IconService} from '../../../ui/services/icon.service';
-import {ToastService} from '../../../ui/services/toast.service';
 import {TableAction, TableActionRouteTo} from '../../models/table-action';
 import {TableColumn, TableColumnFilter, TableFilterValue} from '../../models/table-column';
+import {UtilsService} from '../../../shared/services/utils.service';
+import {DateFnct} from '../../../shared/decorators/date.decorator';
+import {Currency} from '../../../shared/decorators/currency.decorator';
 
 @Component({
   selector: 'app-table',
@@ -14,7 +15,9 @@ import {TableColumn, TableColumnFilter, TableFilterValue} from '../../models/tab
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableComponent extends AbstractComponent  implements OnChanges {
+@DateFnct()
+@Currency()
+export class TableComponent extends AbstractComponent implements OnChanges {
     @Input() public title:string;
     @Input() public columns:TableColumn[] = [];
     @Input() public actions:TableAction[] = [];
@@ -37,13 +40,11 @@ export class TableComponent extends AbstractComponent  implements OnChanges {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
         public icon:IconService,
         protected _route:ActivatedRoute,
         protected _router:Router,
-        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService, _utilsService);
+        super(_cd);
     }
 
     public ngOnInit(): void {
@@ -69,7 +70,13 @@ export class TableComponent extends AbstractComponent  implements OnChanges {
                     this.rows.forEach(row => {
                         let val:any = row[filter.field];
 
+                        if(['date', 'month'].indexOf(filter.cellType) >= 0) {
+                            val = UtilsService.dateToString(val, filter.cellType == 'date');
+                        }
+
                         if(filter.values.map(item => item.value).indexOf(val) < 0) {
+                            // console.log(val)
+                            // console.log(filter)
                             filter.values.push(new TableFilterValue({value:val, label:val}));
                         }
                     });
@@ -111,8 +118,7 @@ export class TableComponent extends AbstractComponent  implements OnChanges {
                     if(filter.cellType == 'boolean') {
                         return item[filter.field] === filter.filterValue;
                     } else if(filter.cellType == 'month') {
-                        // console.log(item[filter.field])
-                        return item[filter.field] === filter.filterValue;
+                        return this.dateToString(item[filter.field], false) === this.dateToString(filter.filterValue), false;
                     } else {
                         if(filter.filterValue == undefined || filter.filterValue == '') {
                             return item;

@@ -5,8 +5,6 @@ import {Outcome} from '../../../shared/models/outcome';
 import {XlsxSheetDataMapping, XlsxSheetDataMappingAssoc} from '../../../shared/models/xlsx-sheet-data';
 import {DataService} from '../../../shared/services/data.service';
 import {TimeService} from '../../../shared/services/time.service';
-import {UtilsService} from '../../../shared/services/utils.service';
-import {ToastService} from '../../../ui/services/toast.service';
 import {ImportDataService} from '../../services/import-data.service';
 
 @Component({
@@ -21,12 +19,10 @@ export class ImportDataComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
         protected _importDataService:ImportDataService,
         protected _dataService:DataService,
-        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService, _utilsService);
+        super(_cd);
 
         this.dataMapping.push(new XlsxSheetDataMapping({sheetName:"Dépenses",  mapping:[
             new XlsxSheetDataMappingAssoc({from:'Date', to:'date', type:'date'}),

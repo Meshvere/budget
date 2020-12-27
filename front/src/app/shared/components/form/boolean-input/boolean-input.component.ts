@@ -1,7 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import {AbstractInputComponent} from '../../../../shared/models/abstract-input-component.component';
-import {ToastService} from '../../../../ui/services/toast.service';
-import {UtilsService} from '../../../services/utils.service';
 
 @Component({
   selector: 'boolean-input',
@@ -20,10 +18,8 @@ export class BooleanInputComponent extends AbstractInputComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
-        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService, _utilsService);
+        super(_cd);
     }
 
     public switchState($event:Event) {

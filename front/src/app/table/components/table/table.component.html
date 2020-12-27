@@ -22,7 +22,7 @@
                 <span *ngIf="curCol.cellType == 'month' && curRow[curCol.field] == undefined">&nbsp;</span>
                 <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] != undefined">{{this.dateToString(curRow[curCol.field])}}</span>
                 <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] == undefined">&nbsp;</span>
-                <span *ngIf="curCol.cellType == 'money'">{{this.currencyToDate(curRow[curCol.field])}}</span>
+                <span *ngIf="curCol.cellType == 'money'">{{this.currencyToString(curRow[curCol.field])}}</span>
                 <span *ngIf="curCol.cellType == 'boolean'"><fa-icon [icon]="curRow[curCol.field]?icon.checkCircle:icon.circle"></fa-icon></span>
                 <span *ngIf="curCol.cellType == 'raw'">{{curRow[curCol.field]}}</span>
             </td>

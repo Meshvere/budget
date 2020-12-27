@@ -8,9 +8,7 @@ import {Income} from '../../../shared/models/income';
 import {InputErrorMessageModel, InputErrorModel} from '../../../shared/models/input-error-model';
 import {SelectModel} from '../../../shared/models/select-model';
 import {DataService} from '../../../shared/services/data.service';
-import {UtilsService} from '../../../shared/services/utils.service';
 import {IconService} from '../../../ui/services/icon.service';
-import {ToastService} from '../../../ui/services/toast.service';
 
 @Component({
     selector: 'app-income-form',
@@ -27,14 +25,12 @@ export class IncomeFormComponent extends AbstractComponent {
     constructor(
         @Inject(LOCALE_ID) public locale: string,
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
         private _route: ActivatedRoute,
         private _router:Router,
         private _dataService:DataService,
         public icon:IconService,
-        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService, _utilsService);
+        super(_cd);
     }
 
     ngOnInit(): void {

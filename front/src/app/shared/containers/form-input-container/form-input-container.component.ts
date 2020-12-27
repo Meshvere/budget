@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
-import {ToastService} from '../../../ui/services/toast.service';
 import {AbstractComponent} from '../../models/abstract-component';
 import {InputErrorMessageModel, InputErrorModel} from '../../models/input-error-model';
+import {UniqId} from '../../decorators/uniq-id.decorator';
 import {UtilsService} from '../../services/utils.service';
 
 @Component({
@@ -11,7 +11,10 @@ import {UtilsService} from '../../services/utils.service';
     styleUrls: ['./form-input-container.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
+@UniqId()
 export class FormInputContainerComponent extends AbstractComponent implements OnInit {
+    public inputId:string = 'toggleFormInputContainer_' + UtilsService.uniqId();
+
     @Input() public showAsCard:boolean = false;
 
     @Input() public label:string;
@@ -63,15 +66,9 @@ export class FormInputContainerComponent extends AbstractComponent implements On
         return (this.togglable && this.openState) || (!this.togglable && !this.openState);
     }
 
-    public get inputId():string {
-        return 'toggleFormInputContainer_'+this._uniqId;
-    }
-
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
-        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService, _utilsService);
+        super(_cd);
     }
 }

@@ -1,12 +1,10 @@
 import {ChangeDetectorRef,Component} from '@angular/core';
 import {AbstractComponent} from '../../../shared/models/abstract-component';
-import {ToastService} from '../../../ui/services/toast.service';
 import {Outcome} from 'src/app/shared/models/outcome';
 import {DataService} from 'src/app/shared/services/data.service';
 import {IconService} from 'src/app/ui/services/icon.service';
 import {TableColumn} from 'src/app/table/models/table-column';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from 'src/app/table/models/table-action';
-import {UtilsService} from '../../../shared/services/utils.service';
 
 @Component({
     selector: 'app-outcome',
@@ -22,12 +20,10 @@ export class OutcomeComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
         private _dataService:DataService,
         public icon:IconService,
-        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService, _utilsService);
+        super(_cd);
 
         this.tableColumnsDaily.push(new TableColumn({label: 'Mois', field:'date', cellType:'month', filter:true}));
         this.tableColumnsDaily.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));

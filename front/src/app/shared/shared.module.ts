@@ -79,6 +79,13 @@ import {LocaleService} from './services/locale.service';
         TimeService,
         UtilsService,
         LocaleService,
+        {
+            provide: 'UTIL',
+            useFactory: () => {
+                return UtilsService;
+            },
+            deps: [LocaleService]
+        },
     ]
 })
 export class SharedModule { }

@@ -3,11 +3,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AbstractComponent} from '../../../shared/models/abstract-component';
 import {Income} from '../../../shared/models/income';
 import {DataService} from '../../../shared/services/data.service';
-import {UtilsService} from '../../../shared/services/utils.service';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from '../../../table/models/table-action';
 import {TableColumn} from '../../../table/models/table-column';
 import {IconService} from '../../../ui/services/icon.service';
-import {ToastService} from '../../../ui/services/toast.service';
 
 @Component({
         selector: 'income',
@@ -23,14 +21,12 @@ export class IncomeComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
         private _dataService:DataService,
         private _route:ActivatedRoute,
         private _router:Router,
         public icon:IconService,
-        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService, _utilsService);
+        super(_cd);
 
         this.tableColumns.push(new TableColumn({label: 'Mois', field:'date', cellType:'month', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));

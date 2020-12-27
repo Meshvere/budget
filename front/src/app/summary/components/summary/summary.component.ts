@@ -1,13 +1,9 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
 import {AbstractComponent} from 'src/app/shared/models/abstract-component';
-import {Income} from 'src/app/shared/models/income';
-import {Outcome} from 'src/app/shared/models/outcome';
 import {DataService} from 'src/app/shared/services/data.service';
 import {TableAction} from 'src/app/table/models/table-action';
 import {TableColumn} from 'src/app/table/models/table-column';
-import {ToastService} from 'src/app/ui/services/toast.service';
 import {Summary} from 'src/app/shared/models/summary';
-import {UtilsService} from '../../../shared/services/utils.service';
 
 
 @Component({
@@ -25,11 +21,9 @@ export class SummaryComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
         private _dataService:DataService,
-        protected _utilsService:UtilsService,
     ) {
-        super(_cd, _toastService, _utilsService);
+        super(_cd);
 
         this.tableColumns.push(new TableColumn({label: 'Mois', field:'date', cellType:'month'}));
         this.tableColumns.push(new TableColumn({label: 'Dépense récurrente', field:'recurrent', cellType:'money'}));

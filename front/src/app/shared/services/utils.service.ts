@@ -6,6 +6,7 @@ import {DatePipe, CurrencyPipe} from '@angular/common';
   providedIn: 'root'
 })
 export class UtilsService {
+    public static locale:string;
     public static readonly roundFactor:number = 100;
     public static readonly castableTypes:string[] = ['Date', 'Boolean'];
 
@@ -48,28 +49,36 @@ export class UtilsService {
         return num != undefined ? Math.round(num * this.roundFactor) / this.roundFactor: num;
     }
 
-    public dateToString(date:Date, fullDate:boolean = true):string {
+    public static dateToString(date:Date, fullDate:boolean = true):string {
+        if(typeof date == 'string') {
+            return date;
+        }
         if(date == undefined) {
             return undefined;
         }
 
-        let pipe:DatePipe = new DatePipe(this.locale);
+        let pipe:DatePipe = new DatePipe(UtilsService.locale);
 
         return pipe.transform(date, fullDate?'dd/MM/yyyy':'MMM-y');
     }
 
-    public currencyToString(amount:number):string {
+    public static currencyToString(amount:number):string {
         if(amount == undefined) {
             return undefined;
         }
 
-        let pipe:CurrencyPipe = new CurrencyPipe(this.locale, '€');
+        let pipe:CurrencyPipe = new CurrencyPipe(UtilsService.locale, '€');
 
         return pipe.transform(amount);
+    }
+
+    public static uniqId():string {
+        return Math.round(Math.random()*Math.random()*1000000*Date.now()).toString();
     }
 
     constructor(
         @Inject(LOCALE_ID) public locale: string,
     ) {
+        UtilsService.locale = locale;
     }
 }
