@@ -60,14 +60,9 @@ export class DataService {
 
         let navEntryList:NavEntry[] = [];
 
-        //TODO : refactor from routing
-        navEntryList.push(new NavEntry({label:'Bilan', path:'summary'}));
-        navEntryList.push(new NavEntry({label:this._titles.income, path:'income'}));
-        navEntryList.push(new NavEntry({label:'Dépenses', path:'outcome'}));
-        navEntryList.push(new NavEntry({label:'Remboursements', path:'refund'}));
-        navEntryList.push(new NavEntry({label:'Tickets resto', path:'food-ticket'}));
-        navEntryList.push(new NavEntry({label:'Epargne', path:'saving'}));
-        navEntryList.push(new NavEntry({label:'Import', path:'import'}));
+        this._routerService.config.forEach(route => {
+            navEntryList.push(new NavEntry({label:route.data.title, icon:route.data.icon, path:route.path}));
+        });
 
         this.menuEntries$ = new BehaviorSubject(navEntryList);
     }

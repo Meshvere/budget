@@ -1,5 +1,5 @@
-<ul ngbNav class="nav-tabs" [roles]="false" [activeId]=""><!--  [activeId]="route | async" -->
+<ul ngbNav class="nav-tabs" [roles]="false" [activeId]="route"><!--  [activeId]="route | async" -->
     <li [ngbNavItem]="entry.path" *ngFor="let entry of this.entryList">
-        <a ngbNavLink [routerLink]="['/', entry.path]" [routerLinkActive]="'active'">{{ entry.label }}</a>
+        <a ngbNavLink [routerLink]="['/', entry.path]" [routerLinkActive]="'active'"><fa-icon [icon]="this.getIcon(entry.icon)" *ngIf="entry.icon"></fa-icon>{{ entry.label }}</a>
     </li>
 </ul>

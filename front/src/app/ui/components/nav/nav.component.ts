@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {NavEntry} from '../../models/nav-entry';
 import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {DataService} from 'src/app/shared/services/data.service';
+import {NavEntry} from '../../models/nav-entry';
+import {IconService} from '../../services/icon.service';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 
 @Component({
     selector: 'app-nav',
@@ -18,6 +20,7 @@ export class NavComponent extends AbstractComponent {
         protected _cd:ChangeDetectorRef,
         public route: ActivatedRoute,
         private _dataService:DataService,
+        private _iconService:IconService,
     ) {
         super(_cd);
 
@@ -34,5 +37,9 @@ export class NavComponent extends AbstractComponent {
         this.route.url.subscribe(rt => {
             // console.log(rt)
         })
+    }
+
+    public getIcon(name:string):IconDefinition {
+        return this._iconService[name];
     }
 }
