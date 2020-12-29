@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {Observable, of} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
-import {AbstractComponent} from '../../../shared/models/abstract-component';
+import {AbstractFormComponent} from '../../../shared/models/abstract-form-component';
 import {Income} from '../../../shared/models/income';
 import {InputErrorMessageModel, InputErrorModel} from '../../../shared/models/input-error-model';
 import {SelectModel} from '../../../shared/models/select-model';
@@ -16,11 +16,9 @@ import {IconService} from '../../../ui/services/icon.service';
     styleUrls: ['./income-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IncomeFormComponent extends AbstractComponent {
+export class IncomeFormComponent extends AbstractFormComponent {
     public curIncome:Income;
     public account:SelectModel[] = [];
-
-    public validations:{code:string, validation:InputErrorModel}[] = [];
 
     constructor(
         @Inject(LOCALE_ID) public locale: string,
@@ -30,7 +28,7 @@ export class IncomeFormComponent extends AbstractComponent {
         private _dataService:DataService,
         public icon:IconService,
     ) {
-        super(_cd);
+        super(_cd, icon);
     }
 
     ngOnInit(): void {
@@ -82,24 +80,6 @@ export class IncomeFormComponent extends AbstractComponent {
         });
     }
 
-    public get formValid():boolean {
-        let valid:boolean;
-
-        for(let validation of this.validations) {
-            valid = validation.validation.valid;
-
-            if(!valid) {
-                break;
-            }
-        }
-
-        return valid;
-    }
-
-    public getIcon(name:string):IconDefinition {
-        return this.icon[name];
-    }
-
     public valueChange(value:any, prop:string) {
         this.curIncome[prop] = value;
 
@@ -116,23 +96,6 @@ export class IncomeFormComponent extends AbstractComponent {
         }
 
         this._cd.markForCheck();
-    }
-
-    public validationChange($event, code:string) {
-        this.validations = this.validations.filter(item => item.code != code);
-        this.validations.push({code:code, validation:$event})
-    }
-
-    public getErrors(code:string):InputErrorModel {
-        let errors:InputErrorModel;
-
-        this.validations.forEach(item => {
-            if(item.code == code) {
-                errors = item.validation;
-            }
-        })
-
-        return errors;
     }
 
     public getErrorMessages(code:string):InputErrorMessageModel[] {

@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '', children: [
             { path: 'add',  data: { action: 'add' }, component: IncomeFormComponent },
             { path: ':id',  data: { action: 'edit' }, component: IncomeFormComponent },
-            { path: '**', component: IncomeComponent}
+            { path: '**', component: IncomeComponent},
         ]
     }
 ];
