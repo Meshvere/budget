@@ -6,8 +6,7 @@ import {IconService} from '../../../ui/services/icon.service';
 import {TableAction, TableActionRouteTo} from '../../models/table-action';
 import {TableColumn, TableColumnFilter, TableFilterValue} from '../../models/table-column';
 import {UtilsService} from '../../../shared/services/utils.service';
-import {DateFnct} from '../../../shared/decorators/date.decorator';
-import {Currency} from '../../../shared/decorators/currency.decorator';
+
 
 @Component({
   selector: 'app-table',
@@ -15,8 +14,6 @@ import {Currency} from '../../../shared/decorators/currency.decorator';
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-@DateFnct()
-@Currency()
 export class TableComponent extends AbstractComponent implements OnChanges {
     @Input() public title:string;
     @Input() public columns:TableColumn[] = [];
@@ -48,6 +45,7 @@ export class TableComponent extends AbstractComponent implements OnChanges {
     }
 
     public ngOnInit(): void {
+        // this.plop();
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

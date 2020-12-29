@@ -110,7 +110,7 @@ export class ImportDataComponent extends AbstractComponent {
             });
 
             this._cd.markForCheck();
-        })
+        });
     }
 
     private _transformData(mapping:XlsxSheetDataMappingAssoc, data:any):any {
@@ -121,7 +121,7 @@ export class ImportDataComponent extends AbstractComponent {
         } else if(mapping.type == 'date') {
             return TimeService.yyyyMmDd(data);
         } else {
-            console.group(mapping.type)
+            console.group(mapping.type);
         }
     }
 }

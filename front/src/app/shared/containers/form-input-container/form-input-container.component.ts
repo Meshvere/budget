@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inp
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {AbstractComponent} from '../../models/abstract-component';
 import {InputErrorMessageModel, InputErrorModel} from '../../models/input-error-model';
-import {UniqId} from '../../decorators/uniq-id.decorator';
 import {UtilsService} from '../../services/utils.service';
 
 @Component({
@@ -11,7 +10,6 @@ import {UtilsService} from '../../services/utils.service';
     styleUrls: ['./form-input-container.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-@UniqId()
 export class FormInputContainerComponent extends AbstractComponent implements OnInit {
     public inputId:string = 'toggleFormInputContainer_' + UtilsService.uniqId();
 

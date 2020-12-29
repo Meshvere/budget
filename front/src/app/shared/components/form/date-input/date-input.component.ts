@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component,Input} from '@angular/core';
-import {AbstractInputComponent} from 'src/app/shared/models/abstract-input-component.component';
-import {TimeService} from 'src/app/shared/services/time.service';
-import {DateFnct} from '../../../decorators/date.decorator';
+import {AbstractInputComponent} from '../../../models/abstract-input-component.component';
+import {TimeService} from '../../../services/time.service';
 
 @Component({
   selector: 'date-input',
@@ -9,7 +8,6 @@ import {DateFnct} from '../../../decorators/date.decorator';
   styleUrls: ['./date-input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-@DateFnct()
 export class DateInputComponent extends AbstractInputComponent {
     @Input() public min:number;
     @Input() public max:number;
