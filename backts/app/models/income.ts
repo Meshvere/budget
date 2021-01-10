@@ -2,6 +2,7 @@ import {Account} from './account.enum';
 import {AbstractEntity} from './abstract-entity';
 
 export class Income extends AbstractEntity {
+    public date:Date;
     public account:Account = Account.MINE;
     public label:string = '';
     public amount:number;

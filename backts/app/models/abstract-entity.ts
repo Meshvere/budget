@@ -1,11 +1,7 @@
-// import * as moment from 'moment';
-// import 'moment/locale/fr';
-// import {TimeService} from '../services/time.service';
 import {Util} from '../util';
 
 export class AbstractEntity {
     public id:string;
-    public date:Date;
 
     protected _table:string;
 

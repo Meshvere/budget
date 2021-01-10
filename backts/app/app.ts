@@ -1,5 +1,6 @@
 import {Income} from './models/income';
 import {Outcome} from './models/outcome';
+import {Recipient} from './models/recipient';
 
 const express = require('express');
 const app = express();
@@ -34,7 +35,7 @@ app.get('/', function (req:any, res:any) {
 });
 
 app.get('/incomes', function (req:any, res:any) {
-    const rows = db.doQuery("SELECT * FROM income ORDER BY `date`, recurrent", queryCallback(res));
+    const rows = db.doQuery("SELECT * FROM income ORDER BY date, recurrent", queryCallback(res));
 });
 
 app.get('/income/', function (req:any, res:any) {
@@ -75,6 +76,44 @@ app.put('/incomes', function (req:any, res:any) {
     res.send([true]);
 });
 
+app.put('/income/', function (req:any, res:any) {
+    let inc = new Income(req.body.body.inc);
+    let sqlQuery = '';
+
+    if(inc.id == undefined) {
+        sqlQuery = inc.getInsertQuery();
+    } else {
+        sqlQuery = inc.getUpdateQuery();
+    }
+
+    const rows = db.doQuery(sqlQuery, queryCallback(res));
+});
+
+
+
+app.get('/outcomes', function (req:any, res:any) {
+    const rows = db.doQuery("SELECT * FROM outcome ORDER BY date", queryCallback(res));
+});
+
+app.get('/outcome/', function (req:any, res:any) {
+    let id = req.query.id;
+
+    const rows = db.doQuery("SELECT * FROM outcome WHERE id = '"+id+"'", queryCallback(res));
+});
+
+app.put('/outcome/', function (req:any, res:any) {
+    let inc = new Outcome(req.body.body.out);
+    let sqlQuery = '';
+
+    if(inc.id == undefined) {
+        sqlQuery = inc.getInsertQuery();
+    } else {
+        sqlQuery = inc.getUpdateQuery();
+    }
+
+    const rows = db.doQuery(sqlQuery, queryCallback(res));
+});
+
 app.put('/outcomes', function (req:any, res:any) {
     let rows:any[] = [];
 
@@ -94,8 +133,23 @@ app.put('/outcomes', function (req:any, res:any) {
     res.send([true]);
 });
 
-app.get('/outcomes', function (req:any, res:any) {
-    const rows = db.doQuery("SELECT * FROM outcome ORDER BY `date`", queryCallback(res));
+
+
+app.get('/recipients', function (req:any, res:any) {
+    const rows = db.doQuery("SELECT * FROM recipient ORDER BY main DESC, label", queryCallback(res));
+});
+
+app.put('/recipient/', function (req:any, res:any) {
+    let inc = new Recipient(req.body.body.rec);
+    let sqlQuery = '';
+
+    if(inc.id == undefined) {
+        sqlQuery = inc.getInsertQuery();
+    } else {
+        sqlQuery = inc.getUpdateQuery();
+    }
+
+    const rows = db.doQuery(sqlQuery, queryCallback(res));
 });
 
 // ----------- FUNCTIONS ---------------
