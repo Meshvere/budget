@@ -5,7 +5,7 @@ import {AbstractComponent} from 'src/app/shared/models/abstract-component';
     selector: 'app-page',
     templateUrl: './page.component.html',
     styleUrls: ['./page.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageComponent extends AbstractComponent {
 

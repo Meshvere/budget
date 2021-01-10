@@ -1,4 +1,4 @@
-import {CommonModule} from '@angular/common';
+import {CommonModule, JsonPipe} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {NgModule, LOCALE_ID} from '@angular/core';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
@@ -57,6 +57,7 @@ import {LocaleService} from './services/locale.service';
         SelectInputComponent,
         BooleanInputComponent,
         TextInputComponent,
+        JsonPipe,
     ],
     entryComponents: [
         RedirectToComponent,

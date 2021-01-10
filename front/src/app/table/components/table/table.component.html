@@ -11,23 +11,28 @@
     <caption *ngIf="this.title">{{this.title}}</caption>
     <thead>
         <tr>
-            <th *ngFor="let curCol of this.columns">{{curCol.label}}</th>
+            <th *ngFor="let curCol of this.columns">
+                <div class="table-col-header" [class.hand]="curCol.sortable" (click)="sortSwitch($event, curCol.field)">
+                    <span>{{curCol.label}}</span>
+                    <fa-icon *ngIf="curCol.sortable" placement="left" [icon]="this.getSortIcon(curCol.field)"></fa-icon>
+                </div>
+            </th>
             <th *ngIf="this.actions.length > 0">&nbsp;</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let curRow of this.filteredRows">
-            <td *ngFor="let curCol of this.columns">
+            <td *ngFor="let curCol of this.columns" [class.boolean]="curCol.cellType == 'boolean'">
                 <span *ngIf="curCol.cellType == 'month' && curRow[curCol.field] != undefined">{{this.monthToString(curRow[curCol.field])}}</span>
                 <span *ngIf="curCol.cellType == 'month' && curRow[curCol.field] == undefined">&nbsp;</span>
                 <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] != undefined">{{this.dateToString(curRow[curCol.field])}}</span>
                 <span *ngIf="curCol.cellType == 'date' && curRow[curCol.field] == undefined">&nbsp;</span>
                 <span *ngIf="curCol.cellType == 'money'">{{this.currencyToString(curRow[curCol.field])}}</span>
-                <span *ngIf="curCol.cellType == 'boolean'"><fa-icon [icon]="curRow[curCol.field]?icon.checkCircle:icon.circle"></fa-icon></span>
+                <span *ngIf="curCol.cellType == 'boolean'"><fa-icon [icon]="curRow[curCol.field]?getIcon('checkCircle'):getIcon('circle')"></fa-icon></span>
                 <span *ngIf="curCol.cellType == 'raw'">{{curRow[curCol.field]}}</span>
             </td>
             <td class="action" *ngIf="this.actions.length > 0">
-                <fa-icon  *ngFor="let curAction of this.actions" [ngbTooltip]="curAction.label" placement="left" class="hand" [icon]="icon[curAction.icon]" (click)="this.doAction(curRow, curAction.action)"></fa-icon>
+                <fa-icon *ngFor="let curAction of this.actions" [ngbTooltip]="curAction.label" placement="left" class="hand" [icon]="getIcon(curAction.icon)" (click)="this.doAction(curRow, curAction.action)"></fa-icon>
             </td>
         </tr>
         <tr *ngIf="this.filteredRows.length == 0">

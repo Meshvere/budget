@@ -18,6 +18,8 @@ export class FormInputContainerComponent extends AbstractComponent implements On
     @Input() public label:string;
     @Input() public icon:IconDefinition;
     @Input() public iconPosition:string = 'before';
+    @Input() public iconActionBefore:Function;
+    @Input() public iconActionAfter:Function;
     @Input() public fullWidth:boolean = false;
     @Input() public message:string;
 
@@ -68,5 +70,14 @@ export class FormInputContainerComponent extends AbstractComponent implements On
         protected _cd:ChangeDetectorRef,
     ) {
         super(_cd);
+    }
+
+    public action(side:string) {
+        if(side == 'before' && this.iconActionBefore != undefined) {
+            this.iconActionBefore();
+        } else
+        if(side == 'after' && this.iconActionAfter != undefined) {
+            this.iconActionAfter();
+        }
     }
 }

@@ -30,13 +30,7 @@ export class ToastService {
     }
 
     public closeToast(id:number) {
-        let list:Toast[] = [];
-
-        for(let toast of this._toastList) {
-            if(toast.id != id) {
-                list.push(toast);
-            }
-        }
+        let list:Toast[] = this._toastList.filter(toast => toast.id != id);
 
         this.toastList$.next(list);
     }

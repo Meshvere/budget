@@ -1,12 +1,13 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {Toast} from '../../models/toast';
 import {ToastService} from '../../services/toast.service';
 
 @Component({
-   selector: 'app-toaster',
+   selector: 'toaster',
    templateUrl: './toaster.component.html',
-   styleUrls: ['./toaster.component.scss']
+   styleUrls: ['./toaster.component.scss'],
+   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToasterComponent extends AbstractComponent {
     public toastList:Toast[] = [];

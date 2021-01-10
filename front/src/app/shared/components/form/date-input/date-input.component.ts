@@ -6,7 +6,7 @@ import {TimeService} from '../../../services/time.service';
   selector: 'date-input',
   templateUrl: './date-input.component.html',
   styleUrls: ['./date-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateInputComponent extends AbstractInputComponent {
     @Input() public min:number;

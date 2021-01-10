@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, ChangeDetectionStrategy} from '@angular/core';
 import {AbstractComponent} from '../../../shared/models/abstract-component';
 import {Income} from '../../../shared/models/income';
 import {Outcome} from '../../../shared/models/outcome';
@@ -8,9 +8,10 @@ import {TimeService} from '../../../shared/services/time.service';
 import {ImportDataService} from '../../services/import-data.service';
 
 @Component({
-    selector: 'app-import-data',
+    selector: 'import-data',
     templateUrl: './import-data.component.html',
-    styleUrls: ['./import-data.component.scss']
+    styleUrls: ['./import-data.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImportDataComponent extends AbstractComponent {
     public dataMapping:XlsxSheetDataMapping[] = [];
@@ -121,6 +122,7 @@ export class ImportDataComponent extends AbstractComponent {
         } else if(mapping.type == 'date') {
             return TimeService.yyyyMmDd(data);
         } else {
+            console.log('_transformData mapping.type')
             console.group(mapping.type);
         }
     }

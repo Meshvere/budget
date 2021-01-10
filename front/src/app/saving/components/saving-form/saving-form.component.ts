@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
-    selector: 'app-saving-form',
+    selector: 'saving-form',
     templateUrl: './saving-form.component.html',
-    styleUrls: ['./saving-form.component.scss']
+    styleUrls: ['./saving-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SavingFormComponent implements OnInit {
 
-    constructor() { }
+    constructor(
+        private _cd:ChangeDetectorRef,
+    ) { }
 
     ngOnInit(): void {
     }

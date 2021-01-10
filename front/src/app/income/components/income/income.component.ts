@@ -5,13 +5,12 @@ import {Income} from '../../../shared/models/income';
 import {DataService} from '../../../shared/services/data.service';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from '../../../table/models/table-action';
 import {TableColumn} from '../../../table/models/table-column';
-import {IconService} from '../../../ui/services/icon.service';
 
 @Component({
-        selector: 'income',
-        templateUrl: './income.component.html',
-        styleUrls: ['./income.component.scss'],
-        changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'income',
+    templateUrl: './income.component.html',
+    styleUrls: ['./income.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IncomeComponent extends AbstractComponent {
     public tableColumns:TableColumn[] = [];
@@ -24,7 +23,6 @@ export class IncomeComponent extends AbstractComponent {
         private _dataService:DataService,
         private _route:ActivatedRoute,
         private _router:Router,
-        public icon:IconService,
     ) {
         super(_cd);
 

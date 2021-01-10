@@ -1,98 +1,75 @@
 <empty-state *ngIf="curOutcome == undefined" title="Dépense non trouvée"></empty-state>
 <form class="form-horizontal" *ngIf="curOutcome != undefined">
-    <div class="twoCol">
-        <div class="form-group">
-                <label class="form-label" for="date">Date</label>
-                <input class="form-input" type="date" id="date" [required]="!curOutcome.recurrent" [(ngModel)]="curOutcome.date"
-                    ng-model-options="{ getterSetter: true }" [formControl]="this.dateFrm">
-        </div>
-        <div class="form-group">
-                <label class="form-label" for="account">Compte</label>
-                <select class="form-select" id="account" required="true" [(ngModel)]="curOutcome.account"
-                    ng-model-options="{ getterSetter: true }" [formControl]="this.accountFrm">
-                    <option *ngFor="let cpt of this.account" value="{{cpt}}">{{cpt}}</option>
-                </select>
-        </div>
-        <div class="form-group">
-                <label class="form-label" for="recipient">Bénéficiaire</label>
-                <input class="form-input" type="text" id="recipient" [(ngModel)]="curOutcome.recipient"
-                    ng-model-options="{ getterSetter: true }" [formControl]="this.recipientFrm">
-        </div>
-    </div>
+    <card [title]="'Type et objet'">
+        <div class="bodyContent multiCol">
+            <form-input-container label="Objet" class="fullWidth" [errors]="this.getErrors('label')" [errorMessages]="this.getErrorMessages('label')">
+                <text-input [required]="true" [(value)]="curOutcome.label" (valueChange)="valueChange($event, 'label')"></text-input>
+            </form-input-container>
 
-    <div class="twoCol">
-        <div class="form-group">
-            <label class="form-label" for="amount">Montant</label>
-                <input class="form-input" type="number" id="amount" step="0.01" required="true" [(ngModel)]="curOutcome.amount"
-                ng-model-options="{ getterSetter: true }" [formControl]="this.amountFrm" inputmode="numeric">&nbsp;€
+            <form-input-container label="Type de dépense">
+                <boolean-input [(value)]="curOutcome.recurrent" labelTrue="Récurrente" iconTrue="sync" labelFalse="Ponctuelle" iconFalse="bullseye" (valueChange)="valueChange($event, 'recurrent')"></boolean-input>
+            </form-input-container>
         </div>
-        <div class="form-group">
-            <label class="form-label">Montant payé</label>
-            <span class="form-input">{{curOutcome.amountPaid | currency:'EUR':'symbol':'.2-2':this.locale}}</span>
-        </div>
-    </div>
+        <ng-container class="bodyContent">
+            <form-input-container label="Commentaire" class="fullWidth" [errors]="this.getErrors('comment')" [errorMessages]="this.getErrorMessages('comment')">
+                <text-input [needValidation]="false" [(value)]="curOutcome.comment" (valueChange)="valueChange($event, 'comment')" [textarea]="true"></text-input>
+            </form-input-container>
+        </ng-container>
+    </card>
+    <card [title]="'Date(s), compte, bénéficiaire montant'">
+        <div class="bodyContent multiCol">
+            <div>
+                <form-input-container label="Date" [icon]="this.getIcon('calendar')" *ngIf="!curOutcome.recurrent" [errors]="this.getErrors('date')" [errorMessages]="this.getErrorMessages('date')">
+                    <date-input [(value)]="curOutcome.date" (valueChange)="valueChange($event, 'date')" [required]="!curOutcome.waiting" (validationChange)="validationChange($event, 'date')"></date-input>
+                </form-input-container>
 
-    <div class="twoCol">
-        <label class="form-switch">
-            <input type="checkbox" id="end_of_month" required="true" [(ngModel)]="curOutcome.end_of_month"
-            ng-model-options="{ getterSetter: true }" [formControl]="this.endOfMonthFrm">
-            <i class="form-icon"></i> Encours
-        </label>
-        <label class="form-switch">
-            <input type="checkbox" id="on_account" required="true" [(ngModel)]="curOutcome.on_account"
-            ng-model-options="{ getterSetter: true }" [formControl]="this.onAccountFrm">
-            <i class="form-icon"></i> Passé sur le compte
-        </label>
-        <label class="form-switch">
-            <input type="checkbox" id="waiting" required="true" [(ngModel)]="curOutcome.waiting"
-            ng-model-options="{ getterSetter: true }" [formControl]="this.waitingFrm">
-            <i class="form-icon"></i> En attente
-        </label>
-    </div>
-    <div class="twoCol">
-        <label class="form-switch">
-            <input type="checkbox" id="shared" required="true" [(ngModel)]="curOutcome.shared"
-            ng-model-options="{ getterSetter: true }" [formControl]="this.sharedFrm">
-            <i class="form-icon"></i> Partagé
-        </label>
-        <label class="form-switch">
-            <input type="checkbox" id="refunded" required="true" [(ngModel)]="curOutcome.refunded"
-            ng-model-options="{ getterSetter: true }" [formControl]="this.refundedFrm">
-            <i class="form-icon"></i> Remboursé
-        </label>
-    </div>
-    <div class="form-group">
-        <label class="form-label" for="comment">Commentaire</label>
-        <textarea class="form-input" id="comment" placeholder="Commentaire" rows="3" [(ngModel)]="curOutcome.comment"
-        ng-model-options="{ getterSetter: true }" [formControl]="this.commentFrm"></textarea>
-    </div>
+                <form-input-container label="Jour du mois" [icon]="this.getIcon('calendar')" *ngIf="curOutcome.recurrent" [errors]="this.getErrors('day')" [errorMessages]="this.getErrorMessages('recurrent_day')">
+                    <number-input [min]="1" [max]="31" [(value)]="curOutcome.day" (valueChange)="valueChange($event, 'recurrent_day')" [required]="true" (validationChange)="validationChange($event, 'recurrent_day')"></number-input>
+                </form-input-container>
+                <form-input-container label="Du" [icon]="this.getIcon('calendar')" *ngIf="curOutcome.recurrent" [errors]="this.getErrors('start_on')" [errorMessages]="this.getErrorMessages('recurrent_start')">
+                    <date-input [(value)]="curOutcome.start_on" (valueChange)="valueChange($event, 'recurrent_start')" [max]="curOutcome.end_on" [required]="true" (validationChange)="validationChange($event, 'recurrent_start')"></date-input>
+                </form-input-container>
+                <form-input-container label="au" [icon]="this.getIcon('calendar')" *ngIf="curOutcome.recurrent" [errors]="this.getErrors('end_on')" [errorMessages]="this.getErrorMessages('recurrent_stop')">
+                    <date-input [(value)]="curOutcome.end_on" (valueChange)="valueChange($event, 'recurrent_stop')" [min]="curOutcome.start_on" [required]="true" (validationChange)="validationChange($event, 'recurrent_stop')"></date-input>
+                </form-input-container>
 
-    <div class="form-group">
-        <label class="form-switch">
-            <input type="checkbox" id="recurrent" required="true" [(ngModel)]="curOutcome.recurrent"
-            ng-model-options="{ getterSetter: true }" [formControl]="this.recurrentFrm">
-            <i class="form-icon"></i> Récurrent
-        </label>
-    </div>
-    <div class="" [class.hidden]="!curOutcome.recurrent">
-        <div class="twoCol">
-            <div class="form-group">
-                <label class="form-label" for="start_on">A partir du ...</label>
-                <input class="form-input" type="date" id="start_on" required="true" [(ngModel)]="curOutcome.start_on"
-                    ng-model-options="{ getterSetter: true }" [formControl]="this.startOnFrm">
+                <form-input-container label="Compte" [icon]="this.getIcon('bank')" [errors]="this.getErrors('account')" [errorMessages]="this.getErrorMessages('account')">
+                    <select-input [values]="this.account" [(value)]="this.curOutcome.account" (valueChange)="valueChange($event, 'account')" [required]="true" (validationChange)="validationChange($event, 'account')"></select-input>
+                </form-input-container>
             </div>
-            <div class="form-group">
-                <label class="form-label" for="end_on">... jusqu'au</label>
-                <input class="form-input" type="date" id="end_on" required="true" [(ngModel)]="curOutcome.end_on"
-                    ng-model-options="{ getterSetter: true }" [formControl]="this.endOnFrm">
-            </div>
-            <div class="form-group">
-                <label class="form-label" for="day">Jour de prélèvement</label>
-                    <input class="form-input" type="number" id="day" min="1" max="31" [required]="curOutcome.recurrent" [(ngModel)]="curOutcome.day"
-                    ng-model-options="{ getterSetter: true }" [formControl]="this.dayFrm" inputmode="numeric">
+
+            <div>
+                <form-input-container label="Bénéficiaire" [icon]="this.getIcon('userPlus')" [iconActionBefore]="this.addRecipient.bind(this)" [errors]="this.getErrors('recipient')" [errorMessages]="this.getErrorMessages('recipient')">
+                    <select-input [values]="this.recipients" [(value)]="this.curOutcome.recipient" [groupLabels]="this.recipientGroupLabels" (valueChange)="valueChange($event, 'recipient')" [required]="true" (validationChange)="validationChange($event, 'recipient')"></select-input>
+                </form-input-container>
+                <form-input-container label="Montant" [icon]="this.getIcon('euro')" [errors]="this.getErrors('amount')" [iconPosition]="'after'" [errorMessages]="this.getErrorMessages('amount')">
+                    <number-input [min]="0.01" [required]="true" [(value)]="curOutcome.amount" step="0.01" (valueChange)="valueChange($event, 'amount')" (validationChange)="validationChange($event, 'amount')"></number-input>
+                </form-input-container>
+                <div class="multiCol">
+                    <form-input-container label="Partagé" [icon]="this.getIcon('cut')">
+                        <boolean-input [(value)]="curOutcome.shared" (valueChange)="valueChange($event, 'shared')" (validationChange)="validationChange($event, 'shared')"></boolean-input>
+                    </form-input-container>
+                    <form-input-container label="Montant dépensé" [icon]="this.getIcon('euro')" [iconPosition]="'after'">
+                        <span class="input-group-text">{{curOutcome.amountPaid}}</span>
+                    </form-input-container>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="bodyContent multiCol">
+            <form-input-container label="Encours" [icon]="this.getIcon('hourglass')">
+                <boolean-input [(value)]="curOutcome.end_of_month" (valueChange)="valueChange($event, 'end_of_month')" (validationChange)="validationChange($event, 'end_of_month')"></boolean-input>
+            </form-input-container>
+            <form-input-container label="Passé sur le compte" [icon]="this.getIcon('check')" *ngIf="!curOutcome.recurrent">
+                <boolean-input [(value)]="curOutcome.on_account" (valueChange)="valueChange($event, 'on_account')" (validationChange)="validationChange($event, 'on_account')"></boolean-input>
+            </form-input-container>
+            <form-input-container label="Remboursé" [icon]="this.getIcon('piggyBank')" *ngIf="curOutcome.shared">
+                <boolean-input [(value)]="curOutcome.refunded" (valueChange)="valueChange($event, 'refunded')" (validationChange)="validationChange($event, 'refunded')"></boolean-input>
+            </form-input-container>
+            <form-input-container label="En attente" [icon]="this.getIcon('clock')" *ngIf="!curOutcome.recurrent">
+                <boolean-input [(value)]="curOutcome.waiting" (valueChange)="valueChange($event, 'waiting')" (validationChange)="validationChange($event, 'waiting')"></boolean-input>
+            </form-input-container>
+        </div>
+    </card>
 
     <div class="footer">
         <button class="btn" (click)="this.back()">Retour</button>

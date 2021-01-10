@@ -1,9 +1,9 @@
-import {ChangeDetectorRef, Directive, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {AbstractComponent} from './abstract-component';
-import {IconService} from '../../ui/services/icon.service';
+import {ChangeDetectorRef, Directive} from '@angular/core';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
-import {InputErrorModel, InputErrorMessageModel} from './input-error-model';
+import {Subscription} from 'rxjs';
+import {IconService} from '../../ui/services/icon.service';
+import {AbstractComponent} from './abstract-component';
+import {InputErrorMessageModel, InputErrorModel} from './input-error-model';
 
 @Directive()
 export class AbstractFormComponent extends AbstractComponent {
@@ -13,9 +13,12 @@ export class AbstractFormComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _iconService:IconService,
     ) {
         super(_cd);
+    }
+
+    public ngOnInit() {
+        super.ngOnInit();
     }
 
     public get formValid():boolean {
@@ -30,10 +33,6 @@ export class AbstractFormComponent extends AbstractComponent {
         }
 
         return valid;
-    }
-
-    public getIcon(name:string):IconDefinition {
-        return this._iconService[name];
     }
 
     public validationChange($event, code:string) {
@@ -57,5 +56,9 @@ export class AbstractFormComponent extends AbstractComponent {
         let messages:InputErrorMessageModel[] = [];
 
         return messages;
+    }
+
+    public valueChange(value:any, prop:string) {
+        this._cd.markForCheck();
     }
 }

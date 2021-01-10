@@ -2,8 +2,9 @@ import {ChangeDetectorRef, Directive, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AutoUnsub} from '../decorators/auto-unsub.decorator';
 import {UtilsService} from '../services/utils.service';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
+import {IconService} from '../../ui/services/icon.service';
 
-@AutoUnsub()
 @Directive()
 export class AbstractComponent implements OnInit, OnDestroy {
     protected _subs:Subscription[] = [];
@@ -35,5 +36,11 @@ export class AbstractComponent implements OnInit, OnDestroy {
 
     public dateToString = function(date:Date, fullDate:boolean = true):string {
         return UtilsService.dateToString(date, fullDate);
+    }
+
+    public getIcon(iconName:string):IconDefinition {
+        let icon:IconDefinition = IconService.getIcon(iconName);
+
+        return icon;
     }
 }

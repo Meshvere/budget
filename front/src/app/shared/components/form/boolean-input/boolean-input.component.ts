@@ -1,16 +1,20 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
 import {AbstractInputComponent} from '../../../../shared/models/abstract-input-component.component';
+import {IconService} from '../../../../ui/services/icon.service';
+import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'boolean-input',
   templateUrl: './boolean-input.component.html',
   styleUrls: ['./boolean-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooleanInputComponent extends AbstractInputComponent {
     @Output() public valueChange:EventEmitter<boolean> = new EventEmitter();
     @Input() public labelTrue:string = 'Oui';
+    @Input() public iconTrue:string;
     @Input() public labelFalse:string = 'Non';
+    @Input() public iconFalse:string;
 
     public get switchValue():boolean {
         return this.value === 'true' || this.value === true || this.value === 1;

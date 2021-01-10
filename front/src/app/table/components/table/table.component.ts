@@ -6,15 +6,20 @@ import {IconService} from '../../../ui/services/icon.service';
 import {TableAction, TableActionRouteTo} from '../../models/table-action';
 import {TableColumn, TableColumnFilter, TableFilterValue} from '../../models/table-column';
 import {UtilsService} from '../../../shared/services/utils.service';
+import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
 
+
+export type SortDirection = 'asc' | 'desc' | '';
+const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableComponent extends AbstractComponent implements OnChanges {
+
     @Input() public title:string;
     @Input() public columns:TableColumn[] = [];
     @Input() public actions:TableAction[] = [];
@@ -35,9 +40,23 @@ export class TableComponent extends AbstractComponent implements OnChanges {
 
     public filters:TableColumnFilter[] = [];
 
+    public sortField:string;
+    public sortDirection:string;
+
+    public getSortIcon(field:string):IconDefinition {
+        if(this.sortField == field && this.sortDirection != undefined && this.sortDirection != '') {
+            if(this.sortDirection == 'asc') {
+                return IconService.getIcon('sortDown');
+            } else {
+                return IconService.getIcon('sortUp');
+            }
+        }
+
+        return IconService.getIcon('sort');
+    }
+
     constructor(
         protected _cd:ChangeDetectorRef,
-        public icon:IconService,
         protected _route:ActivatedRoute,
         protected _router:Router,
     ) {
@@ -45,7 +64,6 @@ export class TableComponent extends AbstractComponent implements OnChanges {
     }
 
     public ngOnInit(): void {
-        // this.plop();
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -127,5 +145,21 @@ export class TableComponent extends AbstractComponent implements OnChanges {
         });
 
         this.filteredRows = filteredRows;
+    }
+
+    public sortSwitch(evt:Event, field:string) {
+        if(this.sortField == field) {
+            this.sortDirection = rotate[this.sortDirection];
+
+            if(this.sortDirection == '') {
+                this.sortField = undefined;
+                this.sortDirection = undefined;
+            }
+        } else {
+            this.sortField = field;
+            this.sortDirection = 'asc';
+        }
+
+        this._cd.markForCheck();
     }
 }

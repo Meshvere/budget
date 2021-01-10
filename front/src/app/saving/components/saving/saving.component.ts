@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
-    selector: 'app-saving',
+    selector: 'saving',
     templateUrl: './saving.component.html',
-    styleUrls: ['./saving.component.scss']
+    styleUrls: ['./saving.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SavingComponent implements OnInit {
 
-    constructor() { }
+    constructor(
+        private _cd:ChangeDetectorRef,
+    ) { }
 
     ngOnInit(): void {
     }

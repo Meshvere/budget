@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 @Component({
-    selector: 'app-refund-form',
+    selector: 'refund-form',
     templateUrl: './refund-form.component.html',
-    styleUrls: ['./refund-form.component.scss']
+    styleUrls: ['./refund-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RefundFormComponent implements OnInit {
 
-    constructor() { }
+    constructor(
+        private _cd:ChangeDetectorRef,
+    ) { }
 
     ngOnInit(): void {
     }

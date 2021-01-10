@@ -10,7 +10,7 @@ import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
     selector: 'app-nav',
     templateUrl: './nav.component.html',
     styleUrls: ['./nav.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavComponent extends AbstractComponent {
     public entryList:NavEntry[] = [];
@@ -20,7 +20,6 @@ export class NavComponent extends AbstractComponent {
         protected _cd:ChangeDetectorRef,
         public route: ActivatedRoute,
         private _dataService:DataService,
-        private _iconService:IconService,
     ) {
         super(_cd);
 
@@ -29,17 +28,5 @@ export class NavComponent extends AbstractComponent {
 
             this._cd.markForCheck();
         });
-    }
-
-    ngOnInit(): void {
-        super.ngOnInit();
-
-        this.route.url.subscribe(rt => {
-            // console.log(rt)
-        })
-    }
-
-    public getIcon(name:string):IconDefinition {
-        return this._iconService[name];
     }
 }

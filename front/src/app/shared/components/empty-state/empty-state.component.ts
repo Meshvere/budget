@@ -1,11 +1,11 @@
-import {ChangeDetectorRef,Component,Input} from '@angular/core';
-import {IconService} from 'src/app/ui/services/icon.service';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {AbstractComponent} from '../../models/abstract-component';
 
 @Component({
     selector: 'empty-state',
     templateUrl: './empty-state.component.html',
-    styleUrls: ['./empty-state.component.scss']
+    styleUrls: ['./empty-state.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmptyStateComponent extends AbstractComponent {
     @Input() public title:string;
@@ -14,7 +14,6 @@ export class EmptyStateComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        public iconService:IconService,
     ) {
         super(_cd)
     }

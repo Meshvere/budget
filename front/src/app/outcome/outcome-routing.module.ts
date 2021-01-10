@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '', children: [
             { path: 'add',  data: { action: 'add' }, component: OutcomeFormComponent },
             { path: ':id',  data: { action: 'edit' }, component: OutcomeFormComponent },
-            { path: '**', component: OutcomeComponent}
+            { path: '**', component: OutcomeComponent},
         ]
     }
 ];

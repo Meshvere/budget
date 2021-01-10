@@ -1,0 +1,17 @@
+label {
+    display: flex;
+    flex-direction: row;
+
+    fa-icon {
+        margin-right: 0.5rem;
+        padding: 0;
+        border: 0;
+        background: none;
+    }
+
+    .icon {
+        fa-icon {
+            color: #fff;
+        }
+    }
+}

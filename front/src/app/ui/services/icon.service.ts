@@ -1,35 +1,51 @@
 import {Injectable} from '@angular/core';
-import {faCalendar, faChartLine, faCheck, faCheckCircle, faCircle, faCircleNotch, faClock, faCoins, faCut, faEdit, faEuroSign, faExclamationTriangle, faFileImport, faMoneyBill, faMoneyCheck, faPiggyBank, faPlus, faQuestion, faShoppingCart, faTimesCircle, faTrash, faUtensils, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {faCalendar, faChartLine, faCheck, faCheckCircle, faCircle, faCircleNotch, faClock, faCoins, faCut, faEdit, faEuroSign, faExclamationTriangle, faFileImport, faHourglass, faMoneyBill, faMoneyCheck, faPiggyBank, faPlus, faQuestion, faShoppingCart, faSort, faSortDown, faSortUp, faTimesCircle, faTrash, faUserPlus, faUtensils, IconDefinition, faSync, faBullseye} from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
    providedIn: 'root'
 })
 export class IconService {
-    public check:IconDefinition = faCheck;
-    public checkCircle:IconDefinition = faCheckCircle;
-    public circle:IconDefinition = faCircle;
-    public add:IconDefinition = faPlus;
-    public edit:IconDefinition = faEdit;
-    public remove:IconDefinition = faTrash;
-    public success:IconDefinition = faCheckCircle;
-    public warning:IconDefinition = faExclamationTriangle;
-    public error:IconDefinition = faTimesCircle;
-    public loading:IconDefinition = faCircleNotch;
-    public euro:IconDefinition = faEuroSign;
-    public calendar:IconDefinition = faCalendar;
-    public bank:IconDefinition = faMoneyCheck;
-    public cut:IconDefinition = faCut;
-    public clock:IconDefinition = faClock;
-    public question:IconDefinition = faQuestion;
-    public chartLine:IconDefinition = faChartLine;
-    public moneyCheck:IconDefinition = faMoneyCheck;
-    public coins:IconDefinition = faCoins;
-    public moneyBill:IconDefinition = faMoneyBill;
-    public utensils:IconDefinition = faUtensils;
-    public shoppingCart:IconDefinition = faShoppingCart;
-    public piggyBank:IconDefinition = faPiggyBank;
-    public fileImport:IconDefinition = faFileImport;
+    public static check:IconDefinition = faCheck;
+    public static checkCircle:IconDefinition = faCheckCircle;
+    public static circle:IconDefinition = faCircle;
+    public static add:IconDefinition = faPlus;
+    public static edit:IconDefinition = faEdit;
+    public static remove:IconDefinition = faTrash;
+    public static success:IconDefinition = faCheckCircle;
+    public static warning:IconDefinition = faExclamationTriangle;
+    public static error:IconDefinition = faTimesCircle;
+    public static loading:IconDefinition = faCircleNotch;
+    public static euro:IconDefinition = faEuroSign;
+    public static calendar:IconDefinition = faCalendar;
+    public static bank:IconDefinition = faMoneyCheck;
+    public static cut:IconDefinition = faCut;
+    public static clock:IconDefinition = faClock;
+    public static question:IconDefinition = faQuestion;
+    public static chartLine:IconDefinition = faChartLine;
+    public static moneyCheck:IconDefinition = faMoneyCheck;
+    public static coins:IconDefinition = faCoins;
+    public static moneyBill:IconDefinition = faMoneyBill;
+    public static utensils:IconDefinition = faUtensils;
+    public static shoppingCart:IconDefinition = faShoppingCart;
+    public static piggyBank:IconDefinition = faPiggyBank;
+    public static fileImport:IconDefinition = faFileImport;
+    public static userPlus:IconDefinition = faUserPlus;
+    public static hourglass:IconDefinition = faHourglass;
+    public static sort:IconDefinition = faSort;
+    public static sortUp:IconDefinition = faSortUp;
+    public static sortDown:IconDefinition = faSortDown;
+    public static sync:IconDefinition = faSync;
+    public static bullseye:IconDefinition = faBullseye;
 
-    constructor() {
+    constructor() {}
+
+    public static getIcon(iconName:string):IconDefinition {
+        let icon:IconDefinition;
+
+        if(iconName != undefined) {
+            icon = IconService[iconName];
+        }
+
+        return icon;
     }
 }

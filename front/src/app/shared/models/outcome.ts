@@ -1,12 +1,12 @@
 import {Account} from '../enum/account.enum';
 import {TimeService} from '../services/time.service';
-import {AbstractEntity} from './abstract-entity';
 import {UtilsService} from '../services/utils.service';
+import {AbstractEntity} from './abstract-entity';
 
 
 export class Outcome extends AbstractEntity {
     public account:Account = Account.MINE;
-    public recipient:string = '';
+    public recipient:number = 1;
     public label:string = '';
     public amount:number = 0;
     public end_of_month:boolean = false;
@@ -18,26 +18,8 @@ export class Outcome extends AbstractEntity {
 
     public recurrent:boolean = false;
     public day:number = 0;
-    public start_on:Date;
-    public end_on:Date;
-
-    // constructor(init?:Partial<Outcome>) {
-    //     super(init);
-
-    //     if(init != undefined) {
-    //         if(init['account'] != undefined) {
-    //             init.account = init['account'] == Account.MINE?Account.MINE:Account.COMMON;
-    //         }
-
-    //         Object.assign(this, init);
-
-    //         if(init['amount'] != undefined) {
-    //             this.amount = UtilsService.numberCut(this.amount);
-    //         }
-    //     }
-
-    //     this.removeNull();
-    // }
+    public start_on:Date = new Date(TimeService.undefinedDate);
+    public end_on:Date = new Date(TimeService.undefinedDate);
 
     constructor(init?:Partial<Outcome>) {
         super(init);
@@ -54,7 +36,7 @@ export class Outcome extends AbstractEntity {
     }
 
     public get amountPaid():number {
-        return UtilsService.numberCut(this.shared?(this.amount/2):this.amount);
+        return this.amount != undefined?UtilsService.numberCut(this.shared?(this.amount/2):this.amount):undefined;
     }
 
     public get refundAurelie():number {

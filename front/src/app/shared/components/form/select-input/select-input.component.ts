@@ -1,17 +1,37 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {AbstractInputComponent} from '../../../models/abstract-input-component.component';
-import {SelectModel} from '../../../models/select-model';
+import {SelectModel, GroupSelectModel, GroupSelectLabelsModel} from '../../../models/select-model';
 import {UtilsService} from '../../../services/utils.service';
 
 @Component({
   selector: 'select-input',
   templateUrl: './select-input.component.html',
   styleUrls: ['./select-input.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectInputComponent extends AbstractInputComponent {
     @Input() public values:SelectModel[] = [];
     @Input() public labelType:string = 'raw';
+
+    @Input() public groupLabels:GroupSelectLabelsModel[] = [];
+
+    public get groupedValues():GroupSelectModel[] {
+        let groups:GroupSelectModel[] = [];
+
+        this.values.forEach(value => {
+            let grp:GroupSelectModel = groups.filter(curGrp => curGrp.code == value.group)[0];
+
+            if(grp == undefined) {
+                grp = new GroupSelectModel({code: value.group});
+
+                groups.push(grp);
+            }
+
+            grp.values.push(value);
+        });
+
+        return groups;
+    }
 
     constructor(
         protected _cd:ChangeDetectorRef,
@@ -29,5 +49,11 @@ export class SelectInputComponent extends AbstractInputComponent {
         } else {
             return value;
         }
+    }
+
+    public getGroupLabel(code:string):string {
+        let group:GroupSelectLabelsModel = this.groupLabels.filter(grp => grp.code == code)[0];
+
+        return group != undefined?group.label:code;
     }
 }

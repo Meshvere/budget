@@ -18,7 +18,6 @@ export class Income extends AbstractEntity {
     public recurrent_start:Date = new Date(TimeService.undefinedDate);
     public recurrent_stop:Date = new Date(TimeService.undefinedDate);
 
-
     constructor(init?:Partial<Income>) {
         super(init);
 

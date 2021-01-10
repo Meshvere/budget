@@ -1,25 +1,56 @@
+@import "~src/variables";
+
+$light: 10%;
+
 .filters {
-    // border:1px solid green;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
 
     .filter {
-        // border:1px solid red;
         display:block;
     }
 }
-.action {
-    fa-icon {
-        margin-left: 1rem;
+table {
+    caption {
+        caption-side: top;
+        text-align: center;
+        font-weight: bold;
 
-        &:first-child {
-            margin-left: 0;
+    }
+
+    td.boolean {
+        text-align: center;
+    }
+
+    .table-col-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        fa-icon {
+            margin-left: 0.5rem;
         }
     }
-}
 
-.no-data {
-    text-align: center;
+    .action {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-end;
+
+        border-left: 1px solid darken($table-border-color, $light);
+
+        fa-icon {
+            margin-left: 1rem;
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .no-data {
+        text-align: center;
+    }
 }

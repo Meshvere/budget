@@ -6,7 +6,7 @@ import {Validators} from '@angular/forms';
     selector: 'number-input',
     templateUrl: './number-input.component.html',
     styleUrls: ['./number-input.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NumberInputComponent extends AbstractInputComponent {
     @Input() public min:number;

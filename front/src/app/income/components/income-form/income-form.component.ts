@@ -1,17 +1,15 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, LOCALE_ID} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {Observable, of} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
 import {AbstractFormComponent} from '../../../shared/models/abstract-form-component';
 import {Income} from '../../../shared/models/income';
-import {InputErrorMessageModel, InputErrorModel} from '../../../shared/models/input-error-model';
+import {InputErrorMessageModel} from '../../../shared/models/input-error-model';
 import {SelectModel} from '../../../shared/models/select-model';
 import {DataService} from '../../../shared/services/data.service';
-import {IconService} from '../../../ui/services/icon.service';
 
 @Component({
-    selector: 'app-income-form',
+    selector: 'income-form',
     templateUrl: './income-form.component.html',
     styleUrls: ['./income-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -26,9 +24,8 @@ export class IncomeFormComponent extends AbstractFormComponent {
         private _route: ActivatedRoute,
         private _router:Router,
         private _dataService:DataService,
-        public icon:IconService,
     ) {
-        super(_cd, icon);
+        super(_cd);
     }
 
     ngOnInit(): void {

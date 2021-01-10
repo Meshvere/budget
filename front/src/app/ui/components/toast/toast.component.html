@@ -15,7 +15,7 @@
         <fa-icon [icon]="this.getIcon()" class="hand" [spin]="this.loading" size="1x"></fa-icon>
         <strong class="mr-auto">{{this.title}}</strong>
         <!-- <small class="text-muted">11 mins ago</small> -->
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Fermer" *ngIf="!this.autoClose || (this.autoClose && autoCloseDelay != undefined)">
+        <button type="button" (click)="this.close()" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Fermer" *ngIf="!this.autoClose || (this.autoClose && autoCloseDelay != undefined)">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>

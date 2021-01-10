@@ -1,38 +1,29 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, LOCALE_ID} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AbstractComponent} from 'src/app/shared/models/abstract-component';
-import {Outcome} from 'src/app/shared/models/outcome';
-import {DataService} from 'src/app/shared/services/data.service';
-import {Toast} from 'src/app/ui/models/toast';
-import {IconService} from 'src/app/ui/services/icon.service';
-import {ToastService} from 'src/app/ui/services/toast.service';
+import {ActivatedRoute, Data, Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Observable, of} from 'rxjs';
+import {flatMap} from 'rxjs/operators';
+import {AbstractFormComponent} from '../../../shared/models/abstract-form-component';
+import {Outcome} from '../../../shared/models/outcome';
+import {Recipient} from '../../../shared/models/recipient';
+import {GroupSelectLabelsModel, SelectModel} from '../../../shared/models/select-model';
+import {DataService} from '../../../shared/services/data.service';
+import {Toast} from '../../../ui/models/toast';
+import {ToastService} from '../../../ui/services/toast.service';
+import { RecipientModalComponent } from '../recipient-modal/recipient-modal.component';
 
 @Component({
-    selector: 'app-outcome-form',
+    selector: 'outcome-form',
     templateUrl: './outcome-form.component.html',
     styleUrls: ['./outcome-form.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OutcomeFormComponent extends AbstractComponent {
+export class OutcomeFormComponent extends AbstractFormComponent {
     public curOutcome:Outcome;
-    public account:string[] = [];
-
-    public dateFrm:FormControl = new FormControl();
-    public accountFrm:FormControl = new FormControl();
-    public recipientFrm:FormControl = new FormControl();
-    public endOfMonthFrm:FormControl = new FormControl();
-    public refundedFrm:FormControl = new FormControl();
-    public amountFrm:FormControl = new FormControl();
-    public sharedFrm:FormControl = new FormControl();
-    public onAccountFrm:FormControl = new FormControl();
-    public waitingFrm:FormControl = new FormControl();
-    public commentFrm:FormControl = new FormControl();
-
-    public recurrentFrm:FormControl = new FormControl();
-    public startOnFrm:FormControl = new FormControl();
-    public endOnFrm:FormControl = new FormControl();
-    public dayFrm:FormControl = new FormControl();
+    public account:SelectModel[] = [];
+    public recipients:SelectModel[] = [];
+    public recipientGroupLabels:GroupSelectLabelsModel[] = [];
 
     constructor(
         @Inject(LOCALE_ID) public locale: string,
@@ -41,51 +32,64 @@ export class OutcomeFormComponent extends AbstractComponent {
         private _route: ActivatedRoute,
         private _router:Router,
         private _dataService:DataService,
-        public icon:IconService,
+        private _modalService: NgbModal,
     ) {
         super(_cd);
 
+        this.recipientGroupLabels.push(new GroupSelectLabelsModel({code:'primary', label: 'Régulier'}));
+        this.recipientGroupLabels.push(new GroupSelectLabelsModel({code:'secondary', label: 'Occasionnel'}));
+
         this.addSub = this._dataService.getAccounts().subscribe(acc => {
-            this.account = acc;
+            let list:SelectModel[] = [];
+
+            acc.forEach(item => {
+                list.push(new SelectModel({value:item, label:item}));
+            });
+
+            this.account = list;
 
             this._cd.markForCheck();
         });
 
-        this._route.data.subscribe(data => {
+        this._getRecipients();
+
+        this.addSub = this._route.data.pipe(flatMap((data:Data) => {
+            let obs:Observable<Outcome>;
             if(data.action == 'edit') {
-                this.retrieveOutcome();
+                obs = this.retrieveOutcome();
             } else {
-                this.curOutcome = new Outcome();
-
-                this._cd.markForCheck();
+                obs = of(new Outcome());
             }
+
+            return obs;
+        })).subscribe(outcome => {
+            this.curOutcome = outcome;
+
+            this._cd.markForCheck();
         });
-
-
     }
 
-    ngOnInit(): void {
-        super.ngOnInit();
+    private _getRecipients(recipient:Recipient = undefined) {
+        this.addSub = this._dataService.getRecipients().subscribe((rec:Recipient[]) => {
+            let list:SelectModel[] = [];
+
+            rec.forEach(item => {
+                list.push(new SelectModel({value:item.id, label:item.label, group:item.main?'primary':'secondary'}));
+                if(recipient != undefined && item.label == recipient.label) {
+                    this.curOutcome.recipient = item.id;
+                }
+            });
+
+            this.recipients = list;
+
+            this._cd.markForCheck();
+        });
     }
 
-    public retrieveOutcome() {
-        // this.addSub = this._route.params.subscribe(param => {
-        //     let toastId:number = this._toastService.addToast('Recette', 'Recette en cours de chargement', Toast.LOADING);
-
-        //     this._cd.markForCheck();
-
-        //     this.addSub = this._dataService.outcomeLoaded$.subscribe(loaded => {
-        //         if(loaded) {
-        //             this._dataService.getOutcome(param.id).subscribe(rec => {
-        //                 this.curOutcome = rec;
-        //                 this._toastService.closeToast(toastId);
-        //                 this._toastService.addToast('Recette', 'Recette récupérée', Toast.SUCCESS);
-
-        //                 this._cd.markForCheck();
-        //             });
-        //         }
-        //     });
-        // });
+    public retrieveOutcome():Observable<Outcome> {
+        return this._route.params.pipe(flatMap(param => {
+            return this._dataService.getOutcome(param.id);
+        }));
     }
 
     public back() {
@@ -100,18 +104,27 @@ export class OutcomeFormComponent extends AbstractComponent {
         });
     }
 
-    public get formValid():boolean {
-        let formElems:string[] = ['dateFrm', 'accountFrm', 'amountFrm'];
-        let valid:boolean;
+    public valueChange(value:any, prop:string) {
+        this.curOutcome[prop] = value;
 
-        for(let elemName of formElems) {
-            valid = this[elemName].valid;
+        if(prop == 'recurrent') {
+            let reset:string[] = [];
 
-            if(!valid) {
-                break;
+            if(this.curOutcome.recurrent) {
+                reset.push('date', 'waiting');
+            } else {
+                reset.push('recurrent_day', 'recurrent_start', 'recurrent_stop');
             }
+
+            reset.forEach(prop => this.curOutcome[prop] = undefined);
         }
 
-        return valid;
+        this._cd.markForCheck();
+    }
+
+    public addRecipient() {
+        this._modalService.open(RecipientModalComponent, { centered: true }).result.then((recipient:Recipient) => {
+            this._getRecipients(recipient);
+        });
     }
 }

@@ -1,4 +1,3 @@
-{{curIncome|json}}
 <empty-state *ngIf="curIncome == undefined" title="Recette non trouvée"></empty-state>
 <form class="form-horizontal" *ngIf="curIncome != undefined">
     <card [title]="'Type et objet'">
@@ -8,7 +7,7 @@
             </form-input-container>
 
             <form-input-container label="Type de recette">
-                <boolean-input [(value)]="curIncome.recurrent" labelTrue="Récurrent" labelFalse="Ponctuel" (valueChange)="valueChange($event, 'recurrent')"></boolean-input>
+                <boolean-input [(value)]="curIncome.recurrent" labelTrue="Récurrente" iconTrue="sync" labelFalse="Ponctuelle" iconFalse="bullseye" (valueChange)="valueChange($event, 'recurrent')"></boolean-input>
             </form-input-container>
         </div>
         <ng-container class="bodyContent">

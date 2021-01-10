@@ -1,15 +1,15 @@
-import {ChangeDetectionStrategy,ChangeDetectorRef,Component,Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
-import {AbstractComponent} from 'src/app/shared/models/abstract-component';
+import {AbstractComponent} from '../../../shared/models/abstract-component';
 import {Toast} from '../../models/toast';
 import {IconService} from '../../services/icon.service';
 import {ToastService} from '../../services/toast.service';
 
 @Component({
-    selector: 'app-toast',
+    selector: 'toast',
     templateUrl: './toast.component.html',
     styleUrls: ['./toast.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastComponent extends AbstractComponent {
     @Input() public id:number;
@@ -23,7 +23,6 @@ export class ToastComponent extends AbstractComponent {
     constructor(
         protected _cd:ChangeDetectorRef,
         protected _toastService:ToastService,
-        private _iconService:IconService,
     ) {
         super(_cd);
     }
@@ -42,13 +41,13 @@ export class ToastComponent extends AbstractComponent {
         let icon:IconDefinition;
 
         if(this.type == Toast.SUCCESS) {
-            icon = this._iconService.success;
+            icon = IconService.getIcon('success');
         } else if(this.type == Toast.WARNING) {
-            icon = this._iconService.warning;
+            icon = IconService.getIcon('warning');
         } else if(this.type == Toast.ERROR) {
-            icon = this._iconService.error;
+            icon = IconService.getIcon('error');
         } else if(this.type == Toast.LOADING) {
-            icon = this._iconService.loading;
+            icon = IconService.getIcon('loading');
         }
 
       return icon;
@@ -61,6 +60,7 @@ export class ToastComponent extends AbstractComponent {
     public close() {
         this.shown = false;
         this._toastService.closeToast(this.id);
+
         this._cd.markForCheck();
     }
 }

@@ -1,3 +1,4 @@
-<div class="p-right head"><button class="btn btn-primary c-hand" [routerLink]="['./add']"><fa-icon  [icon]="icon.add"></fa-icon> Ajouter</button></div>
-<app-table title="Dépenses quotidiennes" [columns]="this.tableColumnsDaily" [rows]="this.filterOutcome(false)" [actions]="this.tableActions"></app-table>
-<app-table title="Prélèvements automatiques" [columns]="this.tableColumnsRecurrent" [rows]="this.filterOutcome(true)" [actions]="this.tableActions"></app-table>
+<div class="head"><button class="btn btn-primary c-hand" [routerLink]="['./add']"><fa-icon  [icon]="getIcon('add')"></fa-icon> Ajouter</button></div>
+
+<app-table title="Dépenses quotidiennes" [columns]="this.tableColumnsDaily" [rows]="this.currentOutcome" [actions]="this.tableActions"></app-table>
+<app-table title="Prélèvements automatiques" [columns]="this.tableColumnsRecurrent" [rows]="this.recurrentOutcome" [actions]="this.tableActions"></app-table>

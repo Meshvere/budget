@@ -1,4 +1,11 @@
 <select class="form-control" [formControl]="this.frmCtrl" [ngClass]="{'is-valid':this.valid && this.needValidation, 'is-invalid':!this.valid && this.needValidation}"
     [required]="this.required" [disabled]="this.disabled" (change)="this.valueChanged($event)" [(ngModel)]="this.value">
-    <option *ngFor="let item of values" [value]="item.value">{{this.formatLabel(item.label)}}</option>
+    <ng-container *ngIf="groupLabels.length > 0">
+        <optgroup [label]="this.getGroupLabel(group.code)" *ngFor="let group of groupedValues">
+            <option *ngFor="let item of group.values" [value]="item.value">{{this.formatLabel(item.label)}}</option>
+        </optgroup>
+    </ng-container>
+    <ng-container *ngIf="groupLabels.length == 0">
+        <option *ngFor="let item of values" [value]="item.value">{{this.formatLabel(item.label)}}</option>
+    </ng-container>
 </select>

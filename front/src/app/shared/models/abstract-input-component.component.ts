@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, Directive } from '@angular/core';
-import {FormControl,ValidatorFn,Validators} from '@angular/forms';
+import {ChangeDetectorRef, Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {AbstractComponent} from './abstract-component';
 import {InputErrorModel} from './input-error-model';
 
@@ -54,6 +54,9 @@ export class AbstractInputComponent extends AbstractComponent implements OnChang
             this._updateValidatorList();
             this._updateValidator();
 
+            this.frmCtrl.updateValueAndValidity();
+            this._validationChange();
+
             this.addSub = this.frmCtrl.valueChanges.subscribe(val => this._validationChange());
         }
     }
@@ -70,8 +73,6 @@ export class AbstractInputComponent extends AbstractComponent implements OnChang
             }
         });
     }
-
-    public ngValue
 
     public valueChanged($event) {
         this.valueChange.emit($event.target.value);

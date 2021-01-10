@@ -5,6 +5,7 @@ export class TableColumn {
     public field:string;
     public cellType:any = 'raw';
     public filter:boolean = false;
+    public sortable:boolean = false;
 
     constructor(init?:Partial<TableColumn>) {
         Object.assign(this, init);

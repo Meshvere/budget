@@ -1,23 +1,25 @@
-import {HttpClient,HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 import * as moment from 'moment';
 import 'moment/locale/fr';
-import {BehaviorSubject,Observable,of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
 import {NavEntry} from '../../ui/models/nav-entry';
+import {Toast} from '../../ui/models/toast';
+import {ToastService} from '../../ui/services/toast.service';
 import {Account} from '../enum/account.enum';
+import {BackResponse} from '../models/back-response';
 import {Income} from '../models/income';
 import {Outcome} from '../models/outcome';
+import {Recipient} from '../models/recipient';
 import {Summary} from '../models/summary';
-import {ToastService} from '../../ui/services/toast.service';
-import {Toast} from '../../ui/models/toast';
-import {BackResponse} from '../models/back-response';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DataService {
-    private _titles:any = {income: 'Recette', outcome: 'Dépense'};
+    public static titles:any = {income: 'Recette', outcome: 'Dépense', 'recipient': 'Bénéficiaire'};
     private _host:string = '192.168.56.102';
     private _port:number = 3000;
     private _baseUrl:string = '/';
@@ -33,6 +35,7 @@ export class DataService {
     constructor(
         private _http:HttpClient,
         protected _toastService:ToastService,
+        private _routerService:Router,
     ) {
         let months:Summary[] = [];
         for(let i:number = - this._deltaMonth; i <= this._deltaMonth; i++) {
@@ -69,7 +72,7 @@ export class DataService {
 
     public getIncomes():Observable<Income[]> {
         let data:any = {start:this.dateStart, end: this.dateEnd};
-        let toastId:number = this._toastService.addToast(this._titles.income, 'Recettes en cours de chargement', Toast.LOADING);
+        let toastId:number = this._toastService.addToast(DataService.titles.income, 'Recettes en cours de chargement', Toast.LOADING);
 
         return this._http.get<Income[]>(this._constructUrl('incomes'), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
@@ -80,6 +83,7 @@ export class DataService {
                 }
 
                 this._toastService.closeToast(toastId);
+                this._toastService.addToast(DataService.titles.outcome, 'Recettes récupérées', Toast.SUCCESS);
 
                 return of(list);
             })
@@ -88,7 +92,7 @@ export class DataService {
 
     public getIncome(id:string):Observable<Income> {
         let data:any = {id: id};
-        let toastId:number = this._toastService.addToast(this._titles.income, 'Recette en cours de chargement', Toast.LOADING);
+        let toastId:number = this._toastService.addToast(DataService.titles.income, 'Recette en cours de chargement', Toast.LOADING);
 
         return this._http.get<Income>(this._constructUrl('income?id='+id), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
@@ -99,7 +103,7 @@ export class DataService {
                 }
 
                 this._toastService.closeToast(toastId);
-                this._toastService.addToast(this._titles.income, 'Recette récupérée', Toast.SUCCESS);
+                this._toastService.addToast(DataService.titles.income, 'Recette récupérée', Toast.SUCCESS);
 
                 return of(inc);
             })
@@ -108,6 +112,7 @@ export class DataService {
 
     public getOutcomes():Observable<Outcome[]> {
         let data:any = {start:this.dateStart, end: this.dateEnd};
+        let toastId:number = this._toastService.addToast(DataService.titles.outcome, 'Dépenses en cours de chargement', Toast.LOADING);
 
         return this._http.get<Outcome[]>(this._constructUrl('outcomes'), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
@@ -117,28 +122,36 @@ export class DataService {
                     list.push(new Outcome(ev[i]));
                 }
 
+                this._toastService.closeToast(toastId);
+                this._toastService.addToast(DataService.titles.outcome, 'Dépenses récupérées', Toast.SUCCESS);
+
                 return of(list);
             })
         );
     }
 
-    // TODO : make real synchro with DB
     public getOutcome(id:string):Observable<Outcome> {
-        let out:Outcome;
+        let data:any = {id: id};
+        let toastId:number = this._toastService.addToast(DataService.titles.outcome, 'Dépense en cours de chargement', Toast.LOADING);
 
-        // for(let curOutc of this.outcome$.value) {
-        //     if(curOutc.id == id) {
-        //         out = cloneDeep(curOutc);
+        return this._http.get<Outcome>(this._constructUrl('outcome?id='+id), this._getHttpHeader('GET', data)).pipe(
+            flatMap((ev) => {
+                let inc:Outcome;
 
-        //         break;
-        //     }
-        // }
+                if(ev[0] != undefined) {
+                    inc = new Outcome(ev[0]);
+                }
 
-        return of(out);
+                this._toastService.closeToast(toastId);
+                this._toastService.addToast(DataService.titles.outcome, 'Dépense récupérée', Toast.SUCCESS);
+
+                return of(inc);
+            })
+        );
     }
 
     public saveIncome(inc:Income):Observable<BackResponse> {
-        let toastId:number = this._toastService.addToast(this._titles.income, 'Enregistrement de la recette en cours', Toast.LOADING);
+        let toastId:number = this._toastService.addToast(DataService.titles.income, 'Enregistrement de la recette en cours', Toast.LOADING);
 
         let data:any = {inc: inc.toObject()};
 
@@ -147,16 +160,15 @@ export class DataService {
                 let result:BackResponse = new BackResponse(ev);
 
                 this._toastService.closeToast(toastId);
-                this._handleResponse(result, this._titles.income, 'Recette enregistrée');
+                this._handleResponse(result, DataService.titles.income, 'Recette enregistrée');
 
                 return of(result);
             })
         );
-
     }
 
     public saveOutcome(out:Outcome):Observable<any> {
-        let toastId:number = this._toastService.addToast(this._titles.income, 'Enregistrement de la recette en cours', Toast.LOADING);
+        let toastId:number = this._toastService.addToast(DataService.titles.outcome, 'Enregistrement de la dépense en cours', Toast.LOADING);
 
         let data:any = {out: out.toObject()};
 
@@ -165,7 +177,7 @@ export class DataService {
                 let result:BackResponse = new BackResponse(ev);
 
                 this._toastService.closeToast(toastId);
-                this._handleResponse(result, this._titles.income, 'Recette enregistrée');
+                this._handleResponse(result, DataService.titles.income, 'Dépense enregistrée');
 
                 return of(result);
             })
@@ -173,7 +185,7 @@ export class DataService {
     }
 
     public saveMass(path:string, datas:any[]):Observable<any> {
-        let toastId:number = this._toastService.addToast(this._titles.income, 'Enregistrement de masse en cours', Toast.LOADING);
+        let toastId:number = this._toastService.addToast(DataService.titles.income, 'Enregistrement de masse en cours', Toast.LOADING);
 
         let sendableDatas:Array<Income|Outcome> = [];
 
@@ -188,7 +200,7 @@ export class DataService {
                 let result:BackResponse = new BackResponse(ev);
 
                 this._toastService.closeToast(toastId);
-                this._handleResponse(result, this._titles.income, 'Recette enregistrée');
+                this._handleResponse(result, DataService.titles.income, 'Recette enregistrée');
 
                 return of(result);
             },
@@ -202,7 +214,45 @@ export class DataService {
         accounts.push(Account.MINE);
         accounts.push(Account.COMMON);
 
-        return new BehaviorSubject(accounts);
+        return new BehaviorSubject<string[]>(accounts);
+    }
+
+    public getRecipients():Observable<Recipient[]> {
+        let data:any = {};
+        let toastId:number = this._toastService.addToast(DataService.titles.recipient, 'Bénéficiaires en cours de chargement', Toast.LOADING);
+
+        return this._http.get<Income[]>(this._constructUrl('recipients'), this._getHttpHeader('GET', data)).pipe(
+            flatMap((ev) => {
+                let list:Recipient[] = [];
+
+                for(let i = 0; i < ev['length']; i++) {
+                    ev[i].main = ev[i].main === 1;
+
+                    list.push(new Recipient(ev[i]));
+                }
+
+                this._toastService.closeToast(toastId);
+
+                return of(list);
+            })
+        );
+    }
+
+    public saveRecipient(rec:Recipient):Observable<any> {
+        let toastId:number = this._toastService.addToast(DataService.titles.recipient, 'Enregistrement du bénéficiaire en cours', Toast.LOADING);
+
+        let data:any = {rec: rec.toObject()};
+
+        return this._http.put<any>(this._constructUrl('recipient'), this._getHttpHeader('PUT', data)).pipe(
+            flatMap((ev) => {
+                let result:BackResponse = new BackResponse(ev);
+
+                this._toastService.closeToast(toastId);
+                this._handleResponse(result, DataService.titles.income, 'Bénéficiaire enregistré');
+
+                return of(result);
+            })
+        );
     }
 
     private _calcSummary() {

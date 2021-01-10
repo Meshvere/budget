@@ -1,10 +1,12 @@
 <div class="btn-group btn-group-toggle">
     <div class="btn-group btn-group-toggle">
         <label class="btn-outline-primary" [class.active]="this.switchValue" ngbButtonLabel>
-          <input type="checkbox" ngbButton [value]="true" (click)="switchState($event)"> {{labelTrue}}
+            <fa-icon *ngIf="iconTrue != undefined" class="input-group-text" [icon]="this.getIcon(iconTrue)"></fa-icon>
+            <input type="checkbox" ngbButton [value]="true" (click)="switchState($event)"> {{labelTrue}}
         </label>
         <label class="btn-outline-primary" [class.active]="!this.switchValue" ngbButtonLabel>
-          <input type="checkbox" ngbButton [value]="false" (click)="switchState($event)"> {{labelFalse}}
+            <fa-icon *ngIf="iconFalse != undefined" class="input-group-text" [icon]="this.getIcon(iconFalse)"></fa-icon>
+            <input type="checkbox" ngbButton [value]="false" (click)="switchState($event)"> {{labelFalse}}
         </label>
-      </div>
+    </div>
 </div>

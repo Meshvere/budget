@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h4 class="modal-title">Bénéficiaire</h4>
+    <button type="button" class="close" aria-label="Fermer" (click)="this.dismiss()" *ngIf="!isSaving">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal">
+        <form-input-container label="Libellé" class="fullWidth" [errors]="this.getErrors('label')" [errorMessages]="this.getErrorMessages('label')">
+            <text-input [required]="true" [(value)]="recipient.label" (validationChange)="validationChange($event, 'label')"></text-input>
+        </form-input-container>
+
+        <form-input-container label="Principal">
+            <boolean-input [(value)]="recipient.main" labelTrue="Oui" labelFalse="Non"></boolean-input>
+        </form-input-container>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn" (click)="this.dismiss()" [disabled]="isSaving">
+        Annuler
+    </button>
+    <button type="button" class="btn btn-primary" ngbAutofocus [disabled]="isSaving || !this.formValid" (click)="this.saveRecipient()">
+        <fa-icon  [icon]="this.getIcon('add')"></fa-icon>
+        Ajouter
+    </button>
+</div>

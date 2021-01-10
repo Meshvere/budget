@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-    selector: 'app-food-ticket-form',
+    selector: 'food-ticket-form',
     templateUrl: './food-ticket-form.component.html',
-    styleUrls: ['./food-ticket-form.component.scss']
+    styleUrls: ['./food-ticket-form.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FoodTicketFormComponent implements OnInit {
 
-    constructor() { }
+    constructor(
+        private _cd:ChangeDetectorRef,
+    ) { }
 
     ngOnInit(): void {
     }
