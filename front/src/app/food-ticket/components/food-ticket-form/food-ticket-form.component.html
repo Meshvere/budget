@@ -1,1 +1,23 @@
-<p>food-ticket-form works!</p>
+<empty-state *ngIf="curFoodTicket == undefined" title="Ticket resto non trouvée"></empty-state>
+<form class="form-horizontal" *ngIf="curFoodTicket != undefined">
+    <card [title]="'Date et montant'">
+        <div class="bodyContent multiCol">
+            <div>
+                <form-input-container label="Date" [icon]="this.getIcon('calendar')" [errors]="this.getErrors('date')" [errorMessages]="this.getErrorMessages('date')">
+                    <date-input [(value)]="curFoodTicket.date" (valueChange)="valueChange($event, 'date')" [required]="true" (validationChange)="validationChange($event, 'date')"></date-input>
+                </form-input-container>
+            </div>
+
+            <div>
+                <form-input-container label="Montant" [icon]="this.getIcon('euro')" [errors]="this.getErrors('amount')" [iconPosition]="'after'" [errorMessages]="this.getErrorMessages('amount')">
+                    <number-input [min]="0.01" [required]="true" [(value)]="curFoodTicket.amount" step="0.01" (valueChange)="valueChange($event, 'amount')" (validationChange)="validationChange($event, 'amount')"></number-input>
+                </form-input-container>
+            </div>
+        </div>
+    </card>
+
+    <div class="footer">
+        <button class="btn" (click)="this.back()">Retour</button>
+        <button class="btn btn-primary" (click)="this.save()" [disabled]="!this.formValid">Enregistrer</button>
+    </div>
+</form>

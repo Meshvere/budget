@@ -1,7 +1,5 @@
 import {ChangeDetectorRef, Directive} from '@angular/core';
-import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 import {Subscription} from 'rxjs';
-import {IconService} from '../../ui/services/icon.service';
 import {AbstractComponent} from './abstract-component';
 import {InputErrorMessageModel, InputErrorModel} from './input-error-model';
 
@@ -15,10 +13,6 @@ export class AbstractFormComponent extends AbstractComponent {
         protected _cd:ChangeDetectorRef,
     ) {
         super(_cd);
-    }
-
-    public ngOnInit() {
-        super.ngOnInit();
     }
 
     public get formValid():boolean {

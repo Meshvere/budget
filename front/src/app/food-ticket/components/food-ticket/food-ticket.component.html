@@ -1,1 +1,7 @@
-<p>food-ticket works!</p>
+<div class="head"><button class="btn btn-primary c-hand" [routerLink]="['./add']"><fa-icon  [icon]="getIcon('add')"></fa-icon> Ajouter</button></div>
+
+<div class="page">
+    <app-table [columns]="this.tableColumns" [rows]="this.foodTicket" [actions]="this.tableActions"></app-table>
+    <chart [data]="this.getStats()" chartWidth="600" chartHeight="400"></chart>
+</div>
+

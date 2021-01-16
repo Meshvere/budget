@@ -1,0 +1,16 @@
+.head {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    text-align: right;
+}
+
+.page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+chart {
+    min-width: 35rem;
+}

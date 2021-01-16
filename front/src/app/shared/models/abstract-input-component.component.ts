@@ -24,10 +24,16 @@ export class AbstractInputComponent extends AbstractComponent implements OnChang
         this._value=value;
 
         if(this.frmCtrl != undefined) {
+            console.log('set value')
+            console.log(this.frmCtrl.value);
+            console.log(this.frmCtrl.valid)
             this.frmCtrl.updateValueAndValidity();
+            console.log(this.frmCtrl.valid)
         }
 
         this._validationChange();
+
+        this._cd.markForCheck();
     }
 
     @Output() public valueChange:EventEmitter<any> = new EventEmitter();

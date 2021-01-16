@@ -15,7 +15,7 @@ import {IncomeRoutingModule} from './income-routing.module';
         CommonModule,
         IncomeRoutingModule,
         SharedModule,
-        TableModule
+        TableModule,
     ],
     exports: [
         IncomeRoutingModule,

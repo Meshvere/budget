@@ -7,7 +7,8 @@ import {FoodTicketComponent} from './components/food-ticket/food-ticket.componen
 const routes: Routes = [
     {
         path: '', children: [
-            { path: ':id', component: FoodTicketFormComponent },
+            { path: 'add',  data: { action: 'add' }, component: FoodTicketFormComponent },
+            { path: ':id',  data: { action: 'edit' }, component: FoodTicketFormComponent },
             { path: '**', component: FoodTicketComponent}
         ]
     }

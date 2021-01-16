@@ -10,6 +10,7 @@ import {AbstractInputComponent} from 'src/app/shared/models/abstract-input-compo
 export class TextInputComponent extends AbstractInputComponent {
     @Input() public maxLength:number;
     @Input() public textarea:boolean = false;
+
     constructor(
         protected _cd:ChangeDetectorRef,
     ) {

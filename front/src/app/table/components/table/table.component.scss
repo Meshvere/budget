@@ -20,8 +20,14 @@ table {
 
     }
 
-    td.boolean {
-        text-align: center;
+    td {
+        &.boolean {
+            text-align: center;
+        }
+    }
+
+    .negativ {
+        color: red;
     }
 
     .table-col-header {
