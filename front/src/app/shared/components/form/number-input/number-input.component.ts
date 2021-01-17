@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component,Input} from '@angular/core';
-import {AbstractInputComponent} from 'src/app/shared/models/abstract-input-component.component';
+import {AbstractInputComponent} from '../../../models/abstract-input-component.component';
 import {Validators} from '@angular/forms';
 
 @Component({
@@ -12,6 +12,15 @@ export class NumberInputComponent extends AbstractInputComponent {
     @Input() public min:number;
     @Input() public max: number;
     @Input() public step:number = 1;
+
+    protected _value: number;
+
+    public get value(): number {
+        return this._value;
+    }
+    public set value(value: number) {
+        super.value = value;
+    }
 
     constructor(
         protected _cd:ChangeDetectorRef,

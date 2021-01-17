@@ -1,1 +1,4 @@
-<input class="form-control" type="number" [(ngModel)]="this.value" [ngClass]="{'is-valid':this.valid && this.needValidation, 'is-invalid':!this.valid && this.needValidation}"  [formControl]="this.frmCtrl" [required]="this.required" [disabled]="this.disabled" [readonly]="this.readOnly" [class.form-control-plaintext]="this.readOnly" [min]="this.min" [max]="this.max" [step]="this.step" (change)="this.valueChanged($event)" />
+<input class="form-control" type="number" [(ngModel)]="this.value" [ngClass]="this.ngClass"
+    [formControl]="this.frmCtrl" [required]="this.required" [disabled]="this.disabled"
+    [readonly]="this.readOnly" [class.form-control-plaintext]="this.readOnly" [min]="this.min" [max]="this.max" [step]="this.step"
+    (change)="this.valueChanged($event)" />

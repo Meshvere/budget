@@ -24,11 +24,10 @@ export class AbstractInputComponent extends AbstractComponent implements OnChang
         this._value=value;
 
         if(this.frmCtrl != undefined) {
-            console.log('set value')
-            console.log(this.frmCtrl.value);
-            console.log(this.frmCtrl.valid)
+            this.frmCtrl.markAsTouched();
+            this.frmCtrl.markAsDirty();
+            this.frmCtrl.markAsPristine();
             this.frmCtrl.updateValueAndValidity();
-            console.log(this.frmCtrl.valid)
         }
 
         this._validationChange();
@@ -42,7 +41,7 @@ export class AbstractInputComponent extends AbstractComponent implements OnChang
     public frmCtrl:FormControl = new FormControl();
 
     public get ngClass():any {
-        return {'is-valid':this.valid && this.needValidation, 'is-invalid':this.valid && this.needValidation};
+        return {'is-valid':this.valid && this.needValidation, 'is-invalid':!this.valid && this.needValidation};
     }
 
     constructor(
@@ -57,13 +56,17 @@ export class AbstractInputComponent extends AbstractComponent implements OnChang
         super.ngOnInit();
 
         if(this.needValidation) {
+            this.addSub = this.frmCtrl.valueChanges.subscribe(val => this._validationChange());
+
             this._updateValidatorList();
             this._updateValidator();
 
-            this.frmCtrl.updateValueAndValidity();
-            this._validationChange();
+            this.frmCtrl.markAsTouched();
+            this.frmCtrl.markAsDirty();
+            // this.frmCtrl.updateValueAndValidity();
+            // this._validationChange();
 
-            this.addSub = this.frmCtrl.valueChanges.subscribe(val => this._validationChange());
+            this._cd.markForCheck();
         }
     }
 
@@ -88,7 +91,11 @@ export class AbstractInputComponent extends AbstractComponent implements OnChang
 
     protected _validationChange() {
         if(this.frmCtrl != undefined) {
-            this.valid = this.frmCtrl.valid;
+            if(this.value == undefined) {
+                this.valid = false;
+            } else {
+                this.valid = this.frmCtrl.valid;
+            }
             this.errors = new InputErrorModel({valid: this.frmCtrl.valid, errors:this.frmCtrl.errors});
 
             this.validationChange.emit(this.errors);
@@ -109,6 +116,6 @@ export class AbstractInputComponent extends AbstractComponent implements OnChang
         this.frmCtrl.clearValidators();
         this.frmCtrl.setValidators(this._validators);
 
-        this.frmCtrl.updateValueAndValidity();
+        // this.frmCtrl.updateValueAndValidity();
     }
 }

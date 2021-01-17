@@ -1,4 +1,4 @@
-<select class="form-control" [formControl]="this.frmCtrl" [ngClass]="{'is-valid':this.valid && this.needValidation, 'is-invalid':!this.valid && this.needValidation}"
+<select class="form-control" [formControl]="this.frmCtrl" [ngClass]="ngClass"
     [required]="this.required" [disabled]="this.disabled" (change)="this.valueChanged($event)" [(ngModel)]="this.value">
     <ng-container *ngIf="groupLabels.length > 0">
         <optgroup [label]="this.getGroupLabel(group.code)" *ngFor="let group of groupedValues">
