@@ -18,6 +18,7 @@ import { BooleanInputComponent } from './components/form/boolean-input/boolean-i
 import {TextInputComponent} from './components/form/text-input/text-input.component';
 import {UtilsService} from './services/utils.service';
 import {LocaleService} from './services/locale.service';
+import { BtnComponent } from './components/btn/btn.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import {LocaleService} from './services/locale.service';
         SelectInputComponent,
         BooleanInputComponent,
         TextInputComponent,
+        BtnComponent,
     ],
     imports: [
         CommonModule,
@@ -58,6 +60,7 @@ import {LocaleService} from './services/locale.service';
         BooleanInputComponent,
         TextInputComponent,
         JsonPipe,
+        BtnComponent,
     ],
     entryComponents: [
         RedirectToComponent,
@@ -67,6 +70,7 @@ import {LocaleService} from './services/locale.service';
         FormInputContainerComponent,
         NumberInputComponent,
         TextInputComponent,
+        BtnComponent,
     ],
     providers: [
         {
