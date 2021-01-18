@@ -1,6 +1,6 @@
 <app-content>
     <div header>
-        <button class="btn btn-primary c-hand" [routerLink]="['./add']"><fa-icon  [icon]="getIcon('add')"></fa-icon> Ajouter</button>
+        <btn [routerLink]="['./add']" [primary]="true" label="Ajouter" icon="add"></btn>
     </div>
     <div body>
         <app-table [columns]="this.tableColumns" [rows]="this.foodTicket" [actions]="this.tableActions"></app-table>
