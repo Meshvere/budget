@@ -284,7 +284,7 @@ export class DataService {
         let data:any = {};
         let toastId:number = this._toastService.addToast(DataService.titles.foodTicket, 'Tickets restos en cours de chargement', Toast.LOADING);
 
-        return this._http.get<FoodTicket[]>(this._constructUrl('food-tickets'), this._getHttpHeader('GET', data)).pipe(
+        return this._http.get<FoodTicket[]>(this._constructUrl('food-ticket'), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
                 let list:FoodTicket[] = [];
 
@@ -305,7 +305,7 @@ export class DataService {
         let data:any = {};
         let toastId:number = this._toastService.addToast(DataService.titles.foodTicket, 'Statistiques des tickets restos en cours de chargement', Toast.LOADING);
 
-        return this._http.get<FoodTicketStats[]>(this._constructUrl('food-tickets/stats'), this._getHttpHeader('GET', data)).pipe(
+        return this._http.get<FoodTicketStats[]>(this._constructUrl('food-ticket/stats'), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
                 let list:FoodTicketStats[] = [];
 
@@ -326,7 +326,7 @@ export class DataService {
         let data:any = {id: id};
         let toastId:number = this._toastService.addToast(DataService.titles.foodTicket, 'Ticket resto en cours de chargement', Toast.LOADING);
 
-        return this._http.get<FoodTicket>(this._constructUrl('food-ticket?id='+id), this._getHttpHeader('GET', data)).pipe(
+        return this._http.get<FoodTicket>(this._constructUrl('food-ticket/item/'+id), this._getHttpHeader('GET', data)).pipe(
             flatMap((ev) => {
                 let ft:FoodTicket;
 
