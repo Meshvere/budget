@@ -31,10 +31,6 @@ app.use(cors({
 
 // ------------- ROUTES ----------------------------
 
-var income = require('./services/income-routes');
-
-app.use('/bird', income);
-
 var foodTicket = require('./services/food-ticket-routes');
 app.use('/food-ticket', foodTicket);
 

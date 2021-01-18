@@ -12,6 +12,14 @@ foodTicketRouter.get('/', function (req: any, res: any) {
     const rows = db.doQuery("SELECT * FROM food_ticket ORDER BY date DESC", queryCallback(res));
 });
 
+foodTicketRouter.get('/item/:id', function (req: any, res: any) {
+    let id = req.params.id;
+
+    console.log(req)
+
+    const rows = db.doQuery("SELECT * FROM " + table + " WHERE id = '"+id+"'", queryCallback(res));
+});
+
 foodTicketRouter.get('/stats', function (req: any, res: any) {
     const rows = db.doQuery("SELECT CONCAT_WS('-', year(date), LPAD(month(date), 2, '0')) AS month, SUM(amount) AS amount FROM food_ticket ft GROUP BY CONCAT_WS('-', year(date), LPAD(month(date), 2, '0')) ORDER BY date", queryCallback(res));
 });
