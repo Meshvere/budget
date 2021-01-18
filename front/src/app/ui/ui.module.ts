@@ -9,6 +9,8 @@ import {IconService} from './services/icon.service';
 import {ToastService} from './services/toast.service';
 import { ToasterComponent } from './components/toaster/toaster.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ContentComponent } from './components/content/content.component';
+import {SharedModule} from '../shared/shared.module';
 
 
 
@@ -18,23 +20,27 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
         PageComponent,
         ToastComponent,
         ToasterComponent,
+        ContentComponent,
     ],
     imports: [
         CommonModule,
         RouterModule,
         FontAwesomeModule,
         NgbModule,
+        SharedModule,
     ],
     exports: [
         FontAwesomeModule,
         NavComponent,
         PageComponent,
         ToastComponent,
+        ContentComponent,
     ],
     entryComponents: [
         NavComponent,
         PageComponent,
         ToastComponent,
+        ContentComponent,
     ],
     providers: [
       IconService,

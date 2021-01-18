@@ -1,0 +1,20 @@
+<empty-state *ngIf="this.isEmpty" [title]="this.emptyTitle"></empty-state>
+<ng-container *ngIf="!this.isEmpty">
+    <div class="header">
+        <ng-content select="[header]"></ng-content>
+    </div>
+    <div class="body">
+        <div class="side-left">
+            <ng-content select="[sideLeft]"></ng-content>
+        </div>
+        <div class="main-body">
+            <ng-content select="[body]"></ng-content>
+        </div>
+        <div class="side-right">
+            <ng-content select="[sideRight]"></ng-content>
+        </div>
+    </div>
+    <div class="footer">
+        <ng-content select="[footer]"></ng-content>
+    </div>
+</ng-container>
