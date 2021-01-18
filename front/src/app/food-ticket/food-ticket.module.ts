@@ -7,6 +7,7 @@ import {FoodTicketFormComponent} from './components/food-ticket-form/food-ticket
 import {FoodTicketComponent} from './components/food-ticket/food-ticket.component';
 import {FoodTicketRoutingModule} from './food-ticket-routing.module';
 import {FoodTicketService} from './services/food-ticket.service';
+import {UiModule} from '../ui/ui.module';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import {FoodTicketService} from './services/food-ticket.service';
         SharedModule,
         TableModule,
         ChartModule,
+        UiModule,
     ],
     exports: [
         FoodTicketRoutingModule,

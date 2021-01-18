@@ -31,7 +31,7 @@ export class FoodTicketComponent extends AbstractComponent {
 
         this.tableColumns.push(new TableColumn({label: 'Mois', field:'date', cellType:'month', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));
-        this.tableColumns.push(new TableColumn({label: 'Montant', field:'amount', cellType:'money', filter:true}));
+        this.tableColumns.push(new TableColumn({label: 'Montant', field:'amount', cellType:'money'}));
         this.tableColumns.push(new TableColumn({label: 'Commentaire', field:'comment', cellType:'raw'}));
 
         this.tableActions.push(new TableAction({label: 'Modifier la ligne', icon: 'edit', action:new TableActionRouteTo({route:[
@@ -57,7 +57,7 @@ export class FoodTicketComponent extends AbstractComponent {
         });
     }
 
-    public addIncome() {
+    public addFoodTicket() {
         this._router.navigate(['.', 'add'])
     }
 

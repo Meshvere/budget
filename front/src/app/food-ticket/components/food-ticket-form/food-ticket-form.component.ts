@@ -1,13 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Inject, LOCALE_ID } from '@angular/core';
-import {FoodTicket} from '../../../shared/models/food-ticket';
-import {AbstractFormComponent} from '../../../shared/models/abstract-form-component';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, LOCALE_ID} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DataService} from '../../../shared/services/data.service';
-import {SelectModel} from '../../../shared/models/select-model';
-import {flatMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
-import {Income} from '../../../shared/models/income';
+import {flatMap} from 'rxjs/operators';
+import {AbstractFormComponent} from '../../../shared/models/abstract-form-component';
+import {FoodTicket} from '../../../shared/models/food-ticket';
 import {InputErrorMessageModel} from '../../../shared/models/input-error-model';
+import {DataService} from '../../../shared/services/data.service';
 
 @Component({
     selector: 'food-ticket-form',
@@ -54,7 +52,7 @@ export class FoodTicketFormComponent extends AbstractFormComponent {
     }
 
     public back() {
-        this._router.navigate(['/income']);
+        this._router.navigate(['/food-ticket']);
     }
 
     public save() {
