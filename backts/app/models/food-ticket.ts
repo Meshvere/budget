@@ -4,6 +4,7 @@ export class FoodTicket extends AbstractEntity {
     public comment:string = '';
     public amount:number = 0;
     public date:Date;
+    public shop_id:number = 0;
 
     constructor(init?:Partial<FoodTicket>) {
         super(init);
@@ -11,6 +12,8 @@ export class FoodTicket extends AbstractEntity {
         Object.assign(this, init);
 
         this.removeNull();
+
+        this._table = 'food_ticket';
     }
 }
 

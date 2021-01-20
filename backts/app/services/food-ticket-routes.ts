@@ -1,3 +1,4 @@
+import {Util} from '../util';
 import {FoodTicket} from '../models/food-ticket';
 
 const Database = require('../models/database');
@@ -9,48 +10,30 @@ let foodTicketRouter = express.Router();
 let table:string = 'food_ticket';
 
 foodTicketRouter.get('/', function (req: any, res: any) {
-    const rows = db.doQuery("SELECT * FROM food_ticket ORDER BY date DESC", queryCallback(res));
+    const rows = db.doQuery(Util.queryAll(table, ['date DESC']), Util.queryCallback(res));
 });
 
 foodTicketRouter.get('/item/:id', function (req: any, res: any) {
     let id = req.params.id;
 
-    console.log(req)
-
-    const rows = db.doQuery("SELECT * FROM " + table + " WHERE id = '"+id+"'", queryCallback(res));
+    const rows = db.doQuery(Util.queryOneById(table, id), Util.queryCallback(res));
 });
 
 foodTicketRouter.get('/stats', function (req: any, res: any) {
-    const rows = db.doQuery("SELECT CONCAT_WS('-', year(date), LPAD(month(date), 2, '0')) AS month, SUM(amount) AS amount FROM food_ticket ft GROUP BY CONCAT_WS('-', year(date), LPAD(month(date), 2, '0')) ORDER BY date", queryCallback(res));
+    const rows = db.doQuery("SELECT CONCAT_WS('-', year(date), LPAD(month(date), 2, '0')) AS month, SUM(amount) AS amount FROM food_ticket ft GROUP BY CONCAT_WS('-', year(date), LPAD(month(date), 2, '0')) ORDER BY date", Util.queryCallback(res));
+});
+
+foodTicketRouter.put('/', function (req: any, res: any) {
+    let ft = new FoodTicket(req.body.body.ft);
+    let sqlQuery = '';
+
+    if(ft.id == undefined) {
+        sqlQuery = ft.getInsertQuery();
+    } else {
+        sqlQuery = ft.getUpdateQuery();
+    }
+
+    const rows = db.doQuery(sqlQuery, Util.queryCallback(res));
 });
 
 module.exports = foodTicketRouter;
-
-
-
-// ----------- FUNCTIONS ---------------
-
-function queryCallback(res) {
-    return function(err:any, rows:any) {
-        if(err) {
-            errHandle(res, err);
-
-            return;
-        }
-
-        sendResponse(res, rows);
-    }
-}
-
-function errHandle(res:any, err:any) {
-    res.status(500);
-    res.send(err.message);
-}
-
-function sendResponse(res:any, data:any) {
-    return new Promise((resolve) => {
-        res.status(200);
-        res.send(data);
-        resolve();
-    });
-}
