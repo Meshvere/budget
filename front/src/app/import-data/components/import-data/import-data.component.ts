@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, ChangeDetectionStrategy} from '@angular/core';
-import {AbstractComponent} from '../../../shared/models/abstract-component';
-import {Income} from '../../../shared/models/income';
-import {Outcome} from '../../../shared/models/outcome';
+import {AbstractComponent} from '../../../shared/models/components/abstract-component';
+import {Income} from '../../../shared/models/entities/income';
+import {Outcome} from '../../../shared/models/entities/outcome';
 import {XlsxSheetDataMapping, XlsxSheetDataMappingAssoc} from '../../../shared/models/xlsx-sheet-data';
 import {DataService} from '../../../shared/services/data.service';
 import {TimeService} from '../../../shared/services/time.service';

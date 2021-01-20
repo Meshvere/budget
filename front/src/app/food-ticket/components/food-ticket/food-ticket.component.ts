@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/co
 import {ActivatedRoute, Router} from '@angular/router';
 import {Chart} from '../../../chart/models/chart';
 import {ChartService} from '../../../chart/services/chart.service';
-import {AbstractComponent} from '../../../shared/models/abstract-component';
-import {FoodTicket, FoodTicketStats} from '../../../shared/models/food-ticket';
+import {AbstractComponent} from '../../../shared/models/components/abstract-component';
+import {FoodTicket, FoodTicketStats} from '../../../shared/models/entities/food-ticket';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from '../../../table/models/table-action';
 import {TableColumn} from '../../../table/models/table-column';
 import {FoodTicketService} from '../../services/food-ticket.service';

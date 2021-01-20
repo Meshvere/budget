@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
-import {AbstractComponent} from '../../../shared/models/abstract-component';
+import {AbstractComponent} from '../../../shared/models/components/abstract-component';
 import {IconService} from '../../../shared/services/icon.service';
 import {Toast} from '../../models/toast';
 import {ToastService} from '../../services/toast.service';

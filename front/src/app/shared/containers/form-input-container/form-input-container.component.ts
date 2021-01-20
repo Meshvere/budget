@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
-import {AbstractComponent} from '../../models/abstract-component';
+import {AbstractComponent} from '../../models/components/abstract-component';
 import {InputErrorMessageModel, InputErrorModel} from '../../models/input-error-model';
 import {UtilsService} from '../../services/utils.service';
 

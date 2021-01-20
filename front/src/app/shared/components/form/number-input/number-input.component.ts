@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component,Input} from '@angular/core';
-import {AbstractInputComponent} from '../../../models/abstract-input-component.component';
+import {AbstractInputComponent} from '../../../models/components/abstract-input-component.component';
 import {Validators} from '@angular/forms';
 
 @Component({

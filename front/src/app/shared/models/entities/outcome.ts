@@ -1,6 +1,6 @@
-import {Account} from '../enum/account.enum';
-import {TimeService} from '../services/time.service';
-import {UtilsService} from '../services/utils.service';
+import {Account} from '../../enum/account.enum';
+import {TimeService} from '../../services/time.service';
+import {UtilsService} from '../../services/utils.service';
 import {AbstractEntity} from './abstract-entity';
 
 

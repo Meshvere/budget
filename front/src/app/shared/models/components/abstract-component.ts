@@ -1,9 +1,8 @@
 import {ChangeDetectorRef, Directive, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {AutoUnsub} from '../decorators/auto-unsub.decorator';
-import {UtilsService} from '../services/utils.service';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
-import {IconService} from '../../shared/services/icon.service';
+import {UtilsService} from '../../services/utils.service';
+import {IconService} from '../../services/icon.service';
 
 @Directive()
 export class AbstractComponent implements OnInit, OnDestroy {

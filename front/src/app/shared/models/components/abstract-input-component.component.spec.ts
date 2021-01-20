@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { AbstractInputComponentComponent } from './abstract-input-component.component';
+import { AbstractInputComponentComponent } from './components/abstract-input-component.component';
 
 describe('AbstractInputComponentComponent', () => {
   let component: AbstractInputComponentComponent;

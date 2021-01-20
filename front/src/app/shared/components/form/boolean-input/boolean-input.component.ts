@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
-import {AbstractInputComponent} from '../../../../shared/models/abstract-input-component.component';
+import {AbstractInputComponent} from '../../../../shared/models/components/abstract-input-component.component';
 
 @Component({
   selector: 'boolean-input',

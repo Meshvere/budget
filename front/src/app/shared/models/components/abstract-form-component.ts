@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Directive} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AbstractComponent} from './abstract-component';
-import {InputErrorMessageModel, InputErrorModel} from './input-error-model';
+import {InputErrorMessageModel, InputErrorModel} from '../input-error-model';
 
 @Directive()
 export class AbstractFormComponent extends AbstractComponent {

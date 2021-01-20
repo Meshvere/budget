@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Directive, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
 import {AbstractComponent} from './abstract-component';
-import {InputErrorModel} from './input-error-model';
+import {InputErrorModel} from '../input-error-model';
 
 @Directive()
 export class AbstractInputComponent extends AbstractComponent implements OnChanges {

@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
-import {AbstractComponent} from 'src/app/shared/models/abstract-component';
-import {DataService} from 'src/app/shared/services/data.service';
-import {TableAction} from 'src/app/table/models/table-action';
-import {TableColumn} from 'src/app/table/models/table-column';
-import {Summary} from 'src/app/shared/models/summary';
+import {AbstractComponent} from '../../../shared/models/components/abstract-component';
+import {DataService} from '../../../shared/services/data.service';
+import {TableAction} from '../../../table/models/table-action';
+import {TableColumn} from '../../../table/models/table-column';
+import {Summary} from '../../../shared/models/summary';
 
 
 @Component({

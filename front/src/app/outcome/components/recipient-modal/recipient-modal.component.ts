@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {AbstractModalComponent} from '../../../shared/models/abstract-modal-component';
-import {Recipient} from '../../../shared/models/recipient';
+import {AbstractModalComponent} from '../../../shared/models/components/abstract-modal-component';
+import {Recipient} from '../../../shared/models/entities/recipient';
 import {DataService} from '../../../shared/services/data.service';
 
 @Component({

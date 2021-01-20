@@ -1,7 +1,7 @@
-import {Account} from '../enum/account.enum';
+import {Account} from '../../enum/account.enum';
 import {AbstractEntity} from './abstract-entity';
-import {TimeService} from '../services/time.service';
-import {UtilsService} from '../services/utils.service';
+import {TimeService} from '../../services/time.service';
+import {UtilsService} from '../../services/utils.service';
 
 
 export class Income extends AbstractEntity {

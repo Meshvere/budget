@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {AbstractComponent} from '../../models/abstract-component';
+import {AbstractComponent} from '../../models/components/abstract-component';
 
 @Component({
     selector: 'empty-state',

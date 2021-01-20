@@ -1,5 +1,5 @@
 import {Observable} from 'rxjs/internal/Observable';
-import {AbstractEntity} from '../models/abstract-entity';
+import {AbstractEntity} from '../models/entities/abstract-entity';
 import {BackResponse} from '../models/back-response';
 
 export interface DataServiceI {

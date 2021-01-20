@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, LOCALE_ID
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
-import {AbstractFormComponent} from '../../../shared/models/abstract-form-component';
-import {Income} from '../../../shared/models/income';
+import {AbstractFormComponent} from '../../../shared/models/components/abstract-form-component';
+import {Income} from '../../../shared/models/entities/income';
 import {InputErrorMessageModel} from '../../../shared/models/input-error-model';
 import {SelectModel} from '../../../shared/models/select-model';
 import {DataService} from '../../../shared/services/data.service';

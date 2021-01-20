@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Directive} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Subscription} from 'rxjs';
 import {AbstractFormComponent} from './abstract-form-component';
-import {InputErrorModel} from './input-error-model';
+import {InputErrorModel} from '../input-error-model';
 
 @Directive()
 export class AbstractModalComponent extends AbstractFormComponent {

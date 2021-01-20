@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import 'moment/locale/fr';
-import {TimeService} from '../services/time.service';
-import {UtilsService} from '../services/utils.service';
+import {TimeService} from '../../services/time.service';
+import {UtilsService} from '../../services/utils.service';
 import {EntityProperty} from './entity-property';
 
 export class AbstractEntity implements AbstractEntityI {

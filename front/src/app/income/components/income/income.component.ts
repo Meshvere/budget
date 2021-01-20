@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AbstractComponent} from '../../../shared/models/abstract-component';
-import {Income} from '../../../shared/models/income';
+import {AbstractComponent} from '../../../shared/models/components/abstract-component';
+import {Income} from '../../../shared/models/entities/income';
 import {DataService} from '../../../shared/services/data.service';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from '../../../table/models/table-action';
 import {TableColumn} from '../../../table/models/table-column';

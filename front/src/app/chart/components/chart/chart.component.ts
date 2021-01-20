@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
-import {AbstractComponent} from '../../../shared/models/abstract-component';
+import {AbstractComponent} from '../../../shared/models/components/abstract-component';
 import {Chart} from '../../models/chart';
 
 @Component({

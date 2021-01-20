@@ -1,6 +1,6 @@
 import {ChangeDetectorRef,Component, ChangeDetectionStrategy} from '@angular/core';
-import {AbstractComponent} from '../../../shared/models/abstract-component';
-import {Outcome} from '../../../shared/models/outcome';
+import {AbstractComponent} from '../../../shared/models/components/abstract-component';
+import {Outcome} from '../../../shared/models/entities/outcome';
 import {DataService} from '../../../shared/services/data.service';
 import {TableColumn} from '../../../table/models/table-column';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from '../../../table/models/table-action';

@@ -1,6 +1,6 @@
-import {AbstractEntity} from './abstract-entity';
-import {Income} from './income';
-import {Outcome} from './outcome';
+import {AbstractEntity} from './entities/abstract-entity';
+import {Income} from './entities/income';
+import {Outcome} from './entities/outcome';
 
 export class Summary extends AbstractEntity {
     protected _income:Income[] = [];

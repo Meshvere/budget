@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {AbstractComponent} from '../../models/abstract-component';
+import {AbstractComponent} from '../../models/components/abstract-component';
 import {NavEntry} from '../../models/nav-entry';
 import {DataService} from '../../services/data.service';
 

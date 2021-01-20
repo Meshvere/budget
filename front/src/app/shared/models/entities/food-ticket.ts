@@ -1,4 +1,4 @@
-import {TimeService} from '../services/time.service';
+import {TimeService} from '../../services/time.service';
 import {AbstractEntity} from './abstract-entity';
 
 export class FoodTicket extends AbstractEntity {

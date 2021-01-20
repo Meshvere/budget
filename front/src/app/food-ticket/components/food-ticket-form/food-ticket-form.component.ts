@@ -2,12 +2,12 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, LOCALE_ID
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable, of} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
-import {AbstractFormComponent} from '../../../shared/models/abstract-form-component';
-import {FoodTicket} from '../../../shared/models/food-ticket';
+import {AbstractFormComponent} from '../../../shared/models/components/abstract-form-component';
+import {FoodTicket} from '../../../shared/models/entities/food-ticket';
 import {InputErrorMessageModel} from '../../../shared/models/input-error-model';
 import {DataService} from '../../../shared/services/data.service';
 import {FoodTicketService} from '../../services/food-ticket.service';
-import {Shop} from '../../../shared/models/shop';
+import {Shop} from '../../../shared/models/entities/shop';
 
 @Component({
     selector: 'food-ticket-form',

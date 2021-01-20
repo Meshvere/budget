@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import cloneDeep from 'lodash/cloneDeep';
-import {AbstractComponent} from '../../../shared/models/abstract-component';
+import {AbstractComponent} from '../../../shared/models/components/abstract-component';
 import {IconService} from '../../../shared/services/icon.service';
 import {TableAction, TableActionRouteTo} from '../../models/table-action';
 import {TableColumn, TableColumnFilter, TableFilterValue} from '../../models/table-column';

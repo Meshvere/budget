@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {Toast} from '../../models/toast';
 import {ToastService} from '../../services/toast.service';
-import {AbstractComponent} from '../../../shared/models/abstract-component';
+import {AbstractComponent} from '../../../shared/models/components/abstract-component';
 
 @Component({
    selector: 'toaster',

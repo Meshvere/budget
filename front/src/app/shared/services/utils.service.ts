@@ -1,5 +1,5 @@
 import { Injectable, Inject, LOCALE_ID } from '@angular/core';
-import {EntityProperty} from '../models/entity-property';
+import {EntityProperty} from '../models/entities/entity-property';
 import {DatePipe, CurrencyPipe} from '@angular/common';
 
 @Injectable({
