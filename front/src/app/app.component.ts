@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {UtilsService} from './shared/services/utils.service';
 
 @Component({
@@ -10,7 +10,9 @@ import {UtilsService} from './shared/services/utils.service';
 export class AppComponent {
     title = 'Budget';
 
-    constructor(private _utilsService:UtilsService) {
+    constructor(
+        private _utilsService:UtilsService,
+    ) {
 
     }
 }

@@ -14,7 +14,7 @@ export class ToasterComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
+        private _toastService:ToastService,
     ) {
         super(_cd);
     }
@@ -22,7 +22,7 @@ export class ToasterComponent extends AbstractComponent {
     ngOnInit(): void {
         super.ngOnInit();
 
-        this.addSub = this._toastService.toastList$.subscribe(toastL => {
+        this.addSub = ToastService.toastList$.subscribe(toastL => {
             this.toastList = toastL;
 
             this._cd.markForCheck();

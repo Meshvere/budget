@@ -1,8 +1,6 @@
 <div class="modal-header">
     <h4 class="modal-title">Bénéficiaire</h4>
-    <button type="button" class="close" aria-label="Fermer" (click)="this.dismiss()" *ngIf="!isSaving">
-        <span aria-hidden="true">&times;</span>
-    </button>
+    <btn icon="close" class="close" [fnct]="this.dismiss.bind(this)" *ngIf="!isSaving"></btn>
 </div>
 <div class="modal-body">
     <form class="form-horizontal">
@@ -16,11 +14,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn" (click)="this.dismiss()" [disabled]="isSaving">
-        Annuler
-    </button>
-    <button type="button" class="btn btn-primary" ngbAutofocus [disabled]="isSaving || !this.formValid" (click)="this.saveRecipient()">
-        <fa-icon  [icon]="this.getIcon('add')"></fa-icon>
-        Ajouter
-    </button>
+    <btn label="Annuler" [fnct]="this.dismiss.bind(this)" [disabled]="isSaving"></btn>
+    <btn label="Ajouter" [primary]="true" ngbAutofocus [fnct]="this.saveRecipient.bind(this)" [disabled]="isSaving || !this.formValid" icon="add"></btn>
 </div>

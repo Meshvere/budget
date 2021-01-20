@@ -6,6 +6,8 @@ import {AbstractFormComponent} from '../../../shared/models/abstract-form-compon
 import {FoodTicket} from '../../../shared/models/food-ticket';
 import {InputErrorMessageModel} from '../../../shared/models/input-error-model';
 import {DataService} from '../../../shared/services/data.service';
+import {FoodTicketService} from '../../services/food-ticket.service';
+import {Shop} from '../../../shared/models/shop';
 
 @Component({
     selector: 'food-ticket-form',
@@ -15,19 +17,27 @@ import {DataService} from '../../../shared/services/data.service';
 })
 export class FoodTicketFormComponent extends AbstractFormComponent {
     public curFoodTicket:FoodTicket;
+    public shops:Shop[] = [];
 
     constructor(
         @Inject(LOCALE_ID) public locale: string,
         protected _cd:ChangeDetectorRef,
         private _route: ActivatedRoute,
         private _router:Router,
+        private _foodTicketService: FoodTicketService,
         private _dataService:DataService,
     ) {
         super(_cd);
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         super.ngOnInit();
+
+        this.addSub = this._dataService.getShops().subscribe(shops => {
+            this.shops = shops;
+
+            this._cd.markForCheck();
+        })
 
         this.addSub = this._route.data.pipe(flatMap(data => {
             let obs:Observable<FoodTicket>;
@@ -47,7 +57,7 @@ export class FoodTicketFormComponent extends AbstractFormComponent {
 
     public retrieveFoodTicket():Observable<FoodTicket> {
         return this._route.params.pipe(flatMap(param => {
-            return this._dataService.getFoodTicket(param.id);
+            return this._foodTicketService.getOneById(param.id);
         }));
     }
 
@@ -56,7 +66,7 @@ export class FoodTicketFormComponent extends AbstractFormComponent {
     }
 
     public save() {
-        this.addSub = this._dataService.saveFoodTicket(this.curFoodTicket).subscribe(res => {
+        this.addSub = this._foodTicketService.save(this.curFoodTicket).subscribe(res => {
             if(res.affectedRows > 0) {
                 this.back();
             }

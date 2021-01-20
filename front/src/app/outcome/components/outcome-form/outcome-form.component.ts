@@ -28,7 +28,6 @@ export class OutcomeFormComponent extends AbstractFormComponent {
     constructor(
         @Inject(LOCALE_ID) public locale: string,
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
         private _route: ActivatedRoute,
         private _router:Router,
         private _dataService:DataService,
@@ -98,7 +97,7 @@ export class OutcomeFormComponent extends AbstractFormComponent {
 
     public save() {
         this.addSub = this._dataService.saveOutcome(this.curOutcome).subscribe(res => {
-            this._toastService.addToast('Recette', 'Recette enregistrée', Toast.SUCCESS);
+            ToastService.addToast('Recette', 'Recette enregistrée', Toast.SUCCESS);
 
             this.back();
         });

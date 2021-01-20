@@ -72,7 +72,7 @@
     </card>
 
     <div class="footer">
-        <button class="btn" (click)="this.back()">Retour</button>
-        <button class="btn btn-primary" (click)="this.save()" [disabled]="!this.formValid">Enregistrer</button>
+        <btn [fnct]="this.back.bind(this)" label="Retour" icon="back"></btn>
+        <btn [fnct]="this.save.bind(this)" [primary]="true" [disabled]="!this.formValid" label="Enregistrer" icon="save"></btn>
     </div>
 </form>

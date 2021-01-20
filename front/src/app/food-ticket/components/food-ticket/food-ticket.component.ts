@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Chart} from '../../../chart/models/chart';
 import {ChartService} from '../../../chart/services/chart.service';
 import {AbstractComponent} from '../../../shared/models/abstract-component';
 import {FoodTicket, FoodTicketStats} from '../../../shared/models/food-ticket';
-import {DataService} from '../../../shared/services/data.service';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from '../../../table/models/table-action';
 import {TableColumn} from '../../../table/models/table-column';
-import {Chart} from '../../../chart/models/chart';
+import {FoodTicketService} from '../../services/food-ticket.service';
 
 @Component({
     selector: 'food-ticket',
@@ -23,15 +23,16 @@ export class FoodTicketComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        private _dataService:DataService,
         private _route:ActivatedRoute,
         private _router:Router,
+        private _foodTicketService: FoodTicketService,
     ) {
         super(_cd);
 
         this.tableColumns.push(new TableColumn({label: 'Mois', field:'date', cellType:'month', filter: true}));
         this.tableColumns.push(new TableColumn({label: 'Date', field:'date', cellType:'date'}));
         this.tableColumns.push(new TableColumn({label: 'Montant', field:'amount', cellType:'money'}));
+        this.tableColumns.push(new TableColumn({label: 'Magasin', field:'shop_id'}));
         this.tableColumns.push(new TableColumn({label: 'Commentaire', field:'comment', cellType:'raw'}));
 
         this.tableActions.push(new TableAction({label: 'Modifier la ligne', icon: 'edit', action:new TableActionRouteTo({route:[
@@ -44,13 +45,13 @@ export class FoodTicketComponent extends AbstractComponent {
     ngOnInit(): void {
         super.ngOnInit();
 
-        this.addSub = this._dataService.getFoodTickets().subscribe(ft => {
+        this.addSub = this._foodTicketService.getAll().subscribe(ft => {
             this.foodTicket = ft;
 
             this._cd.markForCheck();
         });
 
-        this.addSub = this._dataService.getFoodTicketStats().subscribe(stat => {
+        this.addSub = this._foodTicketService.getStats().subscribe(stat => {
             this.foodTicketStats = stat;
 
             this._cd.markForCheck();

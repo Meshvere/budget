@@ -5,6 +5,7 @@ export class FoodTicket extends AbstractEntity {
     public comment:string = '';
     public amount:number = 0;
     public date:Date = new Date(TimeService.undefinedDate);
+    public shop_id:number = 0;
 
     constructor(init?:Partial<FoodTicket>) {
         super(init);

@@ -6,32 +6,31 @@ import {Toast} from '../models/toast';
    providedIn: 'root'
 })
 export class ToastService {
-    public toastList$:Subject<Toast[]>;
-    public _toastList:Toast[] = [];
+    public static toastList$:Subject<Toast[]> = new Subject();
+    protected static _toastList:Toast[] = [];
 
     constructor() {
-        this.toastList$ = new Subject();
-        this.toastList$.subscribe(tl => {
-            this._toastList = tl;
+        ToastService.toastList$.subscribe(tl => {
+            ToastService._toastList = tl;
         });
 
-        this.toastList$.next([]);
+        ToastService.toastList$.next([]);
     }
 
-    public addToast(title:string, msg:string, type:string = Toast.NORMAL, autoClose:boolean = false):number {
+    public static addToast(title:string, msg:string, type:string = Toast.NORMAL, autoClose:boolean = false):number {
         let list:Toast[] = this._toastList;
 
         let newToast:Toast = new Toast({title:title, message: msg, type: type, autoClose: autoClose});
         list.push(newToast);
 
-        this.toastList$.next(list);
+        ToastService.toastList$.next(list);
 
         return newToast.id;
     }
 
-    public closeToast(id:number) {
-        let list:Toast[] = this._toastList.filter(toast => toast.id != id);
+    public static closeToast(id:number) {
+        let list:Toast[] = ToastService._toastList.filter(toast => toast.id != id);
 
-        this.toastList$.next(list);
+        ToastService.toastList$.next(list);
     }
 }

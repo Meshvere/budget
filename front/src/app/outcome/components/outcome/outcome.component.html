@@ -1,4 +1,9 @@
-<div class="head"><button class="btn btn-primary c-hand" [routerLink]="['./add']"><fa-icon  [icon]="getIcon('add')"></fa-icon> Ajouter</button></div>
-
-<app-table title="Dépenses quotidiennes" [columns]="this.tableColumnsDaily" [rows]="this.currentOutcome" [actions]="this.tableActions"></app-table>
+<app-content>
+    <div header>
+        <btn [routerLink]="['./add']" [primary]="true" label="Ajouter" icon="add"></btn>
+    </div>
+    <div body>
+        <app-table title="Dépenses quotidiennes" [columns]="this.tableColumnsDaily" [rows]="this.currentOutcome" [actions]="this.tableActions"></app-table>
 <app-table title="Prélèvements automatiques" [columns]="this.tableColumnsRecurrent" [rows]="this.recurrentOutcome" [actions]="this.tableActions"></app-table>
+    </div>
+</app-content>

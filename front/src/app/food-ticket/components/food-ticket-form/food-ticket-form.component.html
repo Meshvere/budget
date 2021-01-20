@@ -9,6 +9,10 @@
                         </form-input-container>
                     </div>
 
+                    <form-input-container label="Magasin" [errors]="this.getErrors('comment')" [errorMessages]="this.getErrorMessages('comment')">
+                        <select-input [values]="this.shops" [(value)]="curFoodTicket.shop_id" (valueChange)="valueChange($event, 'shop_id')"></select-input>
+                    </form-input-container>
+
                     <div>
                         <form-input-container label="Montant" [icon]="this.getIcon('euro')" [errors]="this.getErrors('amount')" [iconPosition]="'after'" [errorMessages]="this.getErrorMessages('amount')">
                             <number-input [required]="true" [(value)]="curFoodTicket.amount" step="0.01" (valueChange)="valueChange($event, 'amount')" (validationChange)="validationChange($event, 'amount')"></number-input>
@@ -16,11 +20,11 @@
                     </div>
                 </div>
 
-                <ng-container class="bodyContent">
-                    <form-input-container label="Commentaire" class="fullWidth" [errors]="this.getErrors('comment')" [errorMessages]="this.getErrorMessages('comment')">
+                <div class="bodyContent">
+                    <form-input-container label="Commentaire" class="fullWidth" [errors]="this.getErrors('comment')" [errorMessages]="this.getErrorMessages('comment')" [fullWidth]="true">
                         <text-input [needValidation]="false" [(value)]="curFoodTicket.comment" (valueChange)="valueChange($event, 'comment')" [textarea]="true"></text-input>
                     </form-input-container>
-                </ng-container>
+                </div>
             </card>
         </form>
     </div>

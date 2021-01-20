@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'food-ticket',  data: { title: 'Tickets resto', icon:'utensils' }, loadChildren: './food-ticket/food-ticket.module#FoodTicketModule' },
   { path: 'shopping',  data: { title: 'Courses', icon:'shoppingCart' }, loadChildren: './shopping/shopping.module#ShoppingModule' },
   { path: 'saving',  data: { title: 'Epargne', icon:'piggyBank' }, loadChildren: './saving/saving.module#SavingModule' },
+  { path: 'pellets',  data: { title: 'Pellets', icon:'fire' }, loadChildren: () => import('./pellets/pellets.module').then(m => m.PelletsModule) },
 //   { path: 'import',  data: { title: 'Import', icon:'fileImport' }, loadChildren: './import-data/import-data.module#ImportDataModule' },
 
   { path: '**', component: RedirectToComponent, data: { to: '/summary' } }

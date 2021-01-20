@@ -1,3 +1,3 @@
 <button class="btn" [class.btn-primary]="this.primary" (click)="this.doAction()" [disabled]="this.disabled">
-    <fa-icon *ngIf="this.icon != undefined" [icon]="getIcon(this.icon)"></fa-icon> {{this.label}}
+    <fa-icon *ngIf="getIcon(this.icon) != undefined" [icon]="getIcon(this.icon)"></fa-icon> {{this.label}}
 </button>

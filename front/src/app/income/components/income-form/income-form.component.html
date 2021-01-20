@@ -1,69 +1,73 @@
-<empty-state *ngIf="curIncome == undefined" title="Recette non trouvée"></empty-state>
-<form class="form-horizontal" *ngIf="curIncome != undefined">
-    <card [title]="'Type et objet'">
-        <div class="bodyContent multiCol">
-            <form-input-container label="Objet" class="fullWidth" [errors]="this.getErrors('label')" [errorMessages]="this.getErrorMessages('label')">
-                <text-input [required]="true" [(value)]="curIncome.label" (valueChange)="valueChange($event, 'label')"></text-input>
-            </form-input-container>
-
-            <form-input-container label="Type de recette">
-                <boolean-input [(value)]="curIncome.recurrent" labelTrue="Récurrente" iconTrue="sync" labelFalse="Ponctuelle" iconFalse="bullseye" (valueChange)="valueChange($event, 'recurrent')"></boolean-input>
-            </form-input-container>
-        </div>
-        <ng-container class="bodyContent">
-            <form-input-container label="Commentaire" class="fullWidth" [errors]="this.getErrors('comment')" [errorMessages]="this.getErrorMessages('comment')">
-                <text-input [needValidation]="false" [(value)]="curIncome.comment" (valueChange)="valueChange($event, 'comment')" [textarea]="true"></text-input>
-            </form-input-container>
-        </ng-container>
-    </card>
-    <card [title]="'Date(s), compte et montant'">
-        <div class="bodyContent multiCol">
-            <div>
-                <form-input-container label="Date" [icon]="this.getIcon('calendar')" *ngIf="!curIncome.recurrent" [errors]="this.getErrors('date')" [errorMessages]="this.getErrorMessages('date')">
-                    <date-input [(value)]="curIncome.date" (valueChange)="valueChange($event, 'date')" [required]="true" (validationChange)="validationChange($event, 'date')"></date-input>
-                </form-input-container>
-
-                <form-input-container label="Jour du mois" [icon]="this.getIcon('calendar')" *ngIf="curIncome.recurrent" [errors]="this.getErrors('recurrent_day')" [errorMessages]="this.getErrorMessages('recurrent_day')">
-                    <number-input [min]="1" [max]="31" [(value)]="curIncome.recurrent_day" (valueChange)="valueChange($event, 'recurrent_day')" [required]="true" (validationChange)="validationChange($event, 'recurrent_day')"></number-input>
-                </form-input-container>
-                <form-input-container label="Du" [icon]="this.getIcon('calendar')" *ngIf="curIncome.recurrent" [errors]="this.getErrors('recurrent_start')" [errorMessages]="this.getErrorMessages('recurrent_start')">
-                    <date-input [(value)]="curIncome.recurrent_start" (valueChange)="valueChange($event, 'recurrent_start')" [max]="curIncome.recurrent_stop" [required]="true" (validationChange)="validationChange($event, 'recurrent_start')"></date-input>
-                </form-input-container>
-                <form-input-container label="au" [icon]="this.getIcon('calendar')" *ngIf="curIncome.recurrent" [errors]="this.getErrors('recurrent_stop')" [errorMessages]="this.getErrorMessages('recurrent_stop')">
-                    <date-input [(value)]="curIncome.recurrent_stop" (valueChange)="valueChange($event, 'recurrent_stop')" [min]="curIncome.recurrent_start" [required]="true" (validationChange)="validationChange($event, 'recurrent_stop')"></date-input>
-                </form-input-container>
-
-                <form-input-container label="Compte" [icon]="this.getIcon('bank')" [errors]="this.getErrors('account')" [errorMessages]="this.getErrorMessages('account')">
-                    <select-input [values]="this.account" [(value)]="this.curIncome.account" (valueChange)="valueChange($event, 'account')" [required]="true" (validationChange)="validationChange($event, 'account')"></select-input>
-                </form-input-container>
-            </div>
-
-            <div>
-                <form-input-container label="Montant" [icon]="this.getIcon('euro')" [errors]="this.getErrors('amount')" [iconPosition]="'after'" [errorMessages]="this.getErrorMessages('amount')">
-                    <number-input [min]="0.01" [required]="true" [(value)]="curIncome.amount" step="0.01" (valueChange)="valueChange($event, 'amount')" (validationChange)="validationChange($event, 'amount')"></number-input>
-                </form-input-container>
-                <div class="multiCol">
-                    <form-input-container label="Partagé" [icon]="this.getIcon('cut')">
-                        <boolean-input [(value)]="curIncome.shared" (valueChange)="valueChange($event, 'shared')" (validationChange)="validationChange($event, 'shared')"></boolean-input>
+<app-content [isEmpty]="curIncome == undefined" emptyTitle="Recette non trouvée">
+    <div body>
+        <form class="form-horizontal" *ngIf="curIncome != undefined">
+            <card [title]="'Type et objet'">
+                <div class="bodyContent multiCol">
+                    <form-input-container label="Objet" class="fullWidth" [errors]="this.getErrors('label')" [errorMessages]="this.getErrorMessages('label')">
+                        <text-input [required]="true" [(value)]="curIncome.label" (valueChange)="valueChange($event, 'label')"></text-input>
                     </form-input-container>
-                    <form-input-container label="Montant perçu" [icon]="this.getIcon('euro')" [iconPosition]="'after'">
-                        <span class="input-group-text">{{curIncome.amountRecieved}}</span>
+
+                    <form-input-container label="Type de recette">
+                        <boolean-input [(value)]="curIncome.recurrent" labelTrue="Récurrente" iconTrue="sync" labelFalse="Ponctuelle" iconFalse="bullseye" (valueChange)="valueChange($event, 'recurrent')"></boolean-input>
                     </form-input-container>
                 </div>
-            </div>
-        </div>
-        <div class="bodyContent multiCol">
-            <form-input-container label="Passé sur le compte" [icon]="this.getIcon('check')" *ngIf="!curIncome.recurrent">
-                <boolean-input [(value)]="curIncome.on_account" (valueChange)="valueChange($event, 'on_account')" (validationChange)="validationChange($event, 'on_account')"></boolean-input>
-            </form-input-container>
-            <form-input-container label="En attente" [icon]="this.getIcon('clock')" *ngIf="!curIncome.recurrent">
-                <boolean-input [(value)]="curIncome.waiting" (valueChange)="valueChange($event, 'waiting')" (validationChange)="validationChange($event, 'waiting')"></boolean-input>
-            </form-input-container>
-        </div>
-    </card>
+                <ng-container class="bodyContent">
+                    <form-input-container label="Commentaire" class="fullWidth" [errors]="this.getErrors('comment')" [errorMessages]="this.getErrorMessages('comment')">
+                        <text-input [needValidation]="false" [(value)]="curIncome.comment" (valueChange)="valueChange($event, 'comment')" [textarea]="true"></text-input>
+                    </form-input-container>
+                </ng-container>
+            </card>
+            <card [title]="'Date(s), compte et montant'">
+                <div class="bodyContent multiCol">
+                    <div>
+                        <form-input-container label="Date" [icon]="this.getIcon('calendar')" *ngIf="!curIncome.recurrent" [errors]="this.getErrors('date')" [errorMessages]="this.getErrorMessages('date')">
+                            <date-input [(value)]="curIncome.date" (valueChange)="valueChange($event, 'date')" [required]="true" (validationChange)="validationChange($event, 'date')"></date-input>
+                        </form-input-container>
 
-    <div class="footer">
-        <button class="btn" (click)="this.back()">Retour</button>
-        <button class="btn btn-primary" (click)="this.save()" [disabled]="!this.formValid">Enregistrer</button>
+                        <form-input-container label="Jour du mois" [icon]="this.getIcon('calendar')" *ngIf="curIncome.recurrent" [errors]="this.getErrors('recurrent_day')" [errorMessages]="this.getErrorMessages('recurrent_day')">
+                            <number-input [min]="1" [max]="31" [(value)]="curIncome.recurrent_day" (valueChange)="valueChange($event, 'recurrent_day')" [required]="true" (validationChange)="validationChange($event, 'recurrent_day')"></number-input>
+                        </form-input-container>
+                        <form-input-container label="Du" [icon]="this.getIcon('calendar')" *ngIf="curIncome.recurrent" [errors]="this.getErrors('recurrent_start')" [errorMessages]="this.getErrorMessages('recurrent_start')">
+                            <date-input [(value)]="curIncome.recurrent_start" (valueChange)="valueChange($event, 'recurrent_start')" [max]="curIncome.recurrent_stop" [required]="true" (validationChange)="validationChange($event, 'recurrent_start')"></date-input>
+                        </form-input-container>
+                        <form-input-container label="au" [icon]="this.getIcon('calendar')" *ngIf="curIncome.recurrent" [errors]="this.getErrors('recurrent_stop')" [errorMessages]="this.getErrorMessages('recurrent_stop')">
+                            <date-input [(value)]="curIncome.recurrent_stop" (valueChange)="valueChange($event, 'recurrent_stop')" [min]="curIncome.recurrent_start" [required]="true" (validationChange)="validationChange($event, 'recurrent_stop')"></date-input>
+                        </form-input-container>
+
+                        <form-input-container label="Compte" [icon]="this.getIcon('bank')" [errors]="this.getErrors('account')" [errorMessages]="this.getErrorMessages('account')">
+                            <select-input [values]="this.account" [(value)]="this.curIncome.account" (valueChange)="valueChange($event, 'account')" [required]="true" (validationChange)="validationChange($event, 'account')"></select-input>
+                        </form-input-container>
+                    </div>
+
+                    <div>
+                        <form-input-container label="Montant" [icon]="this.getIcon('euro')" [errors]="this.getErrors('amount')" [iconPosition]="'after'" [errorMessages]="this.getErrorMessages('amount')">
+                            <number-input [min]="0.01" [required]="true" [(value)]="curIncome.amount" step="0.01" (valueChange)="valueChange($event, 'amount')" (validationChange)="validationChange($event, 'amount')"></number-input>
+                        </form-input-container>
+                        <div class="multiCol">
+                            <form-input-container label="Partagé" [icon]="this.getIcon('cut')">
+                                <boolean-input [(value)]="curIncome.shared" (valueChange)="valueChange($event, 'shared')" (validationChange)="validationChange($event, 'shared')"></boolean-input>
+                            </form-input-container>
+                            <form-input-container label="Montant perçu" [icon]="this.getIcon('euro')" [iconPosition]="'after'">
+                                <span class="input-group-text">{{curIncome.amountRecieved}}</span>
+                            </form-input-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="bodyContent multiCol">
+                    <form-input-container label="Passé sur le compte" [icon]="this.getIcon('check')" *ngIf="!curIncome.recurrent">
+                        <boolean-input [(value)]="curIncome.on_account" (valueChange)="valueChange($event, 'on_account')" (validationChange)="validationChange($event, 'on_account')"></boolean-input>
+                    </form-input-container>
+                    <form-input-container label="En attente" [icon]="this.getIcon('clock')" *ngIf="!curIncome.recurrent">
+                        <boolean-input [(value)]="curIncome.waiting" (valueChange)="valueChange($event, 'waiting')" (validationChange)="validationChange($event, 'waiting')"></boolean-input>
+                    </form-input-container>
+                </div>
+            </card>
+        </form>
     </div>
-</form>
+    <div footer>
+        <btn [fnct]="this.back.bind(this)" label="Retour" icon="back"></btn>
+        <btn [fnct]="this.save.bind(this)" [primary]="true" [disabled]="!this.formValid" label="Enregistrer" icon="save"></btn>
+    </div>
+</app-content>
+<!-- <empty-state *ngIf="curIncome == undefined" title="Recette non trouvée"></empty-state> -->
+

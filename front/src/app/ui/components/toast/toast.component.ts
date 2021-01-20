@@ -22,7 +22,6 @@ export class ToastComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        protected _toastService:ToastService,
     ) {
         super(_cd);
     }
@@ -59,7 +58,7 @@ export class ToastComponent extends AbstractComponent {
 
     public close() {
         this.shown = false;
-        this._toastService.closeToast(this.id);
+        ToastService.closeToast(this.id);
 
         this._cd.markForCheck();
     }

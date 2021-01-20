@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {faBullseye, faCalendar, faChartLine, faCheck, faCheckCircle, faCircle, faCircleNotch, faClock, faCoins, faCut, faEdit, faEuroSign, faExclamationTriangle, faFileImport, faHourglass, faMoneyBill, faMoneyCheck, faPiggyBank, faPlus, faQuestion, faSave, faShoppingCart, faSort, faSortDown, faSortUp, faSync, faTimesCircle, faTrash, faUserPlus, faUtensils, IconDefinition} from '@fortawesome/free-solid-svg-icons';
+import {faBullseye, faCalendar, faChartLine, faCheck, faCheckCircle, faCircle, faCircleNotch, faClock, faCoins, faCut, faEdit, faEuroSign, faExclamationTriangle, faFileImport, faFire, faHourglass, faMoneyBill, faMoneyCheck, faPiggyBank, faPlus, faQuestion, faSave, faShoppingCart, faSort, faSortDown, faSortUp, faSync, faTimesCircle, faTrash, faUserPlus, faUtensils, IconDefinition} from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
    providedIn: 'root'
@@ -37,6 +37,7 @@ export class IconService {
     public static sortDown:IconDefinition = faSortDown;
     public static sync:IconDefinition = faSync;
     public static bullseye:IconDefinition = faBullseye;
+    public static fire:IconDefinition = faFire;
 
     constructor() {}
 
