@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy,ChangeDetectorRef,Component} from '@angular/core';
-import {AbstractComponent} from 'src/app/shared/models/abstract-component';
+import {AbstractComponent} from '../../../shared/models/abstract-component';
 
 @Component({
     selector: 'app-page',

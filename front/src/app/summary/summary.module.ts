@@ -2,7 +2,6 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared/shared.module';
 import {TableModule} from '../table/table.module';
-import {UiModule} from '../ui/ui.module';
 import {SummaryComponent} from './components/summary/summary.component';
 import {SummaryRoutingModule} from './summary-routing.module';
 
@@ -15,7 +14,6 @@ import {SummaryRoutingModule} from './summary-routing.module';
         SummaryRoutingModule,
         SharedModule,
         TableModule,
-        UiModule,
     ],
     exports: [
         SummaryRoutingModule

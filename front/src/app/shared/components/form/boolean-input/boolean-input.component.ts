@@ -1,7 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
 import {AbstractInputComponent} from '../../../../shared/models/abstract-input-component.component';
-import {IconService} from '../../../../ui/services/icon.service';
-import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'boolean-input',

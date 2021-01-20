@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {RouterModule,Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {FoodTicketFormComponent} from './components/food-ticket-form/food-ticket-form.component';
 import {FoodTicketComponent} from './components/food-ticket/food-ticket.component';
 

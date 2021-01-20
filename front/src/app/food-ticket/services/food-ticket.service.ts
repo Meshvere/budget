@@ -4,11 +4,11 @@ import {Observable} from 'rxjs/internal/Observable';
 import {of} from 'rxjs/internal/observable/of';
 import {flatMap} from 'rxjs/operators';
 import {DataServiceI} from '../../shared/interfaces/data-service-i';
+import {BackResponse} from '../../shared/models/back-response';
 import {FoodTicket, FoodTicketStats} from '../../shared/models/food-ticket';
 import {DataService} from '../../shared/services/data.service';
-import {Toast} from '../../ui/models/toast';
-import {ToastService} from '../../ui/services/toast.service';
-import {BackResponse} from '../../shared/models/back-response';
+import {Toast} from '../../toast/models/toast';
+import {ToastService} from '../../toast/services/toast.service';
 
 @Injectable({
   providedIn: 'root'

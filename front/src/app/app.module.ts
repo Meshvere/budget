@@ -12,7 +12,7 @@ import {RefundModule} from './refund/refund.module';
 import {SavingModule} from './saving/saving.module';
 import {SharedModule} from './shared/shared.module';
 import {SummaryModule} from './summary/summary.module';
-import {UiModule} from './ui/ui.module';
+import { ToastModule } from './toast/toast.module';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -26,7 +26,7 @@ registerLocaleData(localeFr, 'fr-FR');
         BrowserModule,
         AppRoutingModule,
         SharedModule,
-        UiModule,
+        ToastModule,
         // SummaryModule,
         // IncomeModule,
         // OutcomeModule,
@@ -37,7 +37,7 @@ registerLocaleData(localeFr, 'fr-FR');
     ],
     exports: [
         SharedModule,
-        UiModule,
+        ToastModule,
         // SummaryModule,
         // IncomeModule,
         // OutcomeModule,

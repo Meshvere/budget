@@ -1,10 +1,8 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {AbstractComponent} from 'src/app/shared/models/abstract-component';
-import {DataService} from 'src/app/shared/services/data.service';
+import {AbstractComponent} from '../../models/abstract-component';
 import {NavEntry} from '../../models/nav-entry';
-import {IconService} from '../../services/icon.service';
-import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
+import {DataService} from '../../services/data.service';
 
 @Component({
     selector: 'app-nav',

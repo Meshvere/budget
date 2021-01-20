@@ -4,8 +4,6 @@ import {Outcome} from '../../../shared/models/outcome';
 import {DataService} from '../../../shared/services/data.service';
 import {TableColumn} from '../../../table/models/table-column';
 import {TableAction, TableActionRouteTo, TableActionRouteToElem} from '../../../table/models/table-action';
-import {IconDefinition} from '@fortawesome/free-solid-svg-icons';
-import {IconService} from '../../../ui/services/icon.service';
 
 @Component({
     selector: 'outcome',

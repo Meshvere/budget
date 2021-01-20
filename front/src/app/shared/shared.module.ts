@@ -19,6 +19,10 @@ import {DataService} from './services/data.service';
 import {LocaleService} from './services/locale.service';
 import {TimeService} from './services/time.service';
 import {UtilsService} from './services/utils.service';
+import {ContentComponent} from './containers/content/content.component';
+import {PageComponent} from './containers/page/page.component';
+import {NavComponent} from './components/nav/nav.component';
+import {ToastModule} from '../toast/toast.module';
 
 @NgModule({
     declarations: [
@@ -32,6 +36,9 @@ import {UtilsService} from './services/utils.service';
         BooleanInputComponent,
         TextInputComponent,
         BtnComponent,
+        ContentComponent,
+        PageComponent,
+        NavComponent,
     ],
     imports: [
         CommonModule,
@@ -41,6 +48,7 @@ import {UtilsService} from './services/utils.service';
         ReactiveFormsModule,
         HttpClientModule,
         NgbModule,
+        ToastModule,
     ],
     exports: [
         FontAwesomeModule,
@@ -61,6 +69,9 @@ import {UtilsService} from './services/utils.service';
         TextInputComponent,
         JsonPipe,
         BtnComponent,
+        ContentComponent,
+        PageComponent,
+        NavComponent,
     ],
     entryComponents: [
         RedirectToComponent,
@@ -71,6 +82,9 @@ import {UtilsService} from './services/utils.service';
         NumberInputComponent,
         TextInputComponent,
         BtnComponent,
+        ContentComponent,
+        PageComponent,
+        NavComponent,
     ],
     providers: [
         {

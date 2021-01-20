@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import {AutoUnsub} from '../decorators/auto-unsub.decorator';
 import {UtilsService} from '../services/utils.service';
 import {IconDefinition} from '@fortawesome/fontawesome-svg-core';
-import {IconService} from '../../ui/services/icon.service';
+import {IconService} from '../../shared/services/icon.service';
 
 @Directive()
 export class AbstractComponent implements OnInit, OnDestroy {

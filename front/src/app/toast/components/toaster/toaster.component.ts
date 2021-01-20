@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
-import {AbstractComponent} from 'src/app/shared/models/abstract-component';
 import {Toast} from '../../models/toast';
 import {ToastService} from '../../services/toast.service';
+import {AbstractComponent} from '../../../shared/models/abstract-component';
 
 @Component({
    selector: 'toaster',
@@ -14,7 +14,7 @@ export class ToasterComponent extends AbstractComponent {
 
     constructor(
         protected _cd:ChangeDetectorRef,
-        private _toastService:ToastService,
+        private _toastService:ToastService, // Activate dependency only
     ) {
         super(_cd);
     }
