@@ -8,9 +8,6 @@ export class AbstractEntity {
     protected _roundFactor:number = 100;
 
     constructor(init?:Partial<AbstractEntity>) {
-        if(init != undefined && init.date != undefined) {
-            this.date = new Date(init.date);
-        }
     }
 
     public toObject():any {

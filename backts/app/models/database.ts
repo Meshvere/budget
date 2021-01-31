@@ -13,7 +13,7 @@ export class Database {
             password: 'b24acdi', // process.env.DB_PASS,
             database: 'budget', // process.env.DB_DATABASE,
             port: 3306,
-            allow_origin: '*'
+            // allow_origin: '*'
         });
 
         this.con.connect((err) => {
